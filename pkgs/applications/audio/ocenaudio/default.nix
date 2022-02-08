@@ -1,12 +1,4 @@
-{ stdenv
-, lib
-, fetchurl
-, autoPatchelfHook
-, dpkg
-, qt5
-, libjack2
-, alsa-lib
-, bzip2
+{ stdenv, lib, fetchurl, autoPatchelfHook, dpkg, qt5, libjack2, alsa-lib, bzip2
 , libpulseaudio }:
 
 stdenv.mkDerivation rec {
@@ -45,7 +37,8 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "Cross-platform, easy to use, fast and functional audio editor";
+    description =
+      "Cross-platform, easy to use, fast and functional audio editor";
     homepage = "https://www.ocenaudio.com";
     license = licenses.unfree;
     platforms = platforms.linux;
