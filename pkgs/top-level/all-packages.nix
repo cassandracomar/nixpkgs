@@ -26009,6 +26009,19 @@ with pkgs;
     forceWayland = true;
   };
 
+  firefox-nightly-bin-unwrapped = callPackage ../applications/networking/browsers/firefox-bin {
+    inherit (gnome) adwaita-icon-theme;
+    channel = "nightly";
+    generated = import ../applications/networking/browsers/firefox-bin/nightly_sources.nix;
+  };
+
+  firefox-nightly-bin = res.wrapFirefox firefox-nightly-bin-unwrapped {
+    applicationName = "firefox";
+    nameSuffix = "-nightly";
+    pname = "firefox-nightly-bin";
+    desktopName = "Firefox Nightly";
+  };
+
   firefox_decrypt = python3Packages.callPackage ../tools/security/firefox_decrypt { };
 
   flac = callPackage ../applications/audio/flac { };
