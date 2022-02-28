@@ -10,7 +10,7 @@ rustPlatform.buildRustPackage rec {
     owner = "rust-analyzer";
     repo = "rust-analyzer";
     rev = version;
-    sha256 = "sha256-O9onJrAJY0TWxEZZcTWuF7SGPypRtSo0ZbpzDLC5+os=";
+    sha256 = "sha256-GQ1cPO4povnozLl0MTFs0ZXpmBn+AZeFWQVnxHHWf9g=";
   };
 
   patches = [
