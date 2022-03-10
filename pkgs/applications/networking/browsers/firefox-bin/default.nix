@@ -73,7 +73,8 @@ let
 
   policies = {
     DisableAppUpdate = true;
-  } // config.firefox.policies or {};
+    AppAutoUpdate = false;
+  };
 
   policiesJson = writeText "firefox-policies.json" (builtins.toJSON { inherit policies; });
 
@@ -154,7 +155,6 @@ stdenv.mkDerivation {
   patchPhase = ''
     # Don't download updates from Mozilla directly
     echo 'pref("app.update.auto", "false");' >> defaults/pref/channel-prefs.js
-    echo '{"policies": {"AppAutoUpdate": false}}' > distribution/policies.json
   '';
 
   installPhase =
