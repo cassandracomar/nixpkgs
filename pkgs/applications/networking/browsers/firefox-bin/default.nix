@@ -154,6 +154,7 @@ stdenv.mkDerivation {
   patchPhase = ''
     # Don't download updates from Mozilla directly
     echo 'pref("app.update.auto", "false");' >> defaults/pref/channel-prefs.js
+    echo '{"policies": {"AppAutoUpdate": false}}' > distribution/policies.json
   '';
 
   installPhase =
