@@ -1,23 +1,16 @@
-{ pkgs, lib, stdenv, fetchFromGitHub
-, autoreconfHook269, util-linux, nukeReferences, coreutils
-, perl, nixosTests
-, configFile ? "all"
+{ pkgs, lib, stdenv, fetchFromGitHub, autoreconfHook269, util-linux
+, nukeReferences, coreutils, perl, nixosTests, configFile ? "all"
 
-# Userspace dependencies
-, zlib, libuuid, python3, attr, openssl
-, libtirpc
-, nfs-utils, samba
-, gawk, gnugrep, gnused, systemd
-, smartmontools, enableMail ? false
-, sysstat, pkg-config
+  # Userspace dependencies
+, zlib, libuuid, python3, attr, openssl, libtirpc, nfs-utils, samba, gawk
+, gnugrep, gnused, systemd, smartmontools, enableMail ? false, sysstat
+, pkg-config
 
 # Kernel dependencies
-, kernel ? null
-, enablePython ? true
+, kernel ? null, enablePython ? true
 
-# for determining the latest compatible linuxPackages
-, linuxPackages_5_16 ? pkgs.linuxKernel.packages.linux_5_16
-}:
+  # for determining the latest compatible linuxPackages
+, linuxPackages_5_15 ? pkgs.linuxKernel.packages.linux_5_15 }:
 
 let
   inherit (lib) any optionalString optionals optional makeBinPath;
@@ -35,16 +28,14 @@ let
   # clang-built) kernels.
   stdenv' = if kernel == null then stdenv else kernel.stdenv;
 
-  common = { version
-    , sha256
-    , extraPatches ? []
-    , rev ? "zfs-${version}"
-    , isUnstable ? false
-    , latestCompatibleLinuxPackages
-    , kernelCompatible ? null }:
+  common = { version, sha256, extraPatches ? [ ], rev ? "zfs-${version}"
+    , isUnstable ? false, latestCompatibleLinuxPackages, kernelCompatible ? null
+    }:
 
     stdenv'.mkDerivation {
-      name = "zfs-${configFile}-${version}${optionalString buildKernel "-${kernel.version}"}";
+      name = "zfs-${configFile}-${version}${
+          optionalString buildKernel "-${kernel.version}"
+        }";
 
       src = fetchFromGitHub {
         owner = "openzfs";
@@ -56,6 +47,11 @@ let
 
       postPatch = optionalString buildKernel ''
         patchShebangs scripts
+
+        # https://github.com/openzfs/zfs/issues/10107
+        substituteInPlace ./config/kernel.m4 \
+          --replace "make modules" "make CC=$CC modules"
+
         # The arrays must remain the same length, so we repeat a flag that is
         # already part of the command and therefore has no effect.
         substituteInPlace ./module/os/linux/zfs/zfs_ctldir.c \
@@ -63,10 +59,11 @@ let
           --replace '"/usr/bin/env", "mount"'  '"${util-linux}/bin/mount", "-n"'
       '' + optionalString buildUser ''
         substituteInPlace ./lib/libshare/os/linux/nfs.c --replace "/usr/sbin/exportfs" "${
-          # We don't *need* python support, but we set it like this to minimize closure size:
-          # If it's disabled by default, no need to enable it, even if we have python enabled
-          # And if it's enabled by default, only change that if we explicitly disable python to remove python from the closure
-          nfs-utils.override (old: { enablePython = old.enablePython or true && enablePython; })
+        # We don't *need* python support, but we set it like this to minimize closure size:
+        # If it's disabled by default, no need to enable it, even if we have python enabled
+        # And if it's enabled by default, only change that if we explicitly disable python to remove python from the closure
+          nfs-utils.override
+          (old: { enablePython = old.enablePython or true && enablePython; })
         }/bin/exportfs"
         substituteInPlace ./lib/libshare/smb.h        --replace "/usr/bin/net"            "${samba}/bin/net"
         substituteInPlace ./config/user-systemd.m4    --replace "/usr/lib/modules-load.d" "$out/etc/modules-load.d"
@@ -145,7 +142,7 @@ let
       # Since zfs compress kernel modules on installation, our strip hooks skip stripping them.
       # Hence we strip modules prior to compression.
       postBuild = optionalString buildKernel ''
-         find . -name "*.ko" -print0 | xargs -0 -P$NIX_BUILD_CORES ${stdenv.cc.targetPrefix}strip --strip-debug
+        find . -name "*.ko" -print0 | xargs -0 -P$NIX_BUILD_CORES ${stdenv.cc.targetPrefix}strip --strip-debug
       '';
 
       postInstall = optionalString buildKernel ''
@@ -171,7 +168,17 @@ let
       '';
 
       postFixup = let
-        path = "PATH=${makeBinPath [ coreutils gawk gnused gnugrep util-linux smartmon sysstat ]}:$PATH";
+        path = "PATH=${
+            makeBinPath [
+              coreutils
+              gawk
+              gnused
+              gnugrep
+              util-linux
+              smartmon
+              sysstat
+            ]
+          }:$PATH";
       in ''
         for i in $out/libexec/zfs/zpool.d/*; do
           sed -i '2i${path}' $i
@@ -183,13 +190,12 @@ let
       passthru = {
         inherit enableMail latestCompatibleLinuxPackages;
 
-        tests =
-          if isUnstable then [
-            nixosTests.zfs.unstable
-          ] else [
-            nixosTests.zfs.installer
-            nixosTests.zfs.stable
-          ];
+        tests = if isUnstable then
+          [ nixosTests.zfs.unstable ]
+        else [
+          nixosTests.zfs.installer
+          nixosTests.zfs.stable
+        ];
       };
 
       meta = {
@@ -216,8 +222,8 @@ in {
   # to be adapted
   zfsStable = common {
     # check the release notes for compatible kernels
-    kernelCompatible = kernel.kernelAtLeast "3.10" && kernel.kernelOlder "5.17";
-    latestCompatibleLinuxPackages = linuxPackages_5_16;
+    kernelCompatible = kernel.kernelAtLeast "3.10" && kernel.kernelOlder "5.16";
+    latestCompatibleLinuxPackages = linuxPackages_5_15;
 
     # this package should point to the latest release.
     version = "2.1.3";
@@ -227,8 +233,8 @@ in {
 
   zfsUnstable = common {
     # check the release notes for compatible kernels
-    kernelCompatible = kernel.kernelAtLeast "3.10" && kernel.kernelOlder "5.17";
-    latestCompatibleLinuxPackages = linuxPackages_5_16;
+    kernelCompatible = kernel.kernelAtLeast "3.10" && kernel.kernelOlder "5.16";
+    latestCompatibleLinuxPackages = linuxPackages_5_15;
 
     # this package should point to a version / git revision compatible with the latest kernel release
     # IMPORTANT: Always use a tagged release candidate or commits from the

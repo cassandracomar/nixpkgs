@@ -1,13 +1,5 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, rustPlatform
-, CoreServices
-, cmake
-, libiconv
-, useMimalloc ? false
-, doCheck ? true
-}:
+{ lib, stdenv, fetchFromGitHub, rustPlatform, CoreServices, cmake, libiconv
+, useMimalloc ? false, doCheck ? true }:
 
 rustPlatform.buildRustPackage rec {
   pname = "rust-analyzer-unwrapped";
@@ -18,7 +10,7 @@ rustPlatform.buildRustPackage rec {
     owner = "rust-analyzer";
     repo = "rust-analyzer";
     rev = version;
-    sha256 = "sha256-/qKh4utesAjlyG8A3hEmSx+HBgh48Uje6ZRtUGz5f0g=";
+    sha256 = "sha256-MtyPwa9qvQN7Y3rCVa5VwlQzsgkdMNvbg4LX7SNHCFU=";
   };
 
   patches = [
@@ -31,10 +23,7 @@ rustPlatform.buildRustPackage rec {
 
   nativeBuildInputs = lib.optional useMimalloc cmake;
 
-  buildInputs = lib.optionals stdenv.isDarwin [
-    CoreServices
-    libiconv
-  ];
+  buildInputs = lib.optionals stdenv.isDarwin [ CoreServices libiconv ];
 
   buildFeatures = lib.optional useMimalloc "mimalloc";
 
