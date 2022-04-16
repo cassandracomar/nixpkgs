@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   # NB: This is needed for the postBuild step
   nativeBuildInputs = [ (python2.withPackages ( p: with p; [ cffi ] )) ];
 
-  buildInputs = [ (python2.withPackages (p: with p; [ cffi pyserial greenlet jinja2 ])) ];
+  buildInputs = [ (python2.withPackages (p: with p; [ cffi pyserial greenlet jinja2 numpy ])) ];
 
   # we need to run this to prebuild the chelper.
   postBuild = "python2 ./chelper/__init__.py";
@@ -35,6 +35,11 @@ stdenv.mkDerivation rec {
     runHook preInstall
     mkdir -p $out/lib/klipper
     cp -r ./* $out/lib/klipper
+
+    # Moonraker expects `config_examples` and `docs` to be available
+    # under `klipper_path`
+    cp -r $src/docs $out/lib/docs
+    cp -r $src/config $out/lib/config
 
     chmod 755 $out/lib/klipper/klippy.py
     runHook postInstall

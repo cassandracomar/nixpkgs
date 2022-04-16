@@ -118,6 +118,8 @@
   ./misc/version.nix
   ./misc/wordlist.nix
   ./misc/nixops-autoluks.nix
+  ./programs/_1password.nix
+  ./programs/_1password-gui.nix
   ./programs/adb.nix
   ./programs/appgate-sdp.nix
   ./programs/atop.nix
@@ -181,8 +183,11 @@
   ./programs/mtr.nix
   ./programs/nano.nix
   ./programs/nbd.nix
+  ./programs/nix-ld.nix
   ./programs/neovim.nix
+  ./programs/nethoscope.nix
   ./programs/nm-applet.nix
+  ./programs/nncp.nix
   ./programs/npm.nix
   ./programs/noisetorch.nix
   ./programs/oblogout.nix
@@ -405,6 +410,7 @@
   ./services/display-managers/greetd.nix
   ./services/editors/emacs.nix
   ./services/editors/infinoted.nix
+  ./services/editors/haste.nix
   ./services/finance/odoo.nix
   ./services/games/asf.nix
   ./services/games/crossfire-server.nix
@@ -592,7 +598,7 @@
   ./services/misc/osrm.nix
   ./services/misc/owncast.nix
   ./services/misc/packagekit.nix
-  ./services/misc/paperless-ng.nix
+  ./services/misc/paperless.nix
   ./services/misc/parsoid.nix
   ./services/misc/plex.nix
   ./services/misc/plikd.nix
@@ -749,6 +755,7 @@
   ./services/networking/ncdns.nix
   ./services/networking/nomad.nix
   ./services/networking/ejabberd.nix
+  ./services/networking/envoy.nix
   ./services/networking/epmd.nix
   ./services/networking/ergo.nix
   ./services/networking/ergochat.nix
@@ -776,6 +783,7 @@
   ./services/networking/headscale.nix
   ./services/networking/hostapd.nix
   ./services/networking/htpdate.nix
+  ./services/networking/https-dns-proxy.nix
   ./services/networking/hylafax/default.nix
   ./services/networking/i2pd.nix
   ./services/networking/i2p.nix
@@ -810,6 +818,7 @@
   ./services/networking/mosquitto.nix
   ./services/networking/monero.nix
   ./services/networking/morty.nix
+  ./services/networking/mozillavpn.nix
   ./services/networking/miredo.nix
   ./services/networking/mstpd.nix
   ./services/networking/mtprotoproxy.nix
@@ -845,7 +854,7 @@
   ./services/networking/ofono.nix
   ./services/networking/oidentd.nix
   ./services/networking/onedrive.nix
-  ./services/networking/openfire.nix
+  ./services/networking/openconnect.nix
   ./services/networking/openvpn.nix
   ./services/networking/ostinato.nix
   ./services/networking/owamp.nix
@@ -972,6 +981,7 @@
   ./services/security/shibboleth-sp.nix
   ./services/security/sks.nix
   ./services/security/sshguard.nix
+  ./services/security/sslmate-agent.nix
   ./services/security/step-ca.nix
   ./services/security/tor.nix
   ./services/security/torify.nix
@@ -1043,8 +1053,10 @@
   ./services/web-apps/mediawiki.nix
   ./services/web-apps/miniflux.nix
   ./services/web-apps/moodle.nix
+  ./services/web-apps/netbox.nix
   ./services/web-apps/nextcloud.nix
   ./services/web-apps/nexus.nix
+  ./services/web-apps/nifi.nix
   ./services/web-apps/node-red.nix
   ./services/web-apps/pict-rs.nix
   ./services/web-apps/peertube.nix
@@ -1174,6 +1186,8 @@
   ./system/boot/systemd/nspawn.nix
   ./system/boot/systemd/tmpfiles.nix
   ./system/boot/systemd/user.nix
+  ./system/boot/systemd/initrd.nix
+  ./system/boot/systemd/initrd-mdraid.nix
   ./system/boot/timesyncd.nix
   ./system/boot/tmp.nix
   ./system/etc/etc-activation.nix

@@ -30,6 +30,7 @@ let
   defaultOverrides = [
     # Override the version of some packages pinned in Home Assistant's setup.py and requirements_all.txt
     (mkOverride "python-slugify" "4.0.1" "sha256-aaUXdm4AwSaOW7/A0BCgqFCN4LGNMK1aH/NX+K5yQnA=")
+    (mkOverride "voluptuous" "0.12.2" "sha256-TbGsUHnbkkmCDUnIkctGYKb4yuNQSRIQq850H6v1ZRM=")
 
     # pytest-aiohttp>0.3.0 breaks home-assistant tests
     (self: super: {
@@ -48,6 +49,9 @@ let
       });
       hass-nabucasa = super.hass-nabucasa.overridePythonAttrs (oldAttrs: {
         doCheck = false; # requires aiohttp>=1.0.0
+      });
+      rtsp-to-webrtc = super.rtsp-to-webrtc.overridePythonAttrs (oldAttrs: {
+        doCheck = false; # requires pytest-aiohttp>=1.0.0
       });
       snitun = super.snitun.overridePythonAttrs (oldAttrs: {
         doCheck = false; # requires aiohttp>=1.0.0
@@ -164,7 +168,7 @@ let
   extraPackagesFile = writeText "home-assistant-packages" (lib.concatMapStringsSep "\n" (pkg: pkg.pname) extraBuildInputs);
 
   # Don't forget to run parse-requirements.py after updating
-  hassVersion = "2022.3.5";
+  hassVersion = "2022.4.4";
 
 in python.pkgs.buildPythonApplication rec {
   pname = "homeassistant";
@@ -182,7 +186,7 @@ in python.pkgs.buildPythonApplication rec {
     owner = "home-assistant";
     repo = "core";
     rev = version;
-    hash = "sha256-VXE2zQH/HHhogo5qjneC0zlo9892wgGN1qd3ZFKfyqw=";
+    hash = "sha256-NcFQjLNBGT0tNrlgkVLB3uFr9Yh4rc4HnLzALYvcrYA=";
   };
 
   # leave this in, so users don't have to constantly update their downstream patch handling
@@ -202,8 +206,8 @@ in python.pkgs.buildPythonApplication rec {
       "bcrypt"
       "cryptography"
       "httpx"
+      "jinja2"
       "pip"
-      "PyJWT"
       "requests"
       "yarl"
     ];
@@ -306,6 +310,8 @@ in python.pkgs.buildPythonApplication rec {
     "test_merge"
     # Tests are flaky
     "test_config_platform_valid"
+    # Test requires pylint>=2.13.0
+    "test_invalid_discovery_info"
   ];
 
   preCheck = ''

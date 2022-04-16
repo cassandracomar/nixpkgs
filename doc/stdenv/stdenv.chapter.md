@@ -125,7 +125,7 @@ The extension of `PATH` with dependencies, alluded to above, proceeds according 
 A dependency is said to be **propagated** when some of its other-transitive (non-immediate) downstream dependencies also need it as an immediate dependency.
 [^footnote-stdenv-propagated-dependencies]
 
-It is important to note that dependencies are not necessarily propagated as the same sort of dependency that they were before, but rather as the corresponding sort so that the platform rules still line up. To determine the exact rules for dependency propagation, we start by assigning to each dependency a couple of ternary numbers (`-1` for `build`, `0` for `host`, and `1` for `target`), representing how respectively its host and target platforms are "offset" from the depending derivation’s platforms. The following table summarize the different combinations that can be obtained:
+It is important to note that dependencies are not necessarily propagated as the same sort of dependency that they were before, but rather as the corresponding sort so that the platform rules still line up. To determine the exact rules for dependency propagation, we start by assigning to each dependency a couple of ternary numbers (`-1` for `build`, `0` for `host`, and `1` for `target`) representing its [dependency type](#possible-dependency-types), which captures how its host and target platforms are each "offset" from the depending derivation’s host and target platforms. The following table summarize the different combinations that can be obtained:
 
 | `host → target`     | attribute name      | offset   |
 | ------------------- | ------------------- | -------- |
@@ -1043,7 +1043,7 @@ You can also specify a `runtimeDependencies` variable which lists dependencies t
 
 In certain situations you may want to run the main command (`autoPatchelf`) of the setup hook on a file or a set of directories instead of unconditionally patching all outputs. This can be done by setting the `dontAutoPatchelf` environment variable to a non-empty value.
 
-By default `autoPatchelf` will fail as soon as any ELF file requires a dependency which cannot be resolved via the given build inputs. In some situations you might prefer to just leave missing dependencies unpatched and continue to patch the rest. This can be achieved by setting the `autoPatchelfIgnoreMissingDeps` environment variable to a non-empty value.
+By default `autoPatchelf` will fail as soon as any ELF file requires a dependency which cannot be resolved via the given build inputs. In some situations you might prefer to just leave missing dependencies unpatched and continue to patch the rest. This can be achieved by setting the `autoPatchelfIgnoreMissingDeps` environment variable to a non-empty value. `autoPatchelfIgnoreMissingDeps` can be set to a list like `autoPatchelfIgnoreMissingDeps = [ "libcuda.so.1" "libcudart.so.1" ];` or to simply `[ "*" ]` to ignore all missing dependencies.
 
 The `autoPatchelf` command also recognizes a `--no-recurse` command line flag, which prevents it from recursing into subdirectories.
 

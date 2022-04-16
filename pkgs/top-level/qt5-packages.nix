@@ -176,6 +176,9 @@ in (kdeFrameworks // plasmaMobileGear // plasma5 // plasma5.thirdParty // kdeGea
 
   qca-qt5 = callPackage ../development/libraries/qca-qt5 { };
 
+  # Until macOS SDK allows for Qt 5.15, darwin is limited to 2.3.2
+  qca-qt5_2_3_2 = callPackage ../development/libraries/qca-qt5/2.3.2.nix { };
+
   qcoro = callPackage ../development/libraries/qcoro { };
 
   qcsxcad = callPackage ../development/libraries/science/electronics/qcsxcad { };
@@ -210,7 +213,9 @@ in (kdeFrameworks // plasmaMobileGear // plasma5 // plasma5.thirdParty // kdeGea
 
   quazip = callPackage ../development/libraries/quazip { };
 
-  qwt = callPackage ../development/libraries/qwt/6.nix { };
+  qwt = callPackage ../development/libraries/qwt/default.nix { };
+
+  qwt6_1 = callPackage ../development/libraries/qwt/6_1.nix { };
 
   soqt = callPackage ../development/libraries/soqt { };
 
@@ -226,4 +231,5 @@ in (kdeFrameworks // plasmaMobileGear // plasma5 // plasma5.thirdParty // kdeGea
 
   soundkonverter = callPackage ../applications/audio/soundkonverter {};
 
+  yuview = callPackage ../applications/video/yuview { };
 })))

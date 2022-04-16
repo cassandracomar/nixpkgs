@@ -68,7 +68,7 @@ let
       archived = date: throw "the provider has been archived by upstream on ${date}";
       removed = date: throw "removed from nixpkgs on ${date}";
     in
-    lib.optionalAttrs (config.allowAliases or false) {
+    lib.optionalAttrs config.allowAliases {
       arukas = archived "2022/01";
       chef = archived "2022/01";
       cherryservers = archived "2022/01";
@@ -104,5 +104,8 @@ let
       ultradns = archived "2022/01";
       vthunder = throw "provider was renamed to thunder on 2022/01";
     };
+
+  # excluding aliases, used by terraform-full
+  actualProviders = automated-providers // special-providers;
 in
-automated-providers // special-providers // removed-providers // { inherit mkProvider; }
+actualProviders // removed-providers // { inherit actualProviders mkProvider; }

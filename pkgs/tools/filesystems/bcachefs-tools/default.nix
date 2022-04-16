@@ -22,13 +22,13 @@
 
 stdenv.mkDerivation {
   pname = "bcachefs-tools";
-  version = "unstable-2022-03-09";
+  version = "unstable-2022-04-08";
 
   src = fetchFromGitHub {
     owner = "koverstreet";
     repo = "bcachefs-tools";
-    rev = "3e2e3d468eed1d5ebbb4c6309d2eaebd081912c5";
-    sha256 = "1sb0dj2whlp3dxgf642z7yx7s8va5ah82zi6r4qni7l64qy1n554";
+    rev = "986533d8d5b21c8eb512bbb3f0496d3d2a087c5d";
+    sha256 = "1qvb5l937nnls5j82ipgrdh6q5fk923z752rzzqqcms6fz7rrjs4";
   };
 
   postPatch = ''

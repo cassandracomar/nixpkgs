@@ -4,15 +4,15 @@
 , openssh, pcre2, bash
 , asciidoc, texinfo, xmlto, docbook2x, docbook_xsl, docbook_xml_dtd_45
 , libxslt, tcl, tk, makeWrapper, libiconv
-, svnSupport, subversionClient, perlLibs, smtpPerlLibs
+, svnSupport ? false, subversionClient, perlLibs, smtpPerlLibs
 , perlSupport ? stdenv.buildPlatform == stdenv.hostPlatform
 , nlsSupport ? true
 , osxkeychainSupport ? stdenv.isDarwin
-, guiSupport
+, guiSupport ? false
 , withManual ? true
 , pythonSupport ? true
 , withpcre2 ? true
-, sendEmailSupport
+, sendEmailSupport ? false
 , darwin
 , nixosTests
 , withLibsecret ? false
@@ -32,7 +32,9 @@ let
 in
 
 stdenv.mkDerivation {
-  pname = "git";
+  pname = "git"
+    + lib.optionalString svnSupport "-with-svn"
+    + lib.optionalString (!svnSupport && !guiSupport && !sendEmailSupport && !withManual && !pythonSupport && !withpcre2) "-minimal";
   inherit version;
 
   src = fetchurl {
@@ -166,8 +168,13 @@ stdenv.mkDerivation {
       cp -a contrib $out/share/git/
       mkdir -p $out/share/bash-completion/completions
       ln -s $out/share/git/contrib/completion/git-completion.bash $out/share/bash-completion/completions/git
-      mkdir -p $out/share/bash-completion/completions
       ln -s $out/share/git/contrib/completion/git-prompt.sh $out/share/bash-completion/completions/
+      # only readme, developed in another repo
+      rm -r contrib/hooks/multimail
+      mkdir -p $out/share/git-core/contrib
+      cp -a contrib/hooks/ $out/share/git-core/contrib/
+      substituteInPlace $out/share/git-core/contrib/hooks/pre-auto-gc-battery \
+        --replace ' grep' ' ${gnugrep}/bin/grep' \
 
       # grep is a runtime dependency, need to patch so that it's found
       substituteInPlace $out/libexec/git-core/git-sh-setup \

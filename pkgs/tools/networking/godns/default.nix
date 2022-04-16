@@ -2,13 +2,13 @@
 
 buildGoModule rec {
   pname = "godns";
-  version = "2.7";
+  version = "2.7.3";
 
   src = fetchFromGitHub {
     owner = "TimothyYe";
     repo = "godns";
     rev = "v${version}";
-    sha256 = "sha256-PD/3WIxNPtC7s4+2ogWG5DEm717rYQLMx9XA06Q6ebo=";
+    sha256 = "sha256-4QWcccJHvytZmWZJnPcI8W6pQCWgXz0FkTe8sX54Cbk=";
   };
 
   vendorSha256 = "sha256-vhByl9oJjFIvOskAgLubZ5RCcitKd2jjxi8D9nU6850=";

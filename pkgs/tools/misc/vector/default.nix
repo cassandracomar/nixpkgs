@@ -15,21 +15,22 @@
 , CoreServices
 , tzdata
 , cmake
+, perl
   # kafka is optional but one of the most used features
 , enableKafka ? true
   # TODO investigate adding "api" "api-client" "vrl-cli" and various "vendor-*"
   # "disk-buffer" is using leveldb TODO: investigate how useful
   # it would be, perhaps only for massive scale?
-, features ? ([ "sinks" "sources" "transforms" ]
+, features ? ([ "sinks" "sources" "transforms" "vrl-cli" ]
     # the second feature flag is passed to the rdkafka dependency
     # building on linux fails without this feature flag (both x86_64 and AArch64)
-    ++ lib.optionals enableKafka [ "rdkafka-plain" "rdkafka/dynamic_linking" ]
+    ++ lib.optionals enableKafka [ "rdkafka/gssapi-vendored" ]
     ++ lib.optional stdenv.targetPlatform.isUnix "unix")
 }:
 
 let
   pname = "vector";
-  version = "0.20.0";
+  version = "0.21.0";
 in
 rustPlatform.buildRustPackage {
   inherit pname version;
@@ -38,11 +39,11 @@ rustPlatform.buildRustPackage {
     owner = "timberio";
     repo = pname;
     rev = "v${version}";
-    sha256 = "sha256-OkT1Gj66Z4sj3YtaMlU1lbquTECPG34qydXGbx24Ig4=";
+    sha256 = "sha256-ZhOtrv63ZhG3OEWLTk+VdZr6Y6f9KvyCJvAKWck7B7o=";
   };
 
-  cargoSha256 = "sha256-O2uy0wK4pdwjAYzIKJnCzJVsA3n+U+dw731y7OPJfP0=";
-  nativeBuildInputs = [ pkg-config cmake ];
+  cargoSha256 = "sha256-VGB+ljojXGrQmcN0AT90hFk9h5nwjDTtzGpWmItw9x4=";
+  nativeBuildInputs = [ pkg-config cmake perl ];
   buildInputs = [ oniguruma openssl protobuf rdkafka zstd ]
     ++ lib.optionals stdenv.isDarwin [ Security libiconv coreutils CoreServices ];
 
@@ -53,6 +54,9 @@ rustPlatform.buildRustPackage {
   LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
 
   TZDIR = "${tzdata}/share/zoneinfo";
+
+  # needed to dynamically link rdkafka
+  CARGO_FEATURE_DYNAMIC_LINKING=1;
 
   buildNoDefaultFeatures = true;
   buildFeatures = features;
@@ -104,5 +108,6 @@ rustPlatform.buildRustPackage {
     homepage = "https://github.com/timberio/vector";
     license = with licenses; [ asl20 ];
     maintainers = with maintainers; [ thoughtpolice happysalada ];
+    platforms = with platforms; linux;
   };
 }

@@ -10,14 +10,14 @@
 
 python3Packages.buildPythonPackage rec {
   pname = "hydrus";
-  version = "477";
+  version = "480";
   format = "other";
 
   src = fetchFromGitHub {
     owner = "hydrusnetwork";
     repo = "hydrus";
     rev = "v${version}";
-    sha256 = "sha256-/Gehlk+eMBPA+OT7xsTri6PDi2PBmzjckMVbqPGXT64=";
+    sha256 = "sha256-TZQY9wFXJFJtMAw2N+mlfVymewL96rn0Lza9jnDOGNA=";
   };
 
   nativeBuildInputs = [
@@ -27,6 +27,7 @@ python3Packages.buildPythonPackage rec {
 
   propagatedBuildInputs = with python3Packages; [
     beautifulsoup4
+    cbor2
     chardet
     cloudscraper
     html5lib
