@@ -10,7 +10,7 @@ nixpkgs=../../../../..
 # Update lsp
 
 ver=$(
-    curl -s "https://api.github.com/repos/$owner/$repo/releases" |
+    curl -L -s "https://api.github.com/repos/$owner/$repo/releases" |
     jq 'map(select(.prerelease | not)) | .[0].tag_name' --raw-output
 )
 old_ver=$(sed -nE 's/.*\bversion = "(.*)".*/\1/p' ./default.nix)
