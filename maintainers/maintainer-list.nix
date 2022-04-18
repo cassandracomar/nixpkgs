@@ -1794,6 +1794,12 @@
     githubId = 7214361;
     name = "Roman Gerasimenko";
   };
+  builditluc = {
+    email = "builditluc@icloud.com";
+    github = "builditluc";
+    githubId = 37375448;
+    name = "Buildit";
+  };
   bburdette = {
     email = "bburdette@protonmail.com";
     github = "bburdette";
@@ -2082,12 +2088,6 @@
     github = "chessai";
     githubId = 18648043;
     name = "Daniel Cartwright";
-  };
-  chiiruno = {
-    email = "okinan@protonmail.com";
-    github = "chiiruno";
-    githubId = 30435868;
-    name = "Okina Matara";
   };
   Chili-Man = {
     email = "dr.elhombrechile@gmail.com";
@@ -14227,6 +14227,12 @@
     email = "zbioe@protonmail.com";
     github = "zbioe";
     githubId = 7332055;
+  };
+  zendo = {
+    name = "zendo";
+    email = "linzway@qq.com";
+    github = "zendo";
+    githubId = 348013;
   };
   zenithal = {
     name = "zenithal";

@@ -75,6 +75,13 @@
       </listitem>
       <listitem>
         <para>
+          The new
+          <link xlink:href="https://nixos.org/manual/nixpkgs/stable/#sec-postgresqlTestHook"><literal>postgresqlTestHook</literal></link>
+          runs a PostgreSQL server for the duration of package checks.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           <link xlink:href="https://kops.sigs.k8s.io"><literal>kops</literal></link>
           defaults to 1.22.4, which will enable
           <link xlink:href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html">Instance
@@ -464,6 +471,44 @@
       </listitem>
       <listitem>
         <para>
+          <literal>pkgs.ssmtp</literal> has been dropped due to the
+          program being unmaintained. <literal>pkgs.msmtp</literal> can
+          be used instead as a substitute <literal>sendmail</literal>
+          implementation. The corresponding options
+          <literal>services.ssmtp.*</literal> have been removed as well.
+          <literal>programs.msmtp.*</literal> can be used instead for an
+          equivalent setup. For example:
+        </para>
+        <programlisting language="bash">
+{
+  # Original ssmtp configuration:
+  services.ssmtp = {
+    enable = true;
+    useTLS = true;
+    useSTARTTLS = true;
+    hostName = &quot;smtp.example:587&quot;;
+    authUser = &quot;someone&quot;;
+    authPassFile = &quot;/secrets/password.txt&quot;;
+  };
+
+  # Equivalent msmtp configuration:
+  programs.msmtp = {
+    enable = true;
+    accounts.default = {
+      tls = true;
+      tls_starttls = true;
+      auth = true;
+      host = &quot;smtp.example&quot;;
+      port = 587;
+      user = &quot;someone&quot;;
+      passwordeval = &quot;cat /secrets/password.txt&quot;;
+    };
+  };
+}
+</programlisting>
+      </listitem>
+      <listitem>
+        <para>
           <literal>services.kubernetes.addons.dashboard</literal> was
           removed due to it being an outdated version.
         </para>
@@ -515,6 +560,15 @@
         <para>
           <literal>openssh</literal> has been update to 8.9p1, changing
           the FIDO security key middleware interface.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>git</literal> no longer hardcodes the path to
+          openssh’ ssh binary to reduce the amount of rebuilds. If you
+          are using git with ssh remotes and do not have a ssh binary in
+          your enviroment consider adding <literal>openssh</literal> to
+          it or switching to <literal>gitFull</literal>.
         </para>
       </listitem>
       <listitem>
@@ -587,6 +641,13 @@
           rely on systemd interpolating <literal>extraFlags</literal> in
           the service <literal>ExecStart</literal>, this will no longer
           work.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>hbase</literal> version 0.98.24 has been removed. The
+          package now defaults to version 2.4.11. Versions 1.7.1 and
+          3.0.0-alpha-2 are also available.
         </para>
       </listitem>
       <listitem>
@@ -1186,6 +1247,14 @@
       </listitem>
       <listitem>
         <para>
+          <literal>systemd-shutdown</literal> is now properly linked on
+          shutdown to unmount all filesystems and device mapper devices
+          cleanly. This can be disabled using
+          <literal>boot.systemd.shutdown.enable</literal>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           The Tor SOCKS proxy is now actually disabled if
           <literal>services.tor.client.enable</literal> is set to
           <literal>false</literal> (the default). If you are using this
@@ -1644,6 +1713,14 @@
       </listitem>
       <listitem>
         <para>
+          The auto-upgrade service now accepts persistent (default:
+          true) parameter. By default auto-upgrade will now run
+          immediately if it would have been triggered at least once
+          during the time when the timer was inactive.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           If you are using Wayland you can choose to use the Ozone
           Wayland support in Chrome and several Electron apps by setting
           the environment variable <literal>NIXOS_OZONE_WL=1</literal>
@@ -1788,6 +1865,29 @@
           a
           <link xlink:href="https://github.com/NixOS/rfcs/blob/master/rfcs/0042-config-option.md">settings-style</link>
           configuration.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The option
+          <link linkend="opt-services.xserver.desktopManager.runXdgAutostartIfNone">services.xserver.desktopManager.runXdgAutostartIfNone</link>
+          was added in order to automatically run XDG autostart files
+          for sessions without a desktop manager. This replaces helpers
+          like the <literal>dex</literal> package.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When setting
+          <link linkend="opt-i18n.inputMethod.enabled">i18n.inputMethod.enabled</link>
+          to <literal>fcitx5</literal>, it no longer creates
+          corresponding systemd user services. It now relies on XDG
+          autostart files to start and work properly in your desktop
+          sessions. If you are using only a window manager without a
+          desktop manager, you need to enable
+          <literal>services.xserver.desktopManager.runXdgAutostartIfNone</literal>
+          or using the <literal>dex</literal> package to make
+          <literal>fcitx5</literal> work.
         </para>
       </listitem>
       <listitem>
@@ -2120,6 +2220,16 @@
           The <literal>R</literal> package now builds again on
           <literal>aarch64-darwin</literal>
           (<link xlink:href="https://github.com/NixOS/nixpkgs/pull/158992">#158992</link>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The <literal>nss</literal> package was split into
+          <literal>nss_esr</literal> and <literal>nss_latest</literal>,
+          with <literal>nss</literal> being an alias for
+          <literal>nss_esr</literal>. This was done to ease maintenance
+          of <literal>nss</literal> and dependent high-profile packages
+          like <literal>firefox</literal>.
         </para>
       </listitem>
       <listitem>

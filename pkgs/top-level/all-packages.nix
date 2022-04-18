@@ -155,6 +155,7 @@ with pkgs;
       pythonInterpreter = "${python3.withPackages (ps: [ ps.pyelftools ])}/bin/python";
       autoPatchelfScript = ../build-support/setup-hooks/auto-patchelf.py;
     };
+    meta.platforms = lib.platforms.linux;
   } ../build-support/setup-hooks/auto-patchelf.sh;
 
   appflowy = callPackage ../applications/office/appflowy { };
@@ -276,11 +277,7 @@ with pkgs;
 
   catatonit = callPackage ../applications/virtualization/catatonit { };
 
-  cen64 = callPackage ../applications/emulators/cen64 { };
-
   btdu = callPackage ../tools/misc/btdu { };
-
-  uxn = callPackage ../applications/emulators/uxn { };
 
   cereal = callPackage ../development/libraries/cereal { };
 
@@ -411,8 +408,6 @@ with pkgs;
   protoc-gen-twirp_typescript = callPackage ../development/tools/protoc-gen-twirp_typescript { };
 
   protoc-gen-validate = callPackage ../development/tools/protoc-gen-validate { };
-
-  proton-caller = callPackage ../applications/emulators/proton-caller { };
 
   ptags = callPackage ../development/tools/misc/ptags { };
 
@@ -859,7 +854,9 @@ with pkgs;
   setJavaClassPath = makeSetupHook { } ../build-support/setup-hooks/set-java-classpath.sh;
 
   fixDarwinDylibNames = makeSetupHook {
+    name = "fix-darwin-dylib-names-hook";
     substitutions = { inherit (binutils) targetPrefix; };
+    meta.platforms = lib.platforms.darwin;
   } ../build-support/setup-hooks/fix-darwin-dylib-names.sh;
 
   writeDarwinBundle = callPackage ../build-support/make-darwin-bundle/write-darwin-bundle.nix { };
@@ -1191,6 +1188,262 @@ with pkgs;
 
   breitbandmessung = callPackage ../applications/networking/breitbandmessung { };
 
+  ### APPLICATIONS/EMULATORS
+
+  atari800 = callPackage ../applications/emulators/atari800 { };
+
+  ataripp = callPackage ../applications/emulators/atari++ { };
+
+  attract-mode = callPackage ../applications/emulators/attract-mode { };
+
+  basiliskii = callPackage ../applications/emulators/basiliskii { };
+
+  bochs = callPackage ../applications/emulators/bochs {
+    wxGTK = wxGTK30;
+  };
+
+  caprice32 = callPackage ../applications/emulators/caprice32 { };
+
+  ccemux = callPackage ../applications/emulators/ccemux { };
+
+  cdemu-client = callPackage ../applications/emulators/cdemu/client.nix { };
+
+  cdemu-daemon = callPackage ../applications/emulators/cdemu/daemon.nix { };
+
+  cen64 = callPackage ../applications/emulators/cen64 { };
+
+  citra = libsForQt5.callPackage ../applications/emulators/citra { };
+
+  collapseos-cvm = callPackage ../applications/emulators/collapseos-cvm { };
+
+  craftos-pc = callPackage ../applications/emulators/craftos-pc { };
+
+  darcnes = callPackage ../applications/emulators/darcnes { };
+
+  desmume = callPackage ../applications/emulators/desmume { };
+
+  dgen-sdl = callPackage ../applications/emulators/dgen-sdl { };
+
+  dlx = callPackage ../applications/emulators/dlx { };
+
+  dosbox = callPackage ../applications/emulators/dosbox { };
+
+  dosbox-staging = callPackage ../applications/emulators/dosbox-staging { };
+
+  duckstation = libsForQt5.callPackage ../applications/emulators/duckstation {};
+
+  dynamips = callPackage ../applications/emulators/dynamips { };
+
+  emu2 = callPackage ../applications/emulators/emu2 { };
+
+  emulationstation = callPackage ../applications/emulators/emulationstation { };
+
+  fceux = libsForQt5.callPackage ../applications/emulators/fceux { };
+
+  firebird-emu = libsForQt5.callPackage ../applications/emulators/firebird-emu { };
+
+  flycast = callPackage ../applications/emulators/flycast { };
+
+  fsuae = callPackage ../applications/emulators/fs-uae { };
+
+  fsuae-launcher = callPackage ../applications/emulators/fs-uae/launcher.nix { };
+
+  fuse-emulator = callPackage ../applications/emulators/fuse-emulator {};
+
+  gcdemu = callPackage ../applications/emulators/cdemu/gui.nix { };
+
+  gensgs = pkgsi686Linux.callPackage ../applications/emulators/gens-gs { };
+
+  goldberg-emu = callPackage ../applications/emulators/goldberg-emu { };
+
+  gxemul = callPackage ../applications/emulators/gxemul { };
+
+  hatari = callPackage ../applications/emulators/hatari { };
+
+  hercules = callPackage ../applications/emulators/hercules { };
+
+  image-analyzer = callPackage ../applications/emulators/cdemu/analyzer.nix { };
+
+  kega-fusion = pkgsi686Linux.callPackage ../applications/emulators/kega-fusion { };
+
+  lambda-delta = callPackage ../applications/emulators/lambda-delta { };
+
+  libdsk = callPackage ../applications/emulators/libdsk { };
+
+  libmirage = callPackage ../applications/emulators/cdemu/libmirage.nix { };
+
+  maiko = callPackage ../applications/emulators/maiko {
+    inherit (xorg) libX11;
+  };
+
+  mame = libsForQt514.callPackage ../applications/emulators/mame {
+    inherit (darwin.apple_sdk.frameworks) CoreAudioKit ForceFeedback;
+  };
+
+  mednafen = callPackage ../applications/emulators/mednafen {
+    inherit (darwin) libiconv;
+  };
+
+  mednafen-server = callPackage ../applications/emulators/mednafen/server.nix { };
+
+  mednaffe = callPackage ../applications/emulators/mednaffe { };
+
+  melonDS = libsForQt5.callPackage ../applications/emulators/melonDS { };
+
+  mgba = libsForQt5.callPackage ../applications/emulators/mgba { };
+
+  mupen64plus = callPackage ../applications/emulators/mupen64plus { };
+
+  nestopia = callPackage ../applications/emulators/nestopia { };
+
+  np2kai = callPackage ../applications/emulators/np2kai { };
+
+  oberon-risc-emu = callPackage ../applications/emulators/oberon-risc-emu { };
+
+  openmsx = callPackage ../applications/emulators/openmsx {
+    python = python3;
+  };
+
+  pcem = callPackage ../applications/emulators/pcem { };
+
+  pcsx2 = callPackage ../applications/emulators/pcsx2 {
+    wxGTK = wxGTK30-gtk3;
+  };
+
+  pcsxr = callPackage ../applications/emulators/pcsxr { };
+
+  ppsspp = libsForQt5.callPackage ../applications/emulators/ppsspp { };
+
+  proton-caller = callPackage ../applications/emulators/proton-caller { };
+
+  punes = libsForQt5.callPackage ../applications/emulators/punes { };
+
+  py65 = python3Packages.callPackage ../applications/emulators/py65 { };
+
+  resim = callPackage ../applications/emulators/resim {};
+
+  retrofe = callPackage ../applications/emulators/retrofe { };
+
+  rpcs3 = libsForQt5.callPackage ../applications/emulators/rpcs3 { };
+
+  ruffle = callPackage ../applications/emulators/ruffle { };
+
+  ryujinx = callPackage ../applications/emulators/ryujinx { };
+
+  sameboy = callPackage ../applications/emulators/sameboy { };
+
+  simh = callPackage ../applications/emulators/simh { };
+
+  simplenes = callPackage ../applications/emulators/simplenes { };
+
+  snes9x-gtk = callPackage ../applications/emulators/snes9x-gtk { };
+
+  stella = callPackage ../applications/emulators/stella { };
+
+  termtekst = callPackage ../applications/emulators/termtekst { };
+
+  tilem = callPackage ../applications/emulators/tilem { };
+
+  tiny8086 = callPackage ../applications/emulators/tiny8086 { };
+
+  tinyemu = callPackage ../applications/emulators/tinyemu { };
+
+  uae = callPackage ../applications/emulators/uae { };
+
+  uxn = callPackage ../applications/emulators/uxn { };
+
+  vbam = callPackage ../applications/emulators/vbam { };
+
+  vice = callPackage ../applications/emulators/vice { };
+
+  winetricks = callPackage ../applications/emulators/wine/winetricks.nix {
+    inherit (gnome) zenity;
+  };
+
+  xcpc = callPackage ../applications/emulators/xcpc { };
+
+  yapesdl = callPackage ../applications/emulators/yapesdl { };
+
+  zesarux = callPackage ../applications/emulators/zesarux { };
+
+  zsnes = pkgsi686Linux.callPackage ../applications/emulators/zsnes { };
+
+  ### APPLICATIONS/EMULATORS/BSNES
+
+  ares = callPackage ../applications/emulators/bsnes/ares { };
+
+  bsnes-hd = callPackage ../applications/emulators/bsnes/bsnes-hd {
+    inherit (gnome2) gtksourceview;
+    inherit (darwin.apple_sdk.frameworks) Cocoa OpenAL;
+  };
+
+  higan = callPackage ../applications/emulators/bsnes/higan { };
+
+  ### APPLICATIONS/EMULATORS/DOLPHIN-EMU
+
+  dolphin-emu = callPackage ../applications/emulators/dolphin-emu { };
+
+  dolphin-emu-beta = qt5.callPackage ../applications/emulators/dolphin-emu/master.nix {
+    inherit (darwin.apple_sdk.frameworks) CoreBluetooth ForceFeedback IOKit OpenGL;
+  };
+
+  dolphin-emu-primehack = qt5.callPackage ../applications/emulators/dolphin-emu/primehack.nix {
+    inherit (darwin.apple_sdk.frameworks) CoreBluetooth ForceFeedback IOKit OpenGL;
+  };
+
+  ### APPLICATIONS/EMULATORS/RETROARCH
+
+  retroarchBare = callPackage ../applications/emulators/retroarch {
+    inherit (darwin) libobjc;
+    inherit (darwin.apple_sdk.frameworks) AppKit Foundation;
+  };
+
+  retroarchFull = retroarch.override {
+    cores = builtins.filter
+      # Remove cores not supported on platform
+      (c: c ? libretroCore && (lib.meta.availableOn stdenv.hostPlatform c))
+      (builtins.attrValues libretro);
+  };
+
+  wrapRetroArch = { retroarch }:
+    callPackage ../applications/emulators/retroarch/wrapper.nix
+      { inherit retroarch; };
+
+  retroarch = wrapRetroArch { retroarch = retroarchBare; };
+
+  libretro = recurseIntoAttrs
+    (callPackage ../applications/emulators/retroarch/cores.nix {
+      retroarch = retroarchBare;
+    });
+
+  kodi-retroarch-advanced-launchers =
+    callPackage ../applications/emulators/retroarch/kodi-advanced-launchers.nix { };
+
+  ### APPLICATIONS/EMULATORS/YUZU
+
+  yuzu-mainline = import ../applications/emulators/yuzu {
+    branch = "mainline";
+    inherit libsForQt5 fetchFromGitHub;
+  };
+  yuzu-ea = import ../applications/emulators/yuzu {
+    branch = "early-access";
+    inherit libsForQt5 fetchFromGitHub;
+  };
+
+  ### APPLICATIONS/EMULATORS/COMMANDERX16
+
+  x16-emulator = callPackage ../applications/emulators/commanderx16/emulator.nix { };
+  x16-rom = callPackage ../applications/emulators/commanderx16/rom.nix { };
+  x16-run = (callPackage ../applications/emulators/commanderx16/run.nix { }) {
+    emulator = x16-emulator;
+    rom = x16-rom;
+  };
+
+  yabause = libsForQt5.callPackage ../applications/emulators/yabause {
+    freeglut = null;
+    openal = null;
+  };
+
   ### APPLICATIONS/TERMINAL-EMULATORS
 
   alacritty = callPackage ../applications/terminal-emulators/alacritty {
@@ -1455,6 +1708,8 @@ with pkgs;
   apio = python3Packages.callPackage ../development/embedded/fpga/apio { };
 
   apitrace = libsForQt514.callPackage ../applications/graphics/apitrace {};
+
+  argagg = callPackage ../development/libraries/argagg { };
 
   argtable = callPackage ../development/libraries/argtable { };
 
@@ -2406,10 +2661,6 @@ with pkgs;
 
   boca = callPackage ../development/libraries/boca { };
 
-  bochs = callPackage ../applications/emulators/bochs {
-    wxGTK = wxGTK30;
-  };
-
   bubblewrap = callPackage ../tools/admin/bubblewrap { };
 
   borgbackup = callPackage ../tools/backup/borgbackup { };
@@ -2463,10 +2714,6 @@ with pkgs;
 
   breakpointHook = assert stdenv.isLinux;
     makeSetupHook { } ../build-support/setup-hooks/breakpoint-hook.sh;
-
-  py65 = python3Packages.callPackage ../applications/emulators/py65 { };
-
-  simh = callPackage ../applications/emulators/simh { };
 
   btrfs-progs = callPackage ../tools/filesystems/btrfs-progs { };
 
@@ -2589,19 +2836,9 @@ with pkgs;
 
   cde = callPackage ../tools/package-management/cde { };
 
-  cdemu-daemon = callPackage ../applications/emulators/cdemu/daemon.nix { };
-
-  cdemu-client = callPackage ../applications/emulators/cdemu/client.nix { };
-
   ceres-solver = callPackage ../development/libraries/ceres-solver {
     gflags = null; # only required for examples/tests
   };
-
-  craftos-pc = callPackage ../applications/emulators/craftos-pc { };
-
-  gcdemu = callPackage ../applications/emulators/cdemu/gui.nix { };
-
-  image-analyzer = callPackage ../applications/emulators/cdemu/analyzer.nix { };
 
   cbor-diag = callPackage ../development/tools/cbor-diag { };
 
@@ -2991,10 +3228,6 @@ with pkgs;
   };
 
   djv = callPackage ../applications/graphics/djv { };
-
-  dlx = callPackage ../applications/emulators/dlx { };
-
-  dgen-sdl = callPackage ../applications/emulators/dgen-sdl { };
 
   dnschef = python3Packages.callPackage ../tools/networking/dnschef { };
 
@@ -3813,8 +4046,6 @@ with pkgs;
 
   ropgadget = with python3Packages; toPythonApplication ropgadget;
 
-  ryujinx = callPackage ../applications/emulators/ryujinx { };
-
   scour = with python3Packages; toPythonApplication scour;
 
   s2png = callPackage ../tools/graphics/s2png { };
@@ -3836,8 +4067,6 @@ with pkgs;
   shisho = callPackage ../tools/security/shisho { };
 
   simg2img = callPackage ../tools/filesystems/simg2img { };
-
-  simplenes = callPackage ../applications/emulators/simplenes { };
 
   snippetpixie = callPackage ../tools/text/snippetpixie { };
 
@@ -4295,8 +4524,6 @@ with pkgs;
     citrix_workspace_21_12_0
   ;
 
-  citra = libsForQt5.callPackage ../applications/emulators/citra { };
-
   cmigemo = callPackage ../tools/text/cmigemo { };
 
   cmst = libsForQt5.callPackage ../tools/networking/cmst { };
@@ -4620,7 +4847,9 @@ with pkgs;
 
   createrepo_c = callPackage ../tools/package-management/createrepo_c { };
 
-  cromfs = callPackage ../tools/archivers/cromfs { };
+  cromfs = callPackage ../tools/archivers/cromfs {
+    stdenv = if stdenv.cc.isGNU then gcc10Stdenv else stdenv;
+  };
 
   cron = callPackage ../tools/system/cron { };
 
@@ -4904,14 +5133,6 @@ with pkgs;
   dotnetfx35 = callPackage ../development/libraries/dotnetfx35 { };
 
   dotnetfx40 = callPackage ../development/libraries/dotnetfx40 { };
-
-  dolphin-emu = callPackage ../applications/emulators/dolphin-emu { };
-  dolphin-emu-beta = qt5.callPackage ../applications/emulators/dolphin-emu/master.nix {
-    inherit (darwin.apple_sdk.frameworks) CoreBluetooth ForceFeedback IOKit OpenGL;
-  };
-  dolphin-emu-primehack = qt5.callPackage ../applications/emulators/dolphin-emu/primehack.nix {
-    inherit (darwin.apple_sdk.frameworks) CoreBluetooth ForceFeedback IOKit OpenGL;
-  };
 
   domoticz = callPackage ../servers/domoticz { };
 
@@ -5322,7 +5543,8 @@ with pkgs;
   };
 
   exempi = callPackage ../development/libraries/exempi {
-    stdenv = if stdenv.isi686 then gcc6Stdenv else stdenv;
+    stdenv = if stdenv.isi686 then gcc6Stdenv else gcc9Stdenv;
+    boost  = boost15x;
   };
 
   execline = skawarePackages.execline;
@@ -5517,8 +5739,6 @@ with pkgs;
   firehol = callPackage ../applications/networking/firehol {};
 
   fio = callPackage ../tools/system/fio { };
-
-  firebird-emu = libsForQt5.callPackage ../applications/emulators/firebird-emu { };
 
   flamerobin = callPackage ../applications/misc/flamerobin { };
 
@@ -5729,6 +5949,8 @@ with pkgs;
   uni2ascii = callPackage ../tools/text/uni2ascii { };
 
   uniscribe = callPackage ../tools/text/uniscribe { };
+
+  calcoo = callPackage ../applications/misc/calcoo { };
 
   galculator = callPackage ../applications/misc/galculator {
     gtk = gtk3;
@@ -7505,8 +7727,6 @@ with pkgs;
 
   node2nix = nodePackages.node2nix;
 
-  np2kai = callPackage ../applications/emulators/np2kai { };
-
   openipmi = callPackage ../tools/system/openipmi { };
 
   ox = callPackage ../applications/editors/ox { };
@@ -7934,14 +8154,6 @@ with pkgs;
 
   mdp = callPackage ../applications/misc/mdp { };
 
-  mednafen = callPackage ../applications/emulators/mednafen {
-    inherit (darwin) libiconv;
-  };
-
-  mednafen-server = callPackage ../applications/emulators/mednafen/server.nix { };
-
-  mednaffe = callPackage ../applications/emulators/mednaffe { };
-
   megacli = callPackage ../tools/misc/megacli { };
 
   megatools = callPackage ../tools/networking/megatools { };
@@ -7955,8 +8167,6 @@ with pkgs;
   mfcuk = callPackage ../tools/security/mfcuk { };
 
   mfoc = callPackage ../tools/security/mfoc { };
-
-  mgba = libsForQt5.callPackage ../applications/emulators/mgba { };
 
   microdnf = callPackage ../tools/package-management/microdnf { };
 
@@ -8162,6 +8372,8 @@ with pkgs;
 
   ndppd = callPackage ../applications/networking/ndppd { };
 
+  nearcore = callPackage ../applications/blockchains/nearcore { };
+
   nebula = callPackage ../tools/networking/nebula { };
 
   nemiver = callPackage ../development/tools/nemiver { };
@@ -8173,8 +8385,6 @@ with pkgs;
   neofetch = callPackage ../tools/misc/neofetch { };
 
   nerdfonts = callPackage ../data/fonts/nerdfonts { };
-
-  nestopia = callPackage ../applications/emulators/nestopia { };
 
   netatalk = callPackage ../tools/filesystems/netatalk { };
 
@@ -9444,6 +9654,8 @@ with pkgs;
     rekor-cli
     rekor-server;
 
+  rich-cli = callPackage ../misc/rich-cli { };
+
   richgo = callPackage ../development/tools/richgo {  };
 
   rs = callPackage ../tools/text/rs { };
@@ -9623,8 +9835,6 @@ with pkgs;
   rubber = callPackage ../tools/typesetting/rubber { };
 
   rubocop = rubyPackages.rubocop;
-
-  ruffle = callPackage ../applications/emulators/ruffle { };
 
   runningx = callPackage ../tools/X11/runningx { };
 
@@ -9855,6 +10065,8 @@ with pkgs;
   shen-sbcl = callPackage ../development/interpreters/shen-sbcl { };
 
   shen-sources = callPackage ../development/interpreters/shen-sources { };
+
+  shiv = with python3Packages; toPythonApplication shiv;
 
   shocco = callPackage ../tools/text/shocco { };
 
@@ -10217,8 +10429,6 @@ with pkgs;
 
   sshoogr = callPackage ../tools/networking/sshoogr { };
 
-  ssmtp = callPackage ../tools/networking/ssmtp { };
-
   ssocr = callPackage ../applications/misc/ssocr { };
 
   ssss = callPackage ../tools/security/ssss { };
@@ -10504,8 +10714,6 @@ with pkgs;
 
   tiledb = callPackage ../development/libraries/tiledb { };
 
-  tilem = callPackage ../applications/emulators/tilem { };
-
   timemachine = callPackage ../applications/audio/timemachine { };
 
   timelapse-deflicker = callPackage ../applications/graphics/timelapse-deflicker { };
@@ -10527,10 +10735,6 @@ with pkgs;
   tinc_pre = callPackage ../tools/networking/tinc/pre.nix { };
 
   tinycbor = callPackage ../development/libraries/tinycbor { };
-
-  tiny8086 = callPackage ../applications/emulators/tiny8086 { };
-
-  tinyemu = callPackage ../applications/emulators/tinyemu { };
 
   tinyfecvpn = callPackage ../tools/networking/tinyfecvpn { };
 
@@ -11902,7 +12106,9 @@ with pkgs;
 
   algol68g = callPackage ../development/compilers/algol68g { };
 
-  armips = callPackage ../development/compilers/armips { };
+  armips = callPackage ../development/compilers/armips {
+    stdenv = gcc10Stdenv;
+  };
 
   arachne-pnr = callPackage ../development/compilers/arachne-pnr { };
 
@@ -12103,8 +12309,6 @@ with pkgs;
 
   flasm = callPackage ../development/compilers/flasm { };
 
-  flycast = callPackage ../applications/emulators/flycast { };
-
   flyctl = callPackage ../development/web/flyctl { };
 
   fluidd = callPackage ../applications/misc/fluidd { };
@@ -12135,6 +12339,7 @@ with pkgs;
       num =
         if (with stdenv.targetPlatform; isVc4 || libc == "relibc") then 6
         else if (stdenv.targetPlatform.isAarch64 && stdenv.isDarwin) then 11
+        else if (stdenv.targetPlatform.isx86_64) then 11
         else if stdenv.targetPlatform.isAarch64 then 9
         else 10;
       numS = toString num;
@@ -12367,8 +12572,14 @@ with pkgs;
 
   gcc_latest = gcc11;
 
-  # aarch64-darwin doesn't support earlier gcc
-  gfortran = if (stdenv.isDarwin && stdenv.isAarch64) then gfortran11 else gfortran9;
+  # Use the same GCC version as the one from stdenv by default
+  gfortran = wrapCC (gccStdenv.cc.cc.override {
+    name = "gfortran";
+    langFortran = true;
+    langCC = false;
+    langC = false;
+    profiledCompiler = false;
+  });
 
   gfortran48 = wrapCC (gcc48.cc.override {
     name = "gfortran";
@@ -13250,18 +13461,18 @@ with pkgs;
     inherit (darwin) apple_sdk;
   };
 
-  rust_1_59 = callPackage ../development/compilers/rust/1_59.nix {
+  rust_1_60 = callPackage ../development/compilers/rust/1_60.nix {
     inherit (darwin.apple_sdk.frameworks) CoreFoundation Security SystemConfiguration;
-    llvm_13 = llvmPackages_13.libllvm;
+    llvm_14 = llvmPackages_14.libllvm;
   };
-  rust = rust_1_59;
+  rust = rust_1_60;
 
   mrustc = callPackage ../development/compilers/mrustc { };
   mrustc-minicargo = callPackage ../development/compilers/mrustc/minicargo.nix { };
   mrustc-bootstrap = callPackage ../development/compilers/mrustc/bootstrap.nix { };
 
-  rustPackages_1_59 = rust_1_59.packages.stable;
-  rustPackages = rustPackages_1_59;
+  rustPackages_1_60 = rust_1_60.packages.stable;
+  rustPackages = rustPackages_1_60;
 
   inherit (rustPackages) cargo clippy rustc rustPlatform;
 
@@ -14319,7 +14530,6 @@ with pkgs;
   mspdebug = callPackage ../development/misc/msp430/mspdebug.nix { };
 
   vc4-newlib = callPackage ../development/misc/vc4/newlib.nix {};
-  resim = callPackage ../applications/emulators/resim {};
 
   or1k-newlib = callPackage ../development/misc/or1k/newlib.nix {};
 
@@ -14530,7 +14740,10 @@ with pkgs;
     buildJdk = jdk11_headless;
     buildJdkName = "java11";
     runJdk = jdk11_headless;
-    stdenv = if stdenv.cc.isClang then llvmPackages.stdenv else stdenv;
+    stdenv =
+      if stdenv.cc.isClang then llvmPackages.stdenv
+      else if stdenv.cc.isGNU then gcc10Stdenv
+      else stdenv;
     bazel_self = bazel_4;
   };
 
@@ -14569,7 +14782,7 @@ with pkgs;
   bingrep = callPackage ../development/tools/analysis/bingrep { };
 
   binutils-unwrapped = callPackage ../development/tools/misc/binutils {
-    autoreconfHook = if targetPlatform.isiOS then autoreconfHook269 else autoreconfHook;
+    autoreconfHook = autoreconfHook269;
     # FHS sys dirs presumably only have stuff for the build platform
     noSysDirs = (stdenv.targetPlatform != stdenv.hostPlatform) || noSysDirs;
   };
@@ -14584,7 +14797,7 @@ with pkgs;
   };
   binutils_nogold = lowPrio (wrapBintoolsWith {
     bintools = binutils-unwrapped.override {
-      gold = false;
+      enableGold = false;
     };
   });
   binutilsNoLibc = wrapBintoolsWith {
@@ -15147,7 +15360,7 @@ with pkgs;
 
   gnome-desktop-testing = callPackage ../development/tools/gnome-desktop-testing {};
 
-  gnome-firmware-updater = callPackage ../applications/misc/gnome-firmware-updater {};
+  gnome-firmware = callPackage ../applications/misc/gnome-firmware {};
 
   gnome-usage = callPackage ../applications/misc/gnome-usage {};
 
@@ -16626,8 +16839,6 @@ with pkgs;
 
   duckdb = callPackage ../development/libraries/duckdb {};
 
-  duckstation = libsForQt5.callPackage ../applications/emulators/duckstation {};
-
   easyloggingpp = callPackage ../development/libraries/easyloggingpp {};
 
   eccodes = callPackage ../development/libraries/eccodes {
@@ -17162,7 +17373,12 @@ with pkgs;
 
   grilo-plugins = callPackage ../development/libraries/grilo-plugins { };
 
-  grpc = callPackage ../development/libraries/grpc { };
+  grpc = callPackage ../development/libraries/grpc {
+    # grpc builds with c++14 so abseil must also be built that way
+    abseil-cpp = abseil-cpp.override {
+      cxxStandard = "14";
+    };
+  };
 
   gsettings-qt = libsForQt5.callPackage ../development/libraries/gsettings-qt { };
 
@@ -18550,8 +18766,6 @@ with pkgs;
     hdf5 = hdf5_1_10;
   };
 
-  libmirage = callPackage ../applications/emulators/cdemu/libmirage.nix { };
-
   libmkv = callPackage ../development/libraries/libmkv { };
 
   libmms = callPackage ../development/libraries/libmms { };
@@ -19374,7 +19588,9 @@ with pkgs;
     inherit (darwin.apple_sdk.frameworks) CoreServices;
   };
 
-  nss = lowPrio (callPackage ../development/libraries/nss { });
+  nss_latest = callPackage ../development/libraries/nss/latest.nix { };
+  nss_esr = callPackage ../development/libraries/nss/esr.nix { };
+  nss = nss_esr;
   nssTools = nss.tools;
 
   nss_wrapper = callPackage ../development/libraries/nss_wrapper { };
@@ -19814,19 +20030,25 @@ with pkgs;
   qt512 = recurseIntoAttrs (makeOverridable
     (import ../development/libraries/qt-5/5.12) {
       inherit newScope;
-      inherit lib stdenv fetchurl fetchpatch fetchFromGitHub makeSetupHook makeWrapper;
+      inherit lib fetchurl fetchpatch fetchFromGitHub makeSetupHook makeWrapper;
       inherit bison cups dconf harfbuzz libGL perl gtk3;
       inherit (gst_all_1) gstreamer gst-plugins-base;
       inherit darwin;
+      stdenv = if stdenv.cc.isGNU
+        then (if (stdenv.targetPlatform.isx86_64) then gcc10Stdenv else gcc9Stdenv)
+        else stdenv;
     });
 
   qt514 = recurseIntoAttrs (makeOverridable
     (import ../development/libraries/qt-5/5.14) {
       inherit newScope;
-      inherit lib stdenv fetchurl fetchpatch fetchFromGitHub makeSetupHook makeWrapper;
+      inherit lib fetchurl fetchpatch fetchFromGitHub makeSetupHook makeWrapper;
       inherit bison cups dconf harfbuzz libGL perl gtk3;
       inherit (gst_all_1) gstreamer gst-plugins-base;
       inherit darwin;
+      stdenv = if stdenv.cc.isGNU
+        then (if (stdenv.targetPlatform.isx86_64) then gcc10Stdenv else gcc9Stdenv)
+        else stdenv;
     });
 
   qt515 = recurseIntoAttrs (makeOverridable
@@ -21271,7 +21493,7 @@ with pkgs;
   engelsystem = callPackage ../servers/web-apps/engelsystem { php = php74; };
 
   envoy = callPackage ../servers/http/envoy {
-    jdk = openjdk11;
+    jdk = openjdk11_headless;
     gn = gn1924;
   };
 
@@ -21377,7 +21599,11 @@ with pkgs;
 
   hasura-cli = callPackage ../servers/hasura/cli.nix { };
 
-  hbase = callPackage ../servers/hbase {};
+  inherit (callPackage ../servers/hbase {}) hbase_1_7 hbase_2_4 hbase_3_0;
+  hbase1 = hbase_1_7;
+  hbase2 = hbase_2_4;
+  hbase3 = hbase_3_0;
+  hbase = hbase2; # when updating, point to the latest stable release
 
   headphones = callPackage ../servers/headphones {};
 
@@ -21697,16 +21923,8 @@ with pkgs;
 
   hsphfpd = callPackage ../servers/pulseaudio/hsphfpd.nix { };
 
-  pulseaudio-hsphfpd = callPackage ../servers/pulseaudio/pali.nix {
-    inherit (darwin.apple_sdk.frameworks) CoreServices AudioUnit Cocoa;
-  };
-
   pulseaudio = callPackage ../servers/pulseaudio ({
     inherit (darwin.apple_sdk.frameworks) CoreServices AudioUnit Cocoa;
-  } // lib.optionalAttrs stdenv.isDarwin {
-    # Default autoreconfHook (2.70) fails on darwin,
-    # with "configure: error: *** Compiler does not support -std=gnu11"
-    autoreconfHook = buildPackages.autoreconfHook269;
   });
 
   qpaeq = libsForQt5.callPackage ../servers/pulseaudio/qpaeq.nix { };
@@ -21962,6 +22180,8 @@ with pkgs;
   postgresql14Packages = recurseIntoAttrs postgresql_14.pkgs;
 
   postgresql_jdbc = callPackage ../development/java-modules/postgresql_jdbc { };
+
+  postgresqlTestHook = callPackage ../build-support/setup-hooks/postgresql-test-hook { };
 
   prom2json = callPackage ../servers/monitoring/prometheus/prom2json.nix { };
   prometheus = callPackage ../servers/monitoring/prometheus { };
@@ -22413,11 +22633,6 @@ with pkgs;
 
   bluez5-experimental = callPackage ../os-specific/linux/bluez {
     withExperimental = true;
-  };
-
-  pulseaudio-modules-bt = callPackage ../applications/audio/pulseaudio-modules-bt {
-    # pulseaudio-modules-bt is most likely to be used with pulseaudioFull
-    pulseaudio = pulseaudioFull;
   };
 
   bluez = bluez5;
@@ -22921,6 +23136,10 @@ with pkgs;
     # which depends on lvm2 again.  But we only need the libudev part
     # which does not depend on cryptsetup.
     udev = systemdMinimal;
+    # break the cyclic dependency:
+    # util-linux (non-minimal) depends (optionally, but on by default) on systemd,
+    # systemd (optionally, but on by default) on cryptsetup and cryptsetup depends on lvm2
+    util-linux = util-linuxMinimal;
   };
   lvm2-2_02 = callPackage ../os-specific/linux/lvm2/2_02.nix {
     udev = systemdMinimal;
@@ -23487,6 +23706,8 @@ with pkgs;
   udisks_glue = callPackage ../os-specific/linux/udisks-glue { };
 
   ugtrain = callPackage ../tools/misc/ugtrain { };
+
+  unscd = callPackage ../os-specific/linux/unscd { };
 
   untie = callPackage ../os-specific/linux/untie { };
 
@@ -24455,8 +24676,6 @@ with pkgs;
     fonts = [ "Terminus" ];
   };
 
-  termtekst = callPackage ../applications/emulators/termtekst { };
-
   tex-gyre = callPackages ../data/fonts/tex-gyre { };
 
   tex-gyre-math = callPackages ../data/fonts/tex-gyre-math { };
@@ -25139,7 +25358,7 @@ with pkgs;
   cmctl = callPackage ../applications/networking/cluster/cmctl { };
 
   cmus = callPackage ../applications/audio/cmus {
-    inherit (darwin.apple_sdk.frameworks) AudioUnit CoreAudio;
+    inherit (darwin.apple_sdk.frameworks) AudioUnit CoreAudio VideoToolbox;
     libjack = libjack2;
   };
 
@@ -25384,7 +25603,9 @@ with pkgs;
 
   droopy = python3Packages.callPackage ../applications/networking/droopy { };
 
-  drumgizmo = callPackage ../applications/audio/drumgizmo { };
+  drumgizmo = callPackage ../applications/audio/drumgizmo {
+    stdenv = if stdenv.cc.isGNU then gcc10Stdenv else stdenv;
+  };
 
   dsf2flac = callPackage ../applications/audio/dsf2flac { };
 
@@ -25421,8 +25642,6 @@ with pkgs;
   dwmblocks = callPackage ../applications/misc/dwmblocks { };
 
   dwm-status = callPackage ../applications/window-managers/dwm/dwm-status.nix { };
-
-  dynamips = callPackage ../applications/emulators/dynamips { };
 
   exploitdb = callPackage ../tools/security/exploitdb { };
 
@@ -25881,8 +26100,6 @@ with pkgs;
     tuigreet = callPackage ../os-specific/linux/tuigreet { };
   };
 
-  goldberg-emu = callPackage ../applications/emulators/goldberg-emu { };
-
   goldendict = libsForQt5.callPackage ../applications/misc/goldendict {
     inherit (darwin) libiconv;
   };
@@ -26204,6 +26421,7 @@ with pkgs;
     svnSupport = true;
     guiSupport = true;
     sendEmailSupport = true;
+    withSsh = true;
     withLibsecret = !stdenv.isDarwin;
   };
 
@@ -26495,8 +26713,6 @@ with pkgs;
 
   herbstluftwm = callPackage ../applications/window-managers/herbstluftwm { };
 
-  hercules = callPackage ../applications/emulators/hercules { };
-
   hexchat = callPackage ../applications/networking/irc/hexchat { };
 
   hexcurse = callPackage ../applications/editors/hexcurse { };
@@ -26592,6 +26808,8 @@ with pkgs;
   indigenous-desktop = callPackage ../applications/networking/feedreaders/indigenous-desktop { };
 
   jackline = callPackage ../applications/networking/instant-messengers/jackline { };
+
+  keylight-controller-mschneider82 = callPackage ../applications/misc/keylight-controller-mschneider82 { };
 
   leftwm = callPackage ../applications/window-managers/leftwm { };
 
@@ -27041,8 +27259,6 @@ with pkgs;
 
   kdevelop = libsForQt5.callPackage ../applications/editors/kdevelop5/wrapper.nix { };
 
-  kega-fusion = pkgsi686Linux.callPackage ../applications/emulators/kega-fusion { };
-
   kepubify = callPackage ../tools/misc/kepubify { };
 
   kermit = callPackage ../tools/misc/kermit { };
@@ -27236,8 +27452,6 @@ with pkgs;
 
   kvirc = libsForQt514.callPackage ../applications/networking/irc/kvirc { };
 
-  lambda-delta = callPackage ../applications/emulators/lambda-delta { };
-
   lame = callPackage ../development/libraries/lame { };
 
   labwc = callPackage ../applications/window-managers/labwc {
@@ -27368,8 +27582,6 @@ with pkgs;
   lighthouse-steamvr = callPackage ../tools/misc/lighthouse-steamvr { };
 
   lighttable = callPackage ../applications/editors/lighttable {};
-
-  libdsk = callPackage ../applications/emulators/libdsk { };
 
   liblinphone = callPackage ../development/libraries/liblinphone { };
 
@@ -27560,8 +27772,6 @@ with pkgs;
   melmatcheq.lv2 = callPackage ../applications/audio/melmatcheq.lv2 { };
 
   melody = callPackage ../tools/misc/melody { };
-
-  melonDS = libsForQt5.callPackage ../applications/emulators/melonDS { };
 
   meme-image-generator = callPackage ../applications/graphics/meme-image-generator { };
 
@@ -27988,8 +28198,6 @@ with pkgs;
 
   pinegrow = callPackage ../applications/editors/pinegrow { };
 
-  ping = callPackage ../applications/networking/ping { };
-
   piper = callPackage ../os-specific/linux/piper { };
 
   pipe-viewer = perlPackages.callPackage ../applications/video/pipe-viewer {};
@@ -28221,8 +28429,6 @@ with pkgs;
 
   obconf = callPackage ../tools/X11/obconf { };
 
-  oberon-risc-emu = callPackage ../applications/emulators/oberon-risc-emu { };
-
   gnome-obfuscate = callPackage ../applications/graphics/gnome-obfuscate { };
 
   obs-studio = libsForQt5.callPackage ../applications/video/obs-studio {
@@ -28330,7 +28536,7 @@ with pkgs;
 
   vivaldi-widevine = callPackage ../applications/networking/browsers/vivaldi/widevine.nix { };
 
-  libopenmpt = callPackage ../applications/audio/libopenmpt { };
+  libopenmpt = callPackage ../development/libraries/audio/libopenmpt { };
 
   openrazer-daemon = with python3Packages; toPythonApplication openrazer-daemon;
 
@@ -28389,12 +28595,6 @@ with pkgs;
   pbrt = callPackage ../applications/graphics/pbrt { };
 
   pcloud = callPackage ../applications/networking/pcloud { };
-
-  pcsxr = callPackage ../applications/emulators/pcsxr { };
-
-  pcsx2 = callPackage ../applications/emulators/pcsx2 {
-    wxGTK = wxGTK30-gtk3;
-  };
 
   jpsxdec = callPackage ../tools/games/jpsxdec {
     jdk = openjdk8;
@@ -28922,8 +29122,6 @@ with pkgs;
 
   rootlesskit = callPackage ../tools/virtualization/rootlesskit {};
 
-  rpcs3 = libsForQt5.callPackage ../applications/emulators/rpcs3 { };
-
   rsclock = callPackage ../applications/misc/rsclock { };
 
   rstudio = libsForQt5.callPackage ../applications/editors/rstudio {
@@ -28962,8 +29160,6 @@ with pkgs;
   udiskie = python3.pkgs.callPackage ../applications/misc/udiskie { };
 
   sacc = callPackage ../applications/networking/gopher/sacc { };
-
-  sameboy = callPackage ../applications/emulators/sameboy { };
 
   sayonara = libsForQt514.callPackage ../applications/audio/sayonara { };
 
@@ -29100,8 +29296,6 @@ with pkgs;
   stag = callPackage ../applications/misc/stag {
     curses = ncurses;
   };
-
-  stella = callPackage ../applications/emulators/stella { };
 
   linuxstopmotion = libsForQt5.callPackage ../applications/video/linuxstopmotion { };
 
@@ -29353,6 +29547,8 @@ with pkgs;
   symlinks = callPackage ../tools/system/symlinks { };
 
   syncplay = python3.pkgs.callPackage ../applications/networking/syncplay { };
+
+  syncplay-nogui = syncplay.override { enableGUI = false; };
 
   syncterm = callPackage ../applications/terminal-emulators/syncterm { };
 
@@ -30236,9 +30432,6 @@ with pkgs;
 
   kodi-cli = callPackage ../tools/misc/kodi-cli { };
 
-  kodi-retroarch-advanced-launchers =
-    callPackage ../applications/emulators/retroarch/kodi-advanced-launchers.nix { };
-
   xca = libsForQt5.callPackage ../applications/misc/xca { };
 
   xcalib = callPackage ../tools/X11/xcalib { };
@@ -30453,6 +30646,8 @@ with pkgs;
   yate = callPackage ../applications/misc/yate { };
 
   ydiff = with python3.pkgs; toPythonApplication ydiff;
+
+  ydict = callPackage ../applications/misc/ydict {};
 
   yed = callPackage ../applications/graphics/yed {};
 
@@ -31115,8 +31310,18 @@ with pkgs;
 
   cuyo = callPackage ../games/cuyo { };
 
-  inherit (import ../games/deliantra pkgs)
-    deliantra-server deliantra-arch deliantra-maps deliantra-data;
+  deliantra-server = callPackage ../games/deliantra/server.nix {
+    stdenv = if stdenv.cc.isGNU then gcc10Stdenv else stdenv;
+  };
+  deliantra-arch = callPackage ../games/deliantra/arch.nix {
+    stdenv = if stdenv.cc.isGNU then gcc10Stdenv else stdenv;
+  };
+  deliantra-maps = callPackage ../games/deliantra/maps.nix {
+    stdenv = if stdenv.cc.isGNU then gcc10Stdenv else stdenv;
+  };
+  deliantra-data = callPackage ../games/deliantra/data.nix {
+    stdenv = if stdenv.cc.isGNU then gcc10Stdenv else stdenv;
+  };
 
   ddnet = callPackage ../games/ddnet { };
 
@@ -32211,15 +32416,25 @@ with pkgs;
     inherit (darwin.apple_sdk.frameworks) ApplicationServices;
   };
 
-  bpp-core = callPackage ../development/libraries/science/biology/bpp-core { };
+  bpp-core = callPackage ../development/libraries/science/biology/bpp-core {
+    stdenv = if stdenv.cc.isGNU then gcc10Stdenv else stdenv;
+  };
 
-  bpp-phyl = callPackage ../development/libraries/science/biology/bpp-phyl { };
+  bpp-phyl = callPackage ../development/libraries/science/biology/bpp-phyl {
+    stdenv = if stdenv.cc.isGNU then gcc10Stdenv else stdenv;
+  };
 
-  bpp-popgen = callPackage ../development/libraries/science/biology/bpp-popgen { };
+  bpp-popgen = callPackage ../development/libraries/science/biology/bpp-popgen {
+    stdenv = if stdenv.cc.isGNU then gcc10Stdenv else stdenv;
+  };
 
-  bpp-seq = callPackage ../development/libraries/science/biology/bpp-seq { };
+  bpp-seq = callPackage ../development/libraries/science/biology/bpp-seq {
+    stdenv = if stdenv.cc.isGNU then gcc10Stdenv else stdenv;
+  };
 
-  bppsuite = callPackage ../applications/science/biology/bppsuite { };
+  bppsuite = callPackage ../applications/science/biology/bppsuite {
+    stdenv = if stdenv.cc.isGNU then gcc10Stdenv else stdenv;
+  };
 
   cd-hit = callPackage ../applications/science/biology/cd-hit {
     inherit (llvmPackages) openmp;
@@ -32705,8 +32920,6 @@ with pkgs;
   cryptoverif = callPackage ../applications/science/logic/cryptoverif { };
 
   crypto-org-wallet = callPackage ../applications/blockchains/crypto-org-wallet { };
-
-  caprice32 = callPackage ../applications/emulators/caprice32 { };
 
   cubicle = callPackage ../applications/science/logic/cubicle {
     ocamlPackages = ocaml-ng.ocamlPackages_4_05;
@@ -33231,12 +33444,6 @@ with pkgs;
 
   antimicrox = libsForQt5.callPackage ../tools/misc/antimicrox { };
 
-  ares = callPackage ../applications/emulators/ares { };
-
-  atari800 = callPackage ../applications/emulators/atari800 { };
-
-  ataripp = callPackage ../applications/emulators/atari++ { };
-
   atlantis = callPackage ../applications/networking/cluster/atlantis { };
 
   fn-cli = callPackage ../applications/networking/cluster/fn-cli { };
@@ -33251,13 +33458,9 @@ with pkgs;
 
   argononed = callPackage ../misc/drivers/argononed { };
 
-  attract-mode = callPackage ../applications/emulators/attract-mode { };
-
   autotiling = python3Packages.callPackage ../misc/autotiling { };
 
   avell-unofficial-control-center = python3Packages.callPackage ../applications/misc/avell-unofficial-control-center { };
-
-  basiliskii = callPackage ../applications/emulators/basiliskii { };
 
   beep = callPackage ../misc/beep { };
 
@@ -33275,8 +33478,6 @@ with pkgs;
 
   calaos_installer = libsForQt5.callPackage ../misc/calaos/installer {};
 
-  ccemux = callPackage ../applications/emulators/ccemux { };
-
   click = callPackage ../applications/networking/cluster/click { };
 
   clinfo = callPackage ../tools/system/clinfo {
@@ -33284,8 +33485,6 @@ with pkgs;
   };
 
   clpeak = callPackage ../tools/misc/clpeak { };
-
-  collapseos-cvm = callPackage ../applications/emulators/collapseos-cvm { };
 
   cups = callPackage ../misc/cups { };
 
@@ -33357,13 +33556,9 @@ with pkgs;
 
   cnijfilter2 = callPackage ../misc/cups/drivers/cnijfilter2 { };
 
-  darcnes = callPackage ../applications/emulators/darcnes { };
-
   darling-dmg = callPackage ../tools/filesystems/darling-dmg { };
 
   depotdownloader = callPackage ../tools/misc/depotdownloader { };
-
-  desmume = callPackage ../applications/emulators/desmume { };
 
   dbacl = callPackage ../tools/misc/dbacl { };
 
@@ -33377,13 +33572,7 @@ with pkgs;
 
   dockutil = callPackage ../os-specific/darwin/dockutil { };
 
-  dosbox = callPackage ../applications/emulators/dosbox { };
-
-  dosbox-staging = callPackage ../applications/emulators/dosbox-staging { };
-
   eiciel = callPackage ../tools/filesystems/eiciel { };
-
-  emu2 = callPackage ../applications/emulators/emu2 { };
 
   apt = callPackage ../tools/package-management/apt { };
 
@@ -33396,8 +33585,6 @@ with pkgs;
   dxvk = callPackage ../misc/dxvk { };
 
   ecdsatool = callPackage ../tools/security/ecdsatool { };
-
-  emulationstation = callPackage ../applications/emulators/emulationstation { };
 
   electricsheep = callPackage ../misc/screensavers/electricsheep { };
 
@@ -33439,8 +33626,6 @@ with pkgs;
 
   faustStk = callPackage ../applications/audio/faustStk  { };
 
-  fceux = libsForQt5.callPackage ../applications/emulators/fceux { };
-
   flockit = callPackage ../tools/backup/flockit { };
 
   fahclient = callPackage ../applications/science/misc/foldingathome/client.nix {};
@@ -33455,16 +33640,12 @@ with pkgs;
 
   foomatic-filters = callPackage ../misc/drivers/foomatic-filters {};
 
-  fuse-emulator = callPackage ../applications/emulators/fuse-emulator {};
-
   gajim = callPackage ../applications/networking/instant-messengers/gajim {
     inherit (gst_all_1) gstreamer gst-plugins-base gst-libav;
     gst-plugins-good = gst_all_1.gst-plugins-good.override { gtkSupport = true; };
   };
 
   gammu = callPackage ../applications/misc/gammu { };
-
-  gensgs = pkgsi686Linux.callPackage ../applications/emulators/gens-gs { };
 
   ghostscript = callPackage ../misc/ghostscript { };
 
@@ -33491,10 +33672,6 @@ with pkgs;
   gummi = callPackage ../applications/misc/gummi { };
 
   gummy = callPackage ../tools/misc/gummy { };
-
-  gxemul = callPackage ../applications/emulators/gxemul { };
-
-  hatari = callPackage ../applications/emulators/hatari { };
 
   hck = callPackage ../tools/text/hck {
     inherit (darwin.apple_sdk.frameworks) CoreFoundation Security;
@@ -33609,17 +33786,11 @@ with pkgs;
 
   loop = callPackage ../tools/misc/loop { };
 
-  maiko = callPackage ../applications/emulators/maiko { inherit (xorg) libX11; };
-
   mailcore2 = callPackage ../development/libraries/mailcore2 {
     icu = icu58;
   };
 
   mamba = callPackage ../applications/audio/mamba { };
-
-  mame = libsForQt514.callPackage ../applications/emulators/mame {
-    inherit (darwin.apple_sdk.frameworks) CoreAudioKit ForceFeedback;
-  };
 
   martyr = callPackage ../development/libraries/martyr { };
 
@@ -33636,8 +33807,6 @@ with pkgs;
   mongoose = callPackage ../development/libraries/science/math/mongoose {};
 
   morph = callPackage ../tools/package-management/morph { };
-
-  mupen64plus = callPackage ../applications/emulators/mupen64plus { };
 
   muse = libsForQt5.callPackage ../applications/audio/muse { };
 
@@ -33975,8 +34144,6 @@ with pkgs;
 
   OSCAR = qt5.callPackage ../applications/misc/OSCAR { };
 
-  pcem = callPackage ../applications/emulators/pcem { };
-
   pgmanage = callPackage ../applications/misc/pgmanage { };
 
   pgadmin4 = callPackage ../tools/admin/pgadmin { };
@@ -34003,13 +34170,9 @@ with pkgs;
 
   pounce = callPackage ../servers/pounce { };
 
-  ppsspp = libsForQt5.callPackage ../applications/emulators/ppsspp { };
-
   pt = callPackage ../applications/misc/pt { };
 
   protocol = python3Packages.callPackage ../applications/networking/protocol { };
-
-  punes = libsForQt5.callPackage ../applications/emulators/punes { };
 
   pykms = callPackage ../tools/networking/pykms { };
 
@@ -34018,12 +34181,6 @@ with pkgs;
   pwncat = python3Packages.callPackage ../tools/security/pwncat { };
 
   pwntools = with python3Packages; toPythonApplication pwntools;
-
-  uae = callPackage ../applications/emulators/uae { };
-
-  fsuae = callPackage ../applications/emulators/fs-uae { };
-
-  fsuae-launcher = callPackage ../applications/emulators/fs-uae/launcher.nix { };
 
   putty = callPackage ../applications/networking/remote/putty {
     gtk2 = gtk2-x11;
@@ -34052,30 +34209,6 @@ with pkgs;
   redprl = callPackage ../applications/science/logic/redprl { };
 
   renderizer = callPackage ../development/tools/renderizer {};
-
-  retroarchBare = callPackage ../applications/emulators/retroarch {
-    inherit (darwin) libobjc;
-    inherit (darwin.apple_sdk.frameworks) AppKit Foundation;
-  };
-
-  wrapRetroArch = { retroarch }: callPackage ../applications/emulators/retroarch/wrapper.nix {
-    inherit retroarch;
-  };
-
-  retroarch = wrapRetroArch { retroarch = retroarchBare; };
-
-  retroarchFull = retroarch.override {
-    cores = builtins.filter
-      # Remove cores not supported on platform
-      (c: c ? libretroCore && (lib.meta.availableOn stdenv.hostPlatform c))
-      (builtins.attrValues libretro);
-  };
-
-  libretro = recurseIntoAttrs (callPackage ../applications/emulators/retroarch/cores.nix {
-    retroarch = retroarchBare;
-  });
-
-  retrofe = callPackage ../applications/emulators/retrofe { };
 
   rfc-bibtex = python3Packages.callPackage ../development/python-modules/rfc-bibtex { };
 
@@ -34384,11 +34517,7 @@ with pkgs;
 
   vazir-fonts = callPackage ../data/fonts/vazir-fonts { };
 
-  vbam = callPackage ../applications/emulators/vbam { };
-
   vgmstream = callPackage ../applications/audio/vgmstream { };
-
-  vice = callPackage ../applications/emulators/vice { };
 
   viddy = callPackage ../tools/misc/viddy { };
 
@@ -34486,10 +34615,6 @@ with pkgs;
     wineRelease = "wayland";
   });
 
-  winetricks = callPackage ../applications/emulators/wine/winetricks.nix {
-    inherit (gnome) zenity;
-  };
-
   wishbone-tool = callPackage ../development/tools/misc/wishbone-tool { };
 
   with-shell = callPackage ../applications/misc/with-shell { };
@@ -34578,11 +34703,6 @@ with pkgs;
 
   yabai = callPackage ../os-specific/darwin/yabai { };
 
-  yabause = libsForQt5.callPackage ../applications/emulators/yabause {
-    freeglut = null;
-    openal = null;
-  };
-
   yacreader = libsForQt5.callPackage ../applications/graphics/yacreader { };
 
   yadm = callPackage ../applications/version-management/yadm { };
@@ -34600,15 +34720,6 @@ with pkgs;
   yarGen = callPackage ../tools/security/yarGen { };
 
   yaxg = callPackage ../tools/graphics/yaxg {};
-
-  yuzu-mainline = import ../applications/emulators/yuzu {
-    branch = "mainline";
-    inherit libsForQt5 fetchFromGitHub;
-  };
-  yuzu-ea = import ../applications/emulators/yuzu {
-    branch = "early-access";
-    inherit libsForQt5 fetchFromGitHub;
-  };
 
   zap = callPackage ../tools/networking/zap { };
 
@@ -34628,37 +34739,11 @@ with pkgs;
 
   zoneminder = callPackage ../servers/zoneminder { };
 
-  zsnes = pkgsi686Linux.callPackage ../applications/emulators/zsnes { };
-
   xcp = callPackage ../tools/misc/xcp { };
-
-  xcpc = callPackage ../applications/emulators/xcpc { };
 
   zxcvbn-c = callPackage ../development/libraries/zxcvbn-c { };
 
   zxing-cpp = callPackage ../development/libraries/zxing-cpp { };
-
-  snes9x-gtk = callPackage ../applications/emulators/snes9x-gtk { };
-
-  openmsx = callPackage ../applications/emulators/openmsx {
-    python = python3;
-  };
-
-  higan = callPackage ../applications/emulators/higan { };
-
-  bsnes-hd = callPackage ../applications/emulators/bsnes-hd {
-    inherit (gnome2) gtksourceview;
-    inherit (darwin.apple_sdk.frameworks) Cocoa OpenAL;
-  };
-
-  yapesdl = callPackage ../applications/emulators/yapesdl { };
-
-  x16-emulator = callPackage ../applications/emulators/commanderx16/emulator.nix { };
-  x16-rom = callPackage ../applications/emulators/commanderx16/rom.nix { };
-  x16-run = (callPackage ../applications/emulators/commanderx16/run.nix { }) {
-    emulator = x16-emulator;
-    rom = x16-rom;
-  };
 
   bullet = callPackage ../development/libraries/bullet {
     inherit (darwin.apple_sdk.frameworks) Cocoa OpenGL;
@@ -35019,7 +35104,6 @@ with pkgs;
 
   xsos = callPackage ../os-specific/linux/xsos { };
 
-  zesarux = callPackage ../applications/emulators/zesarux { };
 
   zk = callPackage ../applications/office/zk {};
 
