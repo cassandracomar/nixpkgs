@@ -79,6 +79,7 @@ mapAliases ({
   lammps-cython = throw "lammps-cython no longer builds and is unmaintained"; # added 2021-07-04
   Markups = markups; # added 2022-02-14
   MechanicalSoup = mechanicalsoup; # added 2021-06-01
+  net2grid = gridnet; # add 2022-04-22
   nose-cover3 = throw "nose-cover3 has been removed, it was using setuptools 2to3 translation feature, which has been removed in setuptools 58"; # added 2022-02-16
   pam = python-pam; # added 2020-09-07.
   PasteDeploy = pastedeploy; # added 2021-10-07
@@ -121,6 +122,7 @@ mapAliases ({
   ruamel_base = ruamel-base; # added 2021-11-01
   ruamel_yaml = ruamel-yaml; # added 2021-11-01
   ruamel_yaml_clib = ruamel-yaml-clib; # added 2021-11-01
+  sapi-python-client = kbcstorage; # added 2022-04-20
   scikitlearn = scikit-learn; # added 2021-07-21
   selectors34 = throw "selectors34 has been removed: functionality provided by Python itself; archived by upstream."; # added 2021-06-10
   setuptools_scm = setuptools-scm; # added 2021-06-03

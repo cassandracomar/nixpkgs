@@ -178,6 +178,8 @@
 
   git-undo = callPackage ./git-undo { };
 
+  header-file-mode = callPackage ./header-file-mode { };
+
   helm-words = callPackage ./helm-words { };
 
   isearch-plus = callPackage ./isearch-plus { };
@@ -230,6 +232,9 @@
   structured-haskell-mode = self.shm;
 
   sv-kalender = callPackage ./sv-kalender { };
+
+  tree-sitter-langs = callPackage ./tree-sitter-langs { final = self; };
+  tsc = callPackage ./tsc { };
 
   youtube-dl = callPackage ./youtube-dl { };
 
