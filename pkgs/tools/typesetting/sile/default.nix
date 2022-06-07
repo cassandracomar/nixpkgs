@@ -18,7 +18,6 @@ let
   luaEnv = lua.withPackages(ps: with ps; [
     cassowary
     cosmo
-    compat53
     linenoise
     lpeg
     lua-zlib
@@ -33,6 +32,10 @@ let
     penlight
     stdlib
     vstruct
+  ] ++ lib.optionals (lib.versionOlder lua.luaversion "5.2") [
+    bit32
+  ] ++ lib.optionals (lib.versionOlder lua.luaversion "5.3") [
+    compat53
   ]);
 in
 
@@ -56,19 +59,23 @@ stdenv.mkDerivation rec {
     makeWrapper
   ];
   buildInputs = [
+    luaEnv
     harfbuzz
     icu
     fontconfig
     libiconv
-    luaEnv
   ]
   ++ lib.optional stdenv.isDarwin darwin.apple_sdk.frameworks.AppKit
   ;
   checkInputs = [
     poppler_utils
   ];
+  passthru = {
+    # So it will be easier to inspect this environment, in comparison to others
+    inherit luaEnv;
+  };
 
-  preConfigure = ''
+  postPatch = ''
     patchShebangs build-aux/*.sh
   '' + lib.optionalString stdenv.isDarwin ''
     sed -i -e 's|@import AppKit;|#import <AppKit/AppKit.h>|' src/macfonts.m
@@ -97,6 +104,7 @@ stdenv.mkDerivation rec {
   outputs = [ "out" "doc" "man" "dev" ];
 
   meta = with lib; {
+    broken = stdenv.isDarwin;
     description = "A typesetting system";
     longDescription = ''
       SILE is a typesetting system; its job is to produce beautiful
@@ -111,7 +119,6 @@ stdenv.mkDerivation rec {
     homepage = "https://sile-typesetter.org";
     changelog = "https://github.com/sile-typesetter/sile/raw/v${version}/CHANGELOG.md";
     platforms = platforms.unix;
-    broken = stdenv.isDarwin;   # https://github.com/NixOS/nixpkgs/issues/23018
     maintainers = with maintainers; [ doronbehar alerque ];
     license = licenses.mit;
   };

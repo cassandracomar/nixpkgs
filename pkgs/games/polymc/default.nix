@@ -11,6 +11,7 @@
 , libpulseaudio
 , qtbase
 , libGL
+, quazip
 , glfw
 , openal
 , msaClientID ? ""
@@ -18,18 +19,18 @@
 
 mkDerivation rec {
   pname = "polymc";
-  version = "1.2.1";
+  version = "1.3.1";
 
   src = fetchFromGitHub {
     owner = "PolyMC";
     repo = "PolyMC";
     rev = version;
-    sha256 = "sha256-pnMmmeIKAaX+z1YzzowotjaG/HKdiqcz2tJ5eGRR77I=";
+    sha256 = "sha256-oTzhKGDi1Kr3JXY9dYQf1rVDPFr52tJ7L+rb5LCbtBE=";
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs = [ cmake file makeWrapper ];
-  buildInputs = [ qtbase jdk zlib ];
+  nativeBuildInputs = [ cmake file jdk makeWrapper ];
+  buildInputs = [ qtbase zlib quazip ];
 
   postPatch = ''
     # hardcode jdk paths

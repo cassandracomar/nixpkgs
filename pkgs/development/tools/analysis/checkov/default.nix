@@ -32,13 +32,14 @@ with py.pkgs;
 
 buildPythonApplication rec {
   pname = "checkov";
-  version = "2.0.1077";
+  version = "2.0.1195";
+  format = "setuptools";
 
   src = fetchFromGitHub {
     owner = "bridgecrewio";
     repo = pname;
     rev = version;
-    hash = "sha256-Jrwgm5diBSJGY0DFG6r6iv1VQwwawKy04K8/y8yokYI=";
+    hash = "sha256-YzM/YzTeFqNe7ThNH138g13aSzEXK8rzTWit1g27GVw=";
   };
 
   nativeBuildInputs = with py.pkgs; [
@@ -63,6 +64,7 @@ buildPythonApplication rec {
     docker
     dockerfile-parse
     dpath
+    flake8
     GitPython
     jmespath
     jsonpath-ng
@@ -89,13 +91,14 @@ buildPythonApplication rec {
     pytest-mock
     pytest-xdist
     pytestCheckHook
+    responses
   ];
 
   postPatch = ''
     substituteInPlace setup.py \
-      --replace "cyclonedx-python-lib>=0.11.0,<1.0.0" "cyclonedx-python-lib>=0.11.0" \
+      --replace "bc-python-hcl2==" "bc-python-hcl2>=" \
       --replace "prettytable>=3.0.0" "prettytable" \
-      --replace "pycep-parser==0.3.4" "pycep-parser"
+      --replace "pycep-parser==0.3.6" "pycep-parser"
   '';
 
   preCheck = ''

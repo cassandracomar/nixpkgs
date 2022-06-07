@@ -8,6 +8,7 @@
 , ninja
 , pkg-config
 , reuse
+, m4
 , wrapGAppsHook4
 , glib
 , gtk4
@@ -18,20 +19,20 @@
 
 stdenv.mkDerivation rec {
   pname = "amberol";
-  version = "0.3.0";
+  version = "0.7.0";
 
   src = fetchFromGitLab {
     domain = "gitlab.gnome.org";
     owner = "World";
     repo = pname;
     rev = version;
-    sha256 = "sha256-+9lrSkjk7V+ZnIhmhw7lEiEywDp5adoAW+5PEAlhpSI=";
+    hash = "sha256-cBHFyPqhgcFOeYqMhF1aX3XCGAtqEZpI7Mj7b78Etmo=";
   };
 
   cargoDeps = rustPlatform.fetchCargoTarball {
     inherit src;
     name = "${pname}-${version}";
-    sha256 = "sha256-ZJiD6RshEjZ7h+/KYcY+ZjL5fHRb5+RKgIdgbD6LdkA=";
+    hash = "sha256-GaMJsIrTbhI1tmahEMlI1v5hmjw+tFEv9Wdne/kiYIA=";
   };
 
   postPatch = ''
@@ -45,6 +46,7 @@ stdenv.mkDerivation rec {
     ninja
     pkg-config
     reuse
+    m4
     wrapGAppsHook4
   ] ++ (with rustPlatform; [
     cargoSetupHook
@@ -66,7 +68,7 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with lib; {
-    homepage = "https://gitlab.gnome.org/ebassi/amberol";
+    homepage = "https://gitlab.gnome.org/World/amberol";
     description = "A small and simple sound and music player";
     maintainers = with maintainers; [ linsui ];
     license = licenses.gpl3Plus;

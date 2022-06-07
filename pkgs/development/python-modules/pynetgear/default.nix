@@ -7,7 +7,7 @@
 
 buildPythonPackage rec {
   pname = "pynetgear";
-  version = "0.9.4";
+  version = "0.10.4";
   format = "setuptools";
 
   disabled = pythonOlder "3.7";
@@ -16,7 +16,7 @@ buildPythonPackage rec {
     owner = "MatMaul";
     repo = pname;
     rev = "refs/tags/${version}";
-    sha256 = "sha256-/oxwUukYq/a0WeO/XhkMW3Jj7I1icZZUDwh1mdbGi08=";
+    sha256 = "sha256-+Tv7i3iUr8HySTHPR4iNO6ycUnpNazKJkp3mXSflu54=";
   };
 
   propagatedBuildInputs = [

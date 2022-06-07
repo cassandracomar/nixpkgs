@@ -135,6 +135,17 @@ rec {
 
   };
 
+  gitIni = { listsAsDuplicateKeys ? false, ... }@args: {
+
+    type = with lib.types; let
+
+      iniAtom = (ini args).type/*attrsOf*/.functor.wrapped/*attrsOf*/.functor.wrapped;
+
+    in attrsOf (attrsOf (either iniAtom (attrsOf iniAtom)));
+
+    generate = name: value: pkgs.writeText name (lib.generators.toGitINI value);
+  };
+
   toml = {}: json {} // {
     type = with lib.types; let
       valueType = oneOf [
@@ -346,7 +357,7 @@ rec {
           } // lib.mapAttrs (_name: type: elixirOr type) lib.types;
         };
 
-      generate = name: value: pkgs.runCommandNoCC name
+      generate = name: value: pkgs.runCommand name
         {
           value = toConf value;
           passAsFile = [ "value" ];

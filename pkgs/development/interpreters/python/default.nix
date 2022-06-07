@@ -124,10 +124,10 @@ with pkgs;
       sourceVersion = {
         major = "3";
         minor = "9";
-        patch = "12";
+        patch = "13";
         suffix = "";
       };
-      sha256 = "sha256-LNlLIGcOQVnG2atX+R2/JVuX2MGhRR0cNfTsGWit+XE=";
+      sha256 = "sha256-ElsMWY8eFdKqZUBug/eS330XHN84wWgDsUmZQxajCA8=";
     };
     python310 = {
       sourceVersion = {
@@ -231,10 +231,9 @@ in {
     enableLTO = false;
     mimetypesSupport = false;
   } // sources.python39)).overrideAttrs(old: {
+    # TODO(@Artturin): Add this to the main cpython expr
+    strictDeps = true;
     pname = "python3-minimal";
-    meta = old.meta // {
-      maintainers = [];
-    };
   });
 
   pypy27 = callPackage ./pypy {
@@ -297,11 +296,6 @@ in {
     };
     sha256 = "sha256-Xe43x8PLixYAKPveOlkBxoBD36VFoWeUUCuJfUvEDX4="; # linux64
     pythonVersion = "3.8";
-    inherit passthruFun;
-  };
-
-  graalpython37 = callPackage ./graalpython/default.nix {
-    self = pythonInterpreters.graalpython37;
     inherit passthruFun;
   };
 

@@ -30,7 +30,6 @@ let
   defaultOverrides = [
     # Override the version of some packages pinned in Home Assistant's setup.py and requirements_all.txt
     (mkOverride "python-slugify" "4.0.1" "sha256-aaUXdm4AwSaOW7/A0BCgqFCN4LGNMK1aH/NX+K5yQnA=")
-    (mkOverride "voluptuous" "0.12.2" "sha256-TbGsUHnbkkmCDUnIkctGYKb4yuNQSRIQq850H6v1ZRM=")
 
     # pytest-aiohttp>0.3.0 breaks home-assistant tests
     (self: super: {
@@ -47,8 +46,20 @@ let
       aiohomekit = super.aiohomekit.overridePythonAttrs (oldAttrs: {
         doCheck = false; # requires aiohttp>=1.0.0
       });
+      gcal-sync = super.gcal-sync.overridePythonAttrs (oldAttrs: {
+        doCheck = false; # requires aiohttp>=1.0.0
+      });
       hass-nabucasa = super.hass-nabucasa.overridePythonAttrs (oldAttrs: {
         doCheck = false; # requires aiohttp>=1.0.0
+      });
+      pydeconz = super.pydeconz.overridePythonAttrs (oldAttrs: {
+        doCheck = false; # requires pytest-aiohttp>=1.0.0
+      });
+      pynws = super.pynws.overridePythonAttrs (oldAttrs: {
+        doCheck = false; # requires pytest-aiohttp>=1.0.0
+      });
+      pytomorrowio = super.pytomorrowio.overridePythonAttrs (oldAttrs: {
+        doCheck = false; # requires pytest-aiohttp>=1.0.0
       });
       rtsp-to-webrtc = super.rtsp-to-webrtc.overridePythonAttrs (oldAttrs: {
         doCheck = false; # requires pytest-aiohttp>=1.0.0
@@ -58,19 +69,6 @@ let
       });
       zwave-js-server-python = super.zwave-js-server-python.overridePythonAttrs (oldAttrs: {
         doCheck = false; # requires aiohttp>=1.0.0
-      });
-    })
-
-    (self: super: {
-      huawei-lte-api = super.huawei-lte-api.overridePythonAttrs (oldAttrs: rec {
-        version = "1.4.18";
-        src = fetchFromGitHub {
-          owner = "Salamek";
-          repo = "huawei-lte-api";
-          rev = version;
-          sha256 = "1qaqxmh03j10wa9wqbwgc5r3ays8wfr7bldvsm45fycr3qfyn5fg";
-        };
-        propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [ python3.pkgs.dicttoxml ];
       });
     })
 
@@ -110,7 +108,7 @@ let
         src = fetchFromGitHub {
           owner = "ManneW";
           repo = "vilfo-api-client-python";
-          rev = "v$version}";
+          rev = "v${version}";
           sha256 = "1gy5gpsg99rcm1cc3m30232za00r9i46sp74zpd12p3vzz1wyyqf";
         };
       });
@@ -168,7 +166,7 @@ let
   extraPackagesFile = writeText "home-assistant-packages" (lib.concatMapStringsSep "\n" (pkg: pkg.pname) extraBuildInputs);
 
   # Don't forget to run parse-requirements.py after updating
-  hassVersion = "2022.4.7";
+  hassVersion = "2022.6.3";
 
 in python.pkgs.buildPythonApplication rec {
   pname = "homeassistant";
@@ -186,7 +184,7 @@ in python.pkgs.buildPythonApplication rec {
     owner = "home-assistant";
     repo = "core";
     rev = version;
-    hash = "sha256-1m3t+AeHyuEyu3gT8P37A+L28mBdNKGmycU6eNOyb4M=";
+    hash = "sha256-dYJbYrOwjJ2OO+gYT9UmCam+gNvSycFGUEeHBoGTqSM=";
   };
 
   # leave this in, so users don't have to constantly update their downstream patch handling
@@ -199,24 +197,18 @@ in python.pkgs.buildPythonApplication rec {
 
   postPatch = let
     relaxedConstraints = [
-      "aiohttp"
-      "async_timeout"
       "attrs"
       "awesomeversion"
       "bcrypt"
-      "cryptography"
       "httpx"
-      "jinja2"
-      "pip"
-      "requests"
-      "yarl"
+      "PyJWT"
     ];
   in ''
     sed -r -i \
       ${lib.concatStringsSep "\n" (map (package:
         ''-e 's@${package}[<>=]+.*@${package}@g' \''
       ) relaxedConstraints)}
-    setup.cfg
+      setup.cfg
     substituteInPlace tests/test_config.py --replace '"/usr"' '"/build/media"'
   '';
 
@@ -259,7 +251,6 @@ in python.pkgs.buildPythonApplication rec {
   checkInputs = with python.pkgs; [
     # test infrastructure (selectively from requirement_test.txt)
     freezegun
-    jsonpickle
     pytest-aiohttp
     pytest-freezegun
     pytest-mock
@@ -270,10 +261,6 @@ in python.pkgs.buildPythonApplication rec {
     requests-mock
     respx
     stdlib-list
-    tqdm
-    # required by tests/pylint
-    astroid
-    pylint
     # required by tests/auth/mfa_modules
     pyotp
   ] ++ lib.concatMap (component: getPackages component python.pkgs) [
@@ -297,6 +284,10 @@ in python.pkgs.buildPythonApplication rec {
   ];
 
   disabledTestPaths = [
+    # we neither run nor distribute hassfest
+    "tests/hassfest"
+    # we don't care about code quality
+    "tests/pylint"
     # don't bulk test all components
     "tests/components"
     # pyotp since v2.4.0 complains about the short mock keys, hass pins v2.3.0

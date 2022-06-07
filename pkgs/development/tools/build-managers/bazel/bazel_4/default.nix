@@ -197,6 +197,10 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     homepage = "https://github.com/bazelbuild/bazel/";
     description = "Build tool that builds code quickly and reliably";
+    sourceProvenance = with sourceTypes; [
+      fromSource
+      binaryBytecode  # source bundles dependencies as jars
+    ];
     license = licenses.asl20;
     maintainers = lib.teams.bazel.members;
     inherit platforms;
@@ -484,7 +488,6 @@ stdenv.mkDerivation rec {
       build --host_java_toolchain='${javaToolchain}'
       build --verbose_failures
       build --curses=no
-      build --sandbox_debug
       EOF
 
       # add the same environment vars to compile.sh
@@ -498,7 +501,6 @@ stdenv.mkDerivation rec {
           -e "/\$command \\\\$/a --host_java_toolchain='${javaToolchain}' \\\\" \
           -e "/\$command \\\\$/a --verbose_failures \\\\" \
           -e "/\$command \\\\$/a --curses=no \\\\" \
-          -e "/\$command \\\\$/a --sandbox_debug \\\\" \
           -i scripts/bootstrap/compile.sh
 
       # This is necessary to avoid:
@@ -525,7 +527,6 @@ stdenv.mkDerivation rec {
   # when a command can’t be found in a bazel build, you might also
   # need to add it to `defaultShellPath`.
   nativeBuildInputs = [
-    coreutils
     installShellFiles
     makeWrapper
     python3

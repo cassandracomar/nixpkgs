@@ -12,14 +12,14 @@
 
 buildPythonPackage rec {
   pname = "awscrt";
-  version = "0.13.9";
+  version = "0.13.11";
   format = "setuptools";
 
   disabled = pythonOlder "3.6";
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-9XUzHfezr+bhQt6OKYiVEaCHqqWE6J7Y4Rj3MmaMAXA=";
+    hash = "sha256-Yx3I3RD57Nx6Cvm4moc5zmMbdsHeYiMghDfbQUor38E=";
   };
 
   buildInputs = lib.optionals stdenv.isDarwin [
@@ -32,6 +32,11 @@ buildPythonPackage rec {
   hardeningDisable = lib.optionals stdenv.cc.isClang [
     "strictoverflow"
   ];
+
+  postPatch = ''
+    substituteInPlace setup.py \
+      --replace "extra_link_args += ['-Wl,-fatal_warnings']" ""
+  '';
 
   # gcc <10 is not supported, LLVM on darwin is just fine
   nativeBuildInputs = [

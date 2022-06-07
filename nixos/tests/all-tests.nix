@@ -26,8 +26,8 @@ let
     featureFlags.minimalModules = {};
   };
   evalMinimalConfig = module: nixosLib.evalModules { modules = [ module ]; };
-in
-{
+
+in {
   _3proxy = handleTest ./3proxy.nix {};
   acme = handleTest ./acme.nix {};
   adguardhome = handleTest ./adguardhome.nix {};
@@ -62,6 +62,7 @@ in
   breitbandmessung = handleTest ./breitbandmessung.nix {};
   brscan5 = handleTest ./brscan5.nix {};
   btrbk = handleTest ./btrbk.nix {};
+  btrbk-no-timer = handleTest ./btrbk-no-timer.nix {};
   buildbot = handleTest ./buildbot.nix {};
   buildkite-agents = handleTest ./buildkite-agents.nix {};
   caddy = handleTest ./caddy.nix {};
@@ -122,7 +123,6 @@ in
   doas = handleTest ./doas.nix {};
   docker = handleTestOn ["x86_64-linux"] ./docker.nix {};
   docker-rootless = handleTestOn ["x86_64-linux"] ./docker-rootless.nix {};
-  docker-edge = handleTestOn ["x86_64-linux"] ./docker-edge.nix {};
   docker-registry = handleTest ./docker-registry.nix {};
   docker-tools = handleTestOn ["x86_64-linux"] ./docker-tools.nix {};
   docker-tools-cross = handleTestOn ["x86_64-linux" "aarch64-linux"] ./docker-tools-cross.nix {};
@@ -151,6 +151,7 @@ in
   etcd-cluster = handleTestOn ["x86_64-linux"] ./etcd-cluster.nix {};
   etebase-server = handleTest ./etebase-server.nix {};
   etesync-dav = handleTest ./etesync-dav.nix {};
+  extra-python-packages = handleTest ./extra-python-packages.nix {};
   fancontrol = handleTest ./fancontrol.nix {};
   fcitx = handleTest ./fcitx {};
   fenics = handleTest ./fenics.nix {};
@@ -169,6 +170,7 @@ in
   frr = handleTest ./frr.nix {};
   fsck = handleTest ./fsck.nix {};
   ft2-clone = handleTest ./ft2-clone.nix {};
+  mimir = handleTest ./mimir.nix {};
   gerrit = handleTest ./gerrit.nix {};
   geth = handleTest ./geth.nix {};
   ghostunnel = handleTest ./ghostunnel.nix {};
@@ -235,6 +237,7 @@ in
   input-remapper = handleTest ./input-remapper.nix {};
   inspircd = handleTest ./inspircd.nix {};
   installer = handleTest ./installer.nix {};
+  installer-systemd-stage-1 = handleTest ./installer-systemd-stage-1.nix {};
   invoiceplane = handleTest ./invoiceplane.nix {};
   iodine = handleTest ./iodine.nix {};
   ipfs = handleTest ./ipfs.nix {};
@@ -252,6 +255,7 @@ in
   k3s-single-node = handleTest ./k3s-single-node.nix {};
   k3s-single-node-docker = handleTest ./k3s-single-node-docker.nix {};
   kafka = handleTest ./kafka.nix {};
+  kanidm = handleTest ./kanidm.nix {};
   kbd-setfont-decompress = handleTest ./kbd-setfont-decompress.nix {};
   kbd-update-search-paths-patch = handleTest ./kbd-update-search-paths-patch.nix {};
   kea = handleTest ./kea.nix {};
@@ -283,7 +287,6 @@ in
   loki = handleTest ./loki.nix {};
   lvm2 = handleTest ./lvm2 {};
   lxd = handleTest ./lxd.nix {};
-  lxd-image = handleTest ./lxd-image.nix {};
   lxd-nftables = handleTest ./lxd-nftables.nix {};
   lxd-image-server = handleTest ./lxd-image-server.nix {};
   #logstash = handleTest ./logstash.nix {};
@@ -363,6 +366,7 @@ in
   nginx = handleTest ./nginx.nix {};
   nginx-auth = handleTest ./nginx-auth.nix {};
   nginx-etag = handleTest ./nginx-etag.nix {};
+  nginx-http3 = handleTest ./nginx-http3.nix {};
   nginx-modsecurity = handleTest ./nginx-modsecurity.nix {};
   nginx-pubhtml = handleTest ./nginx-pubhtml.nix {};
   nginx-sandbox = handleTestOn ["x86_64-linux"] ./nginx-sandbox.nix {};
@@ -455,6 +459,7 @@ in
   proxy = handleTest ./proxy.nix {};
   prowlarr = handleTest ./prowlarr.nix {};
   pt2-clone = handleTest ./pt2-clone.nix {};
+  public-inbox = handleTest ./public-inbox.nix {};
   pulseaudio = discoverTests (import ./pulseaudio.nix);
   qboot = handleTestOn ["x86_64-linux" "i686-linux"] ./qboot.nix {};
   quorum = handleTest ./quorum.nix {};
@@ -524,6 +529,7 @@ in
   systemd-confinement = handleTest ./systemd-confinement.nix {};
   systemd-cryptenroll = handleTest ./systemd-cryptenroll.nix {};
   systemd-escaping = handleTest ./systemd-escaping.nix {};
+  systemd-initrd-btrfs-raid = handleTest ./systemd-initrd-btrfs-raid.nix {};
   systemd-initrd-luks-keyfile = handleTest ./systemd-initrd-luks-keyfile.nix {};
   systemd-initrd-luks-password = handleTest ./systemd-initrd-luks-password.nix {};
   systemd-initrd-shutdown = handleTest ./systemd-shutdown.nix { systemdStage1 = true; };
@@ -572,8 +578,10 @@ in
   unifi = handleTest ./unifi.nix {};
   unit-php = handleTest ./web-servers/unit-php.nix {};
   upnp = handleTest ./upnp.nix {};
+  uptermd = handleTest ./uptermd.nix {};
   usbguard = handleTest ./usbguard.nix {};
   user-activation-scripts = handleTest ./user-activation-scripts.nix {};
+  user-home-mode = handleTest ./user-home-mode.nix {};
   uwsgi = handleTest ./uwsgi.nix {};
   v2ray = handleTest ./v2ray.nix {};
   vault = handleTest ./vault.nix {};

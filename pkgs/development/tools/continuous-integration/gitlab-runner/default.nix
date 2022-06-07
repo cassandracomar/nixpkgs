@@ -1,7 +1,7 @@
 { lib, buildGoModule, fetchFromGitLab, fetchurl }:
 
 let
-  version = "14.10.0";
+  version = "15.0.0";
 in
 buildGoModule rec {
   inherit version;
@@ -20,7 +20,7 @@ buildGoModule rec {
     owner = "gitlab-org";
     repo = "gitlab-runner";
     rev = "v${version}";
-    sha256 = "033b68hwqk5hn2by4hk1z7v6p08d505grl9hrx72p4wpyk18c80l";
+    sha256 = "1s7jqhrwy5wl0db37d3pms499mmy7msx4ch46w5qa25nfbxcr07c";
   };
 
   patches = [
@@ -55,6 +55,6 @@ buildGoModule rec {
     license = licenses.mit;
     homepage = "https://about.gitlab.com/gitlab-ci/";
     platforms = platforms.unix ++ platforms.darwin;
-    maintainers = with maintainers; [ bachp zimbatm globin ];
+    maintainers = with maintainers; [ bachp zimbatm globin yayayayaka ];
   };
 }

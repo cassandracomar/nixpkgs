@@ -117,6 +117,7 @@ broken-packages:
   - alerta
   - alex-prelude
   - alfred
+  - alfred-margaret
   - alga
   - algebra-dag
   - algebraic-classes
@@ -357,7 +358,6 @@ broken-packages:
   - binary-communicator
   - binary-derive
   - binary-ext
-  - binary-generic-combinators
   - binary-indexed-tree
   - binary-protocol
   - binary-tree
@@ -453,9 +453,9 @@ broken-packages:
   - botpp
   - bottom
   - boundingboxes
-  - bower-json
   - bowntz
   - bpath
+  - BPS
   - braid
   - brain-bleep
   - Bravo
@@ -512,6 +512,7 @@ broken-packages:
   - bytestring-substring
   - bytestring-time
   - bytestring-typenats
+  - bzlib-conduit-jappie
   - c10k
   - c2ats
   - cab
@@ -523,7 +524,9 @@ broken-packages:
   - cabal-bundle-clib
   - cabal-constraints
   - cabal-db
+  - cabal-debian
   - cabal-dependency-licenses
+  - cabal-detailed-quickcheck
   - cabal-dev
   - cabal-dir
   - cabal-edit
@@ -669,6 +672,8 @@ broken-packages:
   - citeproc-hs
   - cjk
   - cj-token
+  - cl3-hmatrix-interface
+  - cl3-linear-interface
   - clang-compilation-database
   - clang-pure
   - clanki
@@ -761,13 +766,18 @@ broken-packages:
   - compaREST
   - comparse
   - compdata
+  - compdoc
   - compendium-client
   - competition
   - compilation
   - complex-generic
   - composable-associations-aeson
   - compose-trans
-  - composite-aeson
+  - composite-aeson-path
+  - composite-cassava
+  - composite-dhall
+  - composite-ekg
+  - composite-lens-extra
   - composite-opaleye
   - composition-tree
   - comprehensions-ghc
@@ -853,6 +863,7 @@ broken-packages:
   - CoreDump
   - CoreErlang
   - core-haskell
+  - core-webserver-warp
   - Coroutine
   - coroutine-object
   - CouchDB
@@ -1008,6 +1019,7 @@ broken-packages:
   - dbf
   - DBlimited
   - dbm
+  - dbmigrations
   - dbmigrations-mysql
   - dbmigrations-postgresql
   - dbmigrations-sqlite
@@ -1024,7 +1036,6 @@ broken-packages:
   - dead-code-detection
   - Deadpan-DDP
   - dead-simple-json
-  - debian
   - debug-me
   - debug-tracy
   - decepticons
@@ -1048,6 +1059,7 @@ broken-packages:
   - dense-int-set
   - dependent-hashmap
   - dependent-monoidal-map
+  - dep-t
   - dep-t-dynamic
   - deptrack-core
   - derangement
@@ -1208,6 +1220,7 @@ broken-packages:
   - dynamic-object
   - dynamic-pipeline
   - DynamicTimeWarp
+  - dyna-processing
   - dynloader
   - DysFRP
   - dywapitchtrack
@@ -1233,6 +1246,7 @@ broken-packages:
   - ede
   - edenmodules
   - edis
+  - EdisonAPI
   - EdisonCore
   - edit
   - edit-lenses
@@ -1394,7 +1408,6 @@ broken-packages:
   - fast-nats
   - fastpbkdf2
   - FastPush
-  - fast-tags
   - FastxPipe
   - fathead-util
   - fb
@@ -1543,7 +1556,6 @@ broken-packages:
   - fresh
   - friday-devil
   - friday-scale-dct
-  - friendly
   - frown
   - frp-arduino
   - frpnow
@@ -1576,6 +1588,7 @@ broken-packages:
   - fused-effects-exceptions
   - fused-effects-mwc-random
   - fused-effects-resumable
+  - fused-effects-squeal
   - fusion
   - futhask
   - futun
@@ -1600,6 +1613,7 @@ broken-packages:
   - gegl
   - gelatin
   - gemcap
+  - gemini-exports
   - gemstone
   - gencheck
   - gender
@@ -1728,6 +1742,7 @@ broken-packages:
   - gitson
   - gitter
   - git-vogue
+  - glade
   - glapp
   - glaze
   - Gleam
@@ -1774,6 +1789,7 @@ broken-packages:
   - gpah
   - GPipe
   - GPipe-GLFW4
+  - gpmf
   - gpx-conduit
   - graceful
   - grafana
@@ -1890,6 +1906,7 @@ broken-packages:
   - hakyll-typescript
   - HaLeX
   - halfs
+  - half-space
   - halipeto
   - halive
   - halma
@@ -1902,6 +1919,7 @@ broken-packages:
   - HandlerSocketClient
   - handsy
   - Hangman
+  - HangmanAscii
   - hannahci
   - hans
   - hanspell
@@ -2093,6 +2111,7 @@ broken-packages:
   - hdo
   - hdph-closure
   - hdr-histogram
+  - HDRUtils
   - headergen
   - heap-console
   - heapsort
@@ -2103,6 +2122,7 @@ broken-packages:
   - hedgehog-checkers
   - hedgehog-generic
   - hedgehog-golden
+  - hedgehog-lens
   - hedgehog-servant
   - hedis-config
   - hedis-namespace
@@ -2834,6 +2854,7 @@ broken-packages:
   - lagrangian
   - lambda2js
   - lambdaBase
+  - lambdabot-telegram-plugins
   - lambdabot-utils
   - lambdabot-xmpp
   - lambda-bridge
@@ -2891,9 +2912,11 @@ broken-packages:
   - layers
   - layout
   - layout-bootstrap
+  - layout-rules
   - lazify
   - lazyarray
   - lazyboy
+  - lazy-bracket
   - lazy-priority-queue
   - lazyset
   - LazyVault
@@ -3063,7 +3086,7 @@ broken-packages:
   - LTS
   - lua-bc
   - luautils
-  - lucid-htmx
+  - lucid2
   - lucid-hyperscript
   - luis-client
   - luka
@@ -3334,7 +3357,6 @@ broken-packages:
   - msgpack
   - msgpack-binary
   - msgpack-persist
-  - msgpack-types
   - msh
   - msi-kb-backlit
   - MTGBuilder
@@ -3600,7 +3622,6 @@ broken-packages:
   - open-signals
   - opensoundcontrol-ht
   - openssh-protocol
-  - opentelemetry-extra
   - opentelemetry-http-client
   - opentheory-char
   - opentok
@@ -3900,6 +3921,7 @@ broken-packages:
   - plzwrk
   - pngload-fixed
   - pocket
+  - podenv
   - pointedalternative
   - pointfree-fancy
   - pointful
@@ -3917,7 +3939,6 @@ broken-packages:
   - poly-control
   - polydata-core
   - polynom
-  - polynomial
   - polynomial-algebra
   - polysemy-check
   - polysemy-keyed-state
@@ -3925,6 +3946,7 @@ broken-packages:
   - polysemy-mocks
   - polysemy-readline
   - polysemy-req
+  - polysemy-scoped-fs
   - polysemy-zoo
   - polytypeable
   - polyvariadic
@@ -3959,6 +3981,7 @@ broken-packages:
   - postgresql-simple-sop
   - postgresql-transactional
   - postgresql-tx-simple
+  - postgresql-tx-squeal
   - postgresql-typed-lifted
   - postgres-tmp
   - postgrest-ws
@@ -4078,9 +4101,8 @@ broken-packages:
   - Pup-Events-Server
   - purebred-email
   - pure-io
+  - purenix
   - pure-priority-queue
-  - purescript-ast
-  - purescript-cst
   - pure-zlib
   - pushbullet
   - pushbullet-types
@@ -4197,7 +4219,6 @@ broken-packages:
   - record
   - record-encode
   - records
-  - records-sop
   - record-wrangler
   - recursion-schemes-ext
   - recursion-schemes-ix
@@ -4214,6 +4235,7 @@ broken-packages:
   - Referees
   - references
   - refined-http-api-data
+  - refined-with
   - reflection-extras
   - reflex-basic-host
   - reflex-dom-ace
@@ -4337,7 +4359,6 @@ broken-packages:
   - robin
   - robots-txt
   - roc-cluster
-  - roc-id
   - roku-api
   - rollbar-client
   - rollbar-hs
@@ -4467,7 +4488,6 @@ broken-packages:
   - semigroups-actions
   - sendgrid-haskell
   - sendgrid-v3
-  - sensei
   - sensu-run
   - sentry
   - separated
@@ -4481,7 +4501,6 @@ broken-packages:
   - servant-auth-hmac
   - servant-avro
   - servant-benchmark
-  - servant-cassava
   - servant-client-js
   - servant-db
   - servant-dhall
@@ -4583,6 +4602,7 @@ broken-packages:
   - signable-haskell-protoc
   - signed-multiset
   - simd
+  - simfin
   - simple-actors
   - simpleargs
   - simple-atom
@@ -4616,6 +4636,7 @@ broken-packages:
   - simple-templates
   - simple-ui
   - simple-units
+  - simple-vec3
   - simplexmq
   - simple-zipper
   - simplistic-generics
@@ -4755,6 +4776,7 @@ broken-packages:
   - spir-v
   - splay
   - splaytree
+  - splines
   - split-morphism
   - splitter
   - Spock-api-ghcjs
@@ -4883,6 +4905,7 @@ broken-packages:
   - stripeapi
   - stripe-core
   - stripe-servant
+  - strongweak
   - structural-traversal
   - structures
   - stt
@@ -5060,6 +5083,7 @@ broken-packages:
   - text1
   - text-and-plots
   - text-ascii
+  - text-builder-linear
   - text-containers
   - text-format
   - text-format-heavy
@@ -5103,7 +5127,6 @@ broken-packages:
   - thorn
   - th-pprint
   - threadmanager
-  - threadscope
   - thread-supervisor
   - threepenny-editors
   - threepenny-gui-contextmenu
@@ -5264,6 +5287,7 @@ broken-packages:
   - typalyze
   - typeable-mock
   - typeable-th
+  - typecheck-plugin-nat-simple
   - type-combinators
   - typed-digits
   - typed-encoding
@@ -5383,6 +5407,7 @@ broken-packages:
   - utf8-prelude
   - utf8-validator
   - UTFTConverter
+  - util
   - util-logict
   - util-plus
   - util-primitive
@@ -5539,6 +5564,7 @@ broken-packages:
   - webdriver
   - webdriver-snoy
   - web-encodings
+  - webkitgtk3
   - WeberLogic
   - webex-teams-pipes
   - webfinger-client
@@ -5799,3 +5825,4 @@ broken-packages:
   - Zwaluw
   - zxcvbn-hs
   - zydiskell
+  - zyre2

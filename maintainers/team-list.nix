@@ -198,6 +198,18 @@ with lib.maintainers; {
     enableFeatureFreezePing = true;
   };
 
+  enlightenment = {
+    members = [
+      romildo
+    ];
+    githubTeams = [
+      "enlightenment"
+    ];
+    scope = "Maintain Enlightenment desktop environment and related packages.";
+    shortName = "Enlightenment";
+    enableFeatureFreezePing = true;
+  };
+
   # Dummy group for the "everyone else" section
   feature-freeze-everyone-else = {
     members = [ ];
@@ -343,6 +355,40 @@ with lib.maintainers; {
     shortName = "Linux Kernel";
   };
 
+  lumiguide = {
+    # Verify additions by approval of an already existing member of the team.
+    members = [
+      roelvandijk
+      lucus16
+    ];
+    scope = "Group registration for LumiGuide employees who collectively maintain packages.";
+    shortName = "Lumiguide employees";
+  };
+
+  lumina = {
+    members = [
+      romildo
+    ];
+    githubTeams = [
+      "lumina"
+    ];
+    scope = "Maintain lumina desktop environment and related packages.";
+    shortName = "Lumina";
+    enableFeatureFreezePing = true;
+  };
+
+  lxqt = {
+    members = [
+      romildo
+    ];
+    githubTeams = [
+      "lxqt"
+    ];
+    scope = "Maintain LXQt desktop environment and related packages.";
+    shortName = "LXQt";
+    enableFeatureFreezePing = true;
+  };
+
   marketing = {
     members = [
       garbas
@@ -407,6 +453,19 @@ with lib.maintainers; {
     scope = "Maintain nixpkgs module system internals.";
     shortName = "NixOS Modules / internals";
     enableFeatureFreezePing = true;
+  };
+
+  numtide = {
+    members = [
+      mic92
+      flokli
+      jfroche
+      tazjin
+      zimbatm
+    ];
+    enableFeatureFreezePing = true;
+    scope = "Group registration for Numtide team members who collectively maintain packages.";
+    shortName = "Numtide team";
   };
 
   openstack = {

@@ -13,7 +13,6 @@
 , tomli
 , typing-extensions
 , GitPython
-, pytest-benchmark
 , pytest-timeout
 , pytest-xdist
 , pytestCheckHook
@@ -58,7 +57,6 @@ buildPythonPackage rec {
   checkInputs = [
     GitPython
     # https://github.com/PyCQA/pylint/blob/main/requirements_test_min.txt
-    pytest-benchmark
     pytest-timeout
     pytest-xdist
     pytestCheckHook
@@ -74,6 +72,7 @@ buildPythonPackage rec {
   '';
 
   disabledTestPaths = [
+    "tests/benchmark"
     # tests miss multiple input files
     # FileNotFoundError: [Errno 2] No such file or directory
     "tests/pyreverse/test_writer.py"
@@ -87,7 +86,16 @@ buildPythonPackage rec {
   meta = with lib; {
     homepage = "https://pylint.pycqa.org/";
     description = "A bug and style checker for Python";
+    longDescription = ''
+      Pylint is a Python static code analysis tool which looks for programming errors,
+      helps enforcing a coding standard, sniffs for code smells and offers simple
+      refactoring suggestions.
+      Pylint is shipped with following additional commands:
+      - pyreverse: an UML diagram generator
+      - symilar: an independent similarities checker
+      - epylint: Emacs and Flymake compatible Pylint
+    '';
     license = licenses.gpl1Plus;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [ totoroot ];
   };
 }

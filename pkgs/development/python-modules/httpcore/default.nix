@@ -39,10 +39,13 @@ buildPythonPackage rec {
     anyio
     certifi
     h11
-    h2
     sniffio
-    socksio
   ];
+
+  passthru.optional-dependencies = {
+    http2 = [ h2 ];
+    socks = [ socksio ];
+  };
 
   checkInputs = [
     pproxy
@@ -53,7 +56,8 @@ buildPythonPackage rec {
     trio
     trustme
     uvicorn
-  ];
+  ] ++ passthru.optional-dependencies.http2
+    ++ passthru.optional-dependencies.socks;
 
   pythonImportsCheck = [ "httpcore" ];
 

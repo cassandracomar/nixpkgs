@@ -16,7 +16,6 @@ let
   knownTreeSitterOrgGrammarRepos = [
     "tree-sitter-javascript"
     "tree-sitter-c"
-    "tree-sitter-swift"
     "tree-sitter-json"
     "tree-sitter-cpp"
     "tree-sitter-ruby"
@@ -42,6 +41,7 @@ let
     "tree-sitter-ql"
     "tree-sitter-embedded-template"
     "tree-sitter-tsq"
+    "tree-sitter-toml"
   ];
   knownTreeSitterOrgGrammarReposJson = jsonFile "known-tree-sitter-org-grammar-repos" knownTreeSitterOrgGrammarRepos;
 
@@ -69,6 +69,8 @@ let
     "tree-sitter-razor"
     # rust library for constructing arbitrary graph structures from source code
     "tree-sitter-graph"
+    # abandoned
+    "tree-sitter-swift"
   ];
   ignoredTreeSitterOrgReposJson = jsonFile "ignored-tree-sitter-org-repos" ignoredTreeSitterOrgRepos;
 
@@ -136,10 +138,6 @@ let
       orga = "ikatyang";
       repo = "tree-sitter-yaml";
     };
-    "tree-sitter-toml" = {
-      orga = "ikatyang";
-      repo = "tree-sitter-toml";
-    };
     "tree-sitter-zig" = {
       orga = "maxxnino";
       repo = "tree-sitter-zig";
@@ -183,6 +181,10 @@ let
     "tree-sitter-graphql" = {
       orga = "bkegley";
       repo = "tree-sitter-graphql";
+    };
+    "tree-sitter-pgn" = {
+      orga = "rolandwalker";
+      repo = "tree-sitter-pgn";
     };
     "tree-sitter-perl" = {
       orga = "ganezdragon";
@@ -279,6 +281,10 @@ let
     "tree-sitter-cmake" = {
       orga = "uyha";
       repo = "tree-sitter-cmake";
+    };
+    "tree-sitter-janet-simple" = {
+      orga = "sogaiu";
+      repo = "tree-sitter-janet-simple";
     };
     "tree-sitter-json5" = {
       orga = "joakker";

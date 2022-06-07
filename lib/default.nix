@@ -36,6 +36,7 @@ let
 
     # constants
     licenses = callLibs ./licenses.nix;
+    sourceTypes = callLibs ./source-types.nix;
     systems = callLibs ./systems;
 
     # serialization
@@ -94,7 +95,8 @@ let
       concatImapStringsSep makeSearchPath makeSearchPathOutput
       makeLibraryPath makeBinPath optionalString
       hasInfix hasPrefix hasSuffix stringToCharacters stringAsChars escape
-      escapeShellArg escapeShellArgs escapeRegex escapeXML replaceChars lowerChars
+      escapeShellArg escapeShellArgs isValidPosixName toShellVar toShellVars
+      escapeRegex escapeXML replaceChars lowerChars
       upperChars toLower toUpper addContextFrom splitString
       removePrefix removeSuffix versionOlder versionAtLeast
       getName getVersion
@@ -108,7 +110,7 @@ let
       makeScope makeScopeWithSplicing;
     inherit (self.meta) addMetaAttrs dontDistribute setName updateName
       appendToName mapDerivationAttrset setPrio lowPrio lowPrioSet hiPrio
-      hiPrioSet getLicenseFromSpdxId;
+      hiPrioSet getLicenseFromSpdxId getExe;
     inherit (self.sources) pathType pathIsDirectory cleanSourceFilter
       cleanSource sourceByRegex sourceFilesBySuffices
       commitIdFromGitRepo cleanSourceWith pathHasContext

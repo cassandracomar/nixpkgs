@@ -17,6 +17,7 @@ let
   # Run the tests for each platform.  You can run a test by doing
   # e.g. ‘nix-build -A tests.login.x86_64-linux’, or equivalently,
   # ‘nix-build tests/login.nix -A result’.
+  # See also nixosTests in pkgs/top-level/all-packages.nix
   allTestsForSystem = system:
     import ./tests/all-tests.nix {
       inherit system;
@@ -24,7 +25,19 @@ let
       callTest = t: {
         ${system} = hydraJob t.test;
       };
+    } // {
+      # for typechecking of the scripts and evaluation of
+      # the nodes, without running VMs.
+      allDrivers =
+        import ./tests/all-tests.nix {
+        inherit system;
+        pkgs = import ./.. { inherit system; };
+        callTest = t: {
+          ${system} = hydraJob t.test.driver;
+        };
+      };
     };
+
   allTests =
     foldAttrs recursiveUpdate {} (map allTestsForSystem supportedSystems);
 
@@ -150,13 +163,13 @@ in rec {
   });
 
   iso_plasma5 = forMatchingSystems [ "x86_64-linux" ] (system: makeIso {
-    module = ./modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix;
+    module = ./modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma5.nix;
     type = "plasma5";
     inherit system;
   });
 
   iso_gnome = forMatchingSystems [ "x86_64-linux" ] (system: makeIso {
-    module = ./modules/installer/cd-dvd/installation-cd-graphical-gnome.nix;
+    module = ./modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix;
     type = "gnome";
     inherit system;
   });
