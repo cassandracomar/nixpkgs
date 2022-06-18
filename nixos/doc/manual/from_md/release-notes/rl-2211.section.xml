@@ -36,6 +36,18 @@
           PHP now defaults to PHP 8.1, updated from 8.0.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          <literal>hardware.nvidia</literal> has a new option
+          <literal>open</literal> that can be used to opt in the
+          opensource version of NVIDIA kernel driver. Note that the
+          driver’s support for GeForce and Workstation GPUs is still
+          alpha quality, see
+          <link xlink:href="https://developer.nvidia.com/blog/nvidia-releases-open-source-gpu-kernel-modules/">NVIDIA
+          Releases Open-Source GPU Kernel Modules</link> for the
+          official announcement.
+        </para>
+      </listitem>
     </itemizedlist>
   </section>
   <section xml:id="sec-release-22.11-new-services">
@@ -50,9 +62,32 @@
       </listitem>
       <listitem>
         <para>
+          <link xlink:href="https://dragonflydb.io/">dragonflydb</link>,
+          a modern replacement for Redis and Memcached. Available as
+          <link linkend="opt-services.dragonflydb.enable">services.dragonflydb</link>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           <link xlink:href="https://github.com/leetronics/infnoise">infnoise</link>,
           a hardware True Random Number Generator dongle. Available as
           <link xlink:href="options.html#opt-services.infnoise.enable">services.infnoise</link>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <link xlink:href="https://github.com/aiberia/persistent-evdev">persistent-evdev</link>,
+          a daemon to add virtual proxy devices that mirror a physical
+          input device but persist even if the underlying hardware is
+          hot-plugged. Available as
+          <link linkend="opt-services.persistent-evdev.enable">services.persistent-evdev</link>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <link xlink:href="https://www.expressvpn.com">expressvpn</link>,
+          the CLI client for ExpressVPN. Available as
+          <link linkend="opt-services.expressvpn.enable">services.expressvpn</link>.
         </para>
       </listitem>
     </itemizedlist>
@@ -79,6 +114,17 @@
       </listitem>
       <listitem>
         <para>
+          <literal>ngrok</literal> has been upgraded from 2.3.40 to
+          3.0.4. Please see
+          <link xlink:href="https://ngrok.com/docs/guides/upgrade-v2-v3">the
+          upgrade guide</link> and
+          <link xlink:href="https://ngrok.com/docs/ngrok-agent/changelog">changelog</link>.
+          Notably, breaking changes are that the config file format has
+          changed and support for single hypen arguments was dropped.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           The <literal>isPowerPC</literal> predicate, found on
           <literal>platform</literal> attrsets
           (<literal>hostPlatform</literal>,
@@ -90,6 +136,26 @@
           a broader set of systems. If you were using this predicate,
           you can replace <literal>foo.isPowerPC</literal> with
           <literal>(with foo; isPower &amp;&amp; is32bit &amp;&amp; isBigEndian)</literal>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          PHP 7.4 is no longer supported due to upstream not supporting
+          this version for the entire lifecycle of the 22.11 release.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          (Neo)Vim can not be configured with
+          <literal>configure.pathogen</literal> anymore to reduce
+          maintainance burden. Use <literal>configure.packages</literal>
+          instead.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>k3s</literal> no longer supports docker as runtime
+          due to upstream dropping support.
         </para>
       </listitem>
     </itemizedlist>
