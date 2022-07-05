@@ -133,10 +133,10 @@ with pkgs;
       sourceVersion = {
         major = "3";
         minor = "10";
-        patch = "4";
+        patch = "5";
         suffix = "";
       };
-      sha256 = "sha256-gL+SX1cdpDazUhCIbPefbrX6XWxXExa3NWg0NFH3ehk=";
+      sha256 = "sha256-hDfv1bEG7wp1qr+/I9iAYlEgpzqGoireTS4uaNe3RIY=";
     };
   };
 
@@ -230,7 +230,7 @@ in {
     enableOptimizations = false;
     enableLTO = false;
     mimetypesSupport = false;
-  } // sources.python39)).overrideAttrs(old: {
+  } // sources.python310)).overrideAttrs(old: {
     # TODO(@Artturin): Add this to the main cpython expr
     strictDeps = true;
     pname = "python3-minimal";

@@ -7,6 +7,7 @@
 , "@bitwarden/cli"
 , "@commitlint/cli"
 , "@commitlint/config-conventional"
+, "@forge/cli"
 , "@google/clasp"
 , "@hyperspace/cli"
 , "@medable/mdctl-cli"
@@ -174,7 +175,7 @@
 , "insect"
 , "intelephense"
 , "ionic"
-, {"iosevka": "https://github.com/be5invis/Iosevka/archive/v15.5.0.tar.gz"}
+, {"iosevka": "https://github.com/be5invis/Iosevka/archive/v15.5.2.tar.gz"}
 , "jake"
 , "javascript-typescript-langserver"
 , "joplin"

@@ -40,6 +40,7 @@ stdenv.mkDerivation rec {
     description =
       "Cross-platform, easy to use, fast and functional audio editor";
     homepage = "https://www.ocenaudio.com";
+    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
     license = licenses.unfree;
     platforms = platforms.linux;
     maintainers = with maintainers; [ onny ];

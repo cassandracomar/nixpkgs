@@ -39,7 +39,7 @@
 
 buildPythonPackage rec {
   pname = "wandb";
-  version = "0.12.18";
+  version = "0.12.20";
   format = "setuptools";
 
   disabled = pythonOlder "3.6";
@@ -47,8 +47,8 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = pname;
     repo = "client";
-    rev = "v${version}";
-    hash = "sha256-9++CFoC8p3cACPyjRbb6i8MdJp8iD9GUh0uHpTiufdg=";
+    rev = "refs/tags/v${version}";
+    hash = "sha256-zS3DA06uLfUApe0kDAbqPA+2is70bnb9EifgFWqcuRg=";
   };
 
   patches = [
