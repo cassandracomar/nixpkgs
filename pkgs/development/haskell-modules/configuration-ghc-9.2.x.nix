@@ -120,13 +120,6 @@ self: super: {
   path = doJailbreak super.path;
   polyparse = overrideCabal (drv: { postPatch = "sed -i -e 's, <0.11, <0.12,' polyparse.cabal"; }) (doJailbreak super.polyparse);
   primitive = doJailbreak super.primitive;
-  # https://github.com/protolude/protolude/pull/136
-  protolude = appendPatches [
-    (pkgs.fetchpatch {
-      url = "https://github.com/protolude/protolude/commit/47820a36c25ea6f0c6e44382f7d4f3507358b8e7.diff";
-      sha256 = "sha256-PtHx5SyTgqFzI03YVeQD+RqglO6ASMQWSxdpy4ROMDY=";
-    })
-  ] (doJailbreak super.protolude);
   regex-posix = doJailbreak super.regex-posix;
   resolv = doJailbreak super.resolv;
   retrie = doDistribute (dontCheck self.retrie_1_2_0_1);
@@ -161,16 +154,6 @@ self: super: {
       "--skip=/Hpack/renderCabalFile/is inverse to readCabalFile/"
     ] ++ drv.testFlags or [];
   }) (doJailbreak super.hpack);
-
-  validity = pkgs.lib.pipe super.validity [
-    # head.hackage patch
-    (appendPatch (pkgs.fetchpatch {
-      url = "https://gitlab.haskell.org/ghc/head.hackage/-/raw/9110e6972b5daf085e19cad41f97920d3ddac499/patches/validity-0.12.0.0.patch";
-      sha256 = "0hzns596dxvyn8irgi7aflx76wak1qi13chkkvl0055pkgykm08f";
-    }))
-    # head.hackage ignores test suite
-    dontCheck
-  ];
 
   # lens >= 5.1 supports 9.2.1
   lens = doDistribute self.lens_5_1_1;

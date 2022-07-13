@@ -262,6 +262,7 @@ broken-packages:
   - authenticate-ldap
   - authinfo-hs
   - auto
+  - autodocodec-yaml
   - autom
   - autonix-deps
   - autopack
@@ -820,7 +821,6 @@ broken-packages:
   - config-parser
   - Configurable
   - configuration
-  - configurator-pg
   - config-value-getopt
   - confsolve
   - congruence-relation
@@ -1134,6 +1134,7 @@ broken-packages:
   - direct-plugins
   - direm
   - dirtree
+  - discord-haskell
   - discordian-calendar
   - discord-types
   - discrete
@@ -1314,6 +1315,7 @@ broken-packages:
   - enum-text
   - enum-utf8
   - envelope
+  - env-extra
   - env-parser
   - envstatus
   - epanet-haskell
@@ -1417,6 +1419,7 @@ broken-packages:
   - fast-nats
   - fastpbkdf2
   - FastPush
+  - fast-tags
   - FastxPipe
   - fathead-util
   - fb
@@ -1659,6 +1662,7 @@ broken-packages:
   - gentlemark
   - geocode-google
   - GeocoderOpenCage
+  - geodetics
   - geodetic-types
   - GeoIp
   - geojson-types
@@ -2068,7 +2072,6 @@ broken-packages:
   - hasql-cursor-transaction
   - hasql-explain-tests
   - hasql-generic
-  - hasql-implicits
   - hasql-resource-pool
   - hasql-simple
   - hasql-streams-example
@@ -2453,7 +2456,6 @@ broken-packages:
   - hspec-snap
   - hspec-structured-formatter
   - hspec-tables
-  - hspec-wai-json
   - HsPerl5
   - hs-pgms
   - hspkcs11
@@ -2672,6 +2674,7 @@ broken-packages:
   - interval
   - interval-algebra
   - interval-patterns
+  - interval-tree-clock
   - IntFormats
   - int-multimap
   - intricacy
@@ -2843,6 +2846,7 @@ broken-packages:
   - khph
   - kickass-torrents-dump-parser
   - kickchan
+  - ki-unlifted
   - kleene-list
   - kmonad
   - kmp-dfa
@@ -4006,6 +4010,7 @@ broken-packages:
   - postgresql-tx-simple
   - postgresql-tx-squeal
   - postgresql-typed-lifted
+  - postgrest
   - postgres-tmp
   - postgrest-ws
   - postgres-websockets
@@ -4014,7 +4019,6 @@ broken-packages:
   - postmaster
   - potato-tool
   - potoki-core
-  - powerdns
   - powermate
   - powerpc
   - powerqueue-levelmem
@@ -4110,6 +4114,7 @@ broken-packages:
   - provenience
   - proxy-kindness
   - proxy-mapping
+  - psc-ide
   - pseudo-trie
   - PSQueue
   - PTQ
@@ -4127,6 +4132,7 @@ broken-packages:
   - pure-io
   - purenix
   - pure-priority-queue
+  - purescript-tsd-gen
   - pure-zlib
   - pushbullet
   - pushbullet-types
@@ -4135,6 +4141,7 @@ broken-packages:
   - push-notifications
   - putlenses
   - puzzle-draw
+  - pvector
   - pyffi
   - pyfi
   - python-pickle
@@ -4418,6 +4425,7 @@ broken-packages:
   - ruin
   - runhs
   - runmany
+  - rustls
   - rws
   - RxHaskell
   - rz-pipe
@@ -5838,6 +5846,7 @@ broken-packages:
   - zendesk-api
   - zeno
   - zeolite-lang
+  - zephyr
   - zeromq4-clone-pattern
   - zeromq4-conduit
   - zeromq4-patterns
