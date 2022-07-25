@@ -269,6 +269,13 @@
       </listitem>
       <listitem>
         <para>
+          The <literal>meta.mainProgram</literal> attribute of packages
+          in <literal>wineWowPackages</literal> now defaults to
+          <literal>&quot;wine64&quot;</literal>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           (Neo)Vim can not be configured with
           <literal>configure.pathogen</literal> anymore to reduce
           maintainance burden. Use <literal>configure.packages</literal>
@@ -339,6 +346,15 @@
       <listitem>
         <para>
           Add udev rules for the Teensy family of microcontrollers.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The <literal>pass-secret-service</literal> package now
+          includes systemd units from upstream, so adding it to the
+          NixOS <literal>services.dbus.packages</literal> option will
+          make it start automatically as a systemd user service when an
+          application tries to talk to the libsecret D-Bus API.
         </para>
       </listitem>
       <listitem>

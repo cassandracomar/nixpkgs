@@ -17,16 +17,16 @@
 
 buildPythonPackage rec {
   pname = "homematicip";
-  version = "1.0.3";
+  version = "1.0.6";
   format = "setuptools";
 
   disabled = pythonOlder "3.6";
 
   src = fetchFromGitHub {
-    owner = "coreGreenberet";
+    owner = "hahn-th";
     repo = "homematicip-rest-api";
-    rev = version;
-    sha256 = "sha256-rTTYJ/2R+/FLuL3rTWT7ieixN+Gv9GhwkUaKPfLqUGc=";
+    rev = "refs/tags/${version}";
+    hash = "sha256-z27VGApm5VsDm6VG0DaDOmhFrvRhLLINHtSM/cIiXyY=";
   };
 
   propagatedBuildInputs = [
@@ -80,8 +80,8 @@ buildPythonPackage rec {
   ];
 
   meta = with lib; {
-    description = "Python module for the homematicIP REST API";
-    homepage = "https://github.com/coreGreenberet/homematicip-rest-api";
+    description = "Module for the homematicIP REST API";
+    homepage = "https://github.com/hahn-th/homematicip-rest-api";
     license = with licenses; [ gpl3Only ];
     maintainers = with maintainers; [ fab ];
   };

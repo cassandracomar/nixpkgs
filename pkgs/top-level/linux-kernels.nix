@@ -218,29 +218,17 @@ in {
       ];
     }).lqx;
 
-    # This contains both the STABLE and EDGE variants of the XanMod kernel
-    xanmodKernels = callPackage ../os-specific/linux/kernel/xanmod-kernels.nix;
-
-    linux_xanmod = (xanmodKernels {
+    # This contains the variants of the XanMod kernel
+    xanmodKernels = callPackage ../os-specific/linux/kernel/xanmod-kernels.nix {
       kernelPatches = [
         kernelPatches.bridge_stp_helper
         kernelPatches.request_key_helper
       ];
-    }).stable;
+    };
 
-    linux_xanmod_tt = (xanmodKernels {
-      kernelPatches = [
-        kernelPatches.bridge_stp_helper
-        kernelPatches.request_key_helper
-      ];
-    }).stableTT;
-
-    linux_xanmod_latest = (xanmodKernels {
-      kernelPatches = [
-        kernelPatches.bridge_stp_helper
-        kernelPatches.request_key_helper
-      ];
-    }).edge;
+    linux_xanmod = xanmodKernels.lts;
+    linux_xanmod_latest = xanmodKernels.edge;
+    linux_xanmod_tt = xanmodKernels.tt;
 
     linux_libre = deblobKernel packageAliases.linux_default.kernel;
 
@@ -386,6 +374,8 @@ in {
 
     rtl8189es = callPackage ../os-specific/linux/rtl8189es { };
 
+    rtl8189fs = callPackage ../os-specific/linux/rtl8189fs { };
+
     rtl8723bs = callPackage ../os-specific/linux/rtl8723bs { };
 
     rtl8812au = callPackage ../os-specific/linux/rtl8812au { };
@@ -438,8 +428,7 @@ in {
 
     phc-intel = if lib.versionAtLeast kernel.version "4.10" then callPackage ../os-specific/linux/phc-intel { } else null;
 
-    # Disable for kernels 4.15 and above due to compatibility issues
-    prl-tools = if lib.versionOlder kernel.version "4.15" then callPackage ../os-specific/linux/prl-tools { } else null;
+    prl-tools = callPackage ../os-specific/linux/prl-tools { };
 
     sch_cake = callPackage ../os-specific/linux/sch_cake { };
 
@@ -510,6 +499,8 @@ in {
 
     can-isotp = callPackage ../os-specific/linux/can-isotp { };
 
+    qc71_laptop = callPackage ../os-specific/linux/qc71_laptop { };
+
   } // lib.optionalAttrs config.allowAliases {
     ati_drivers_x11 = throw "ati drivers are no longer supported by any kernel >=4.1"; # added 2021-05-18;
   });
@@ -573,6 +564,7 @@ in {
     linux_xanmod = recurseIntoAttrs (packagesFor kernels.linux_xanmod);
     linux_xanmod_tt = recurseIntoAttrs (packagesFor kernels.linux_xanmod_tt);
     linux_xanmod_latest = recurseIntoAttrs (packagesFor kernels.linux_xanmod_latest);
+    linux_xanmod_tt = recurseIntoAttrs (packagesFor kernels.linux_xanmod_tt);
 
     hardkernel_4_14 = recurseIntoAttrs (packagesFor kernels.linux_hardkernel_4_14);
 

@@ -47,7 +47,8 @@ buildDunePackage {
     ipaddr
   ];
 
-  doCheck = true;
+  # Examples don't compile with core 0.15.  See https://github.com/mirage/ocaml-cohttp/pull/864.
+  doCheck = false;
   checkInputs = [
     ounit
     mirage-crypto

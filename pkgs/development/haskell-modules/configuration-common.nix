@@ -352,15 +352,22 @@ self: super: {
   lvmrun = disableHardening ["format"] (dontCheck super.lvmrun);
   matplotlib = dontCheck super.matplotlib;
 
-  brick_0_71_1 = super.brick_0_71_1.overrideScope (self: super: {
+  brick_0_73 = doDistribute (super.brick_0_73.overrideScope (self: super: {
     vty = self.vty_5_36;
-  });
+    text-zipper = self.text-zipper_0_12;
+  }));
 
   # https://github.com/matterhorn-chat/matterhorn/issues/679 they do not want to be on stackage
-  # Needs brick ^>= 0.70
-  matterhorn = doJailbreak (super.matterhorn.overrideScope (self: super: {
-    brick = self.brick_0_71_1;
-  }));
+  matterhorn = doJailbreak (appendPatches [
+    # Fix build with brick 0.73
+    (fetchpatch {
+      name = "matterhorn-brick-0.72.patch";
+      url = "https://github.com/matterhorn-chat/matterhorn/commit/d52df3342b8420e219095aad477205e47fbef11b.patch";
+      sha256 = "1ifvv926g9m8niyc9nl1hy9bkx4kf12ciyv2v8vnrzz3njp4fsrz";
+    })
+  ] (super.matterhorn.overrideScope (self: super: {
+    brick = self.brick_0_73;
+  })));
 
   memcache = dontCheck super.memcache;
   metrics = dontCheck super.metrics;
@@ -1657,6 +1664,12 @@ self: super: {
     hspec-meta = self.hspec-meta_2_9_3;
   };
 
+  # Point hspec 2.7.10 to correct dependencies
+  hspec_2_7_10 = doDistribute (super.hspec_2_7_10.override {
+    hspec-discover = self.hspec-discover_2_7_10;
+    hspec-core = self.hspec-core_2_7_10;
+  });
+
   # waiting for aeson bump
   servant-swagger-ui-core = doJailbreak super.servant-swagger-ui-core;
 
@@ -2139,13 +2152,21 @@ self: super: {
 
   # 2022-03-21: Newest stylish-haskell needs ghc-lib-parser-9_2
   stylish-haskell = (super.stylish-haskell.override {
-    ghc-lib-parser = super.ghc-lib-parser_9_2_3_20220527;
+    ghc-lib-parser = super.ghc-lib-parser_9_2_3_20220709;
     ghc-lib-parser-ex = self.ghc-lib-parser-ex_9_2_1_0;
   });
 
   ghc-lib-parser-ex_9_2_1_0 = super.ghc-lib-parser-ex_9_2_1_0.override {
-    ghc-lib-parser = super.ghc-lib-parser_9_2_3_20220527;
+    ghc-lib-parser = super.ghc-lib-parser_9_2_3_20220709;
   };
+
+  ghc-lib-parser-ex_9_2_0_4 = super.ghc-lib-parser-ex_9_2_0_4.override {
+    ghc-lib-parser = super.ghc-lib-parser_9_2_3_20220709;
+  };
+
+  hlint_3_4_1 = doDistribute (super.hlint_3_4_1.override {
+    ghc-lib-parser-ex = self.ghc-lib-parser-ex_9_2_0_4;
+  });
 
   # To strict bound on hspec
   # https://github.com/dagit/zenc/issues/5
@@ -2207,9 +2228,10 @@ self: super: {
   # file revision on hackage was gifted CRLF line endings
   gogol-core = appendPatch ./patches/gogol-core-144.patch super.gogol-core;
 
-  # Too strict bound on deepseq
-  # https://github.com/hadolint/hadolint/issues/800
-  hadolint = doJailbreak super.hadolint;
+  # Stackage LTS 19 still has 10.*
+  hadolint = super.hadolint.override {
+    language-docker = self.language-docker_11_0_0;
+  };
 
   nix-tree = super.nix-tree;
 
@@ -2378,7 +2400,11 @@ self: super: {
   # https://hub.darcs.net/shelarcy/regex-compat-tdfa/issue/3
   regex-compat-tdfa = appendPatches [
     ./patches/regex-compat-tdfa-ghc-9.0.patch
-  ] super.regex-compat-tdfa;
+  ] (overrideCabal {
+    # Revision introduces bound base < 4.15
+    revision = null;
+    editedCabalFile = null;
+  } super.regex-compat-tdfa);
 
   # https://github.com/kowainik/validation-selective/issues/64
   validation-selective = doJailbreak super.validation-selective;
@@ -2527,15 +2553,6 @@ self: super: {
   })
   super.polynomial);
 
-  fast-tags = appendPatches [
-    (fetchpatch {
-      name = "fast-tags-ghc-9.0-fix-test-nondeterminism.patch";
-      url = "https://github.com/elaforge/fast-tags/commit/af861acc2dd239fedd8b169ddc5e3fa694e7af57.patch";
-      sha256 = "0ml678q1n29daqnxsb5p94s5lf7a6dk4lqbbgmiayxrbyxnlbi4f";
-      excludes = [ ".github/**" ];
-    })
-  ] super.fast-tags;
-
   # lucid-htmx has restrictive upper bounds on lucid and servant:
   #
   #   Setup: Encountered missing or private dependencies:
@@ -2555,6 +2572,10 @@ self: super: {
   futhark = super.futhark.override {
     lsp = self.lsp_1_5_0_0;
   };
+
+  # Too strict bounds on hspec
+  # https://github.com/klapaucius/vector-hashtables/issues/11
+  vector-hashtables = doJailbreak super.vector-hashtables;
 
 } // import ./configuration-tensorflow.nix {inherit pkgs haskellLib;} self super // (let
   # We need to build purescript with these dependencies and thus also its reverse
@@ -2604,4 +2625,7 @@ in {
   purescript-ast = purescriptStOverride super.purescript-ast;
 
   purenix = purescriptStOverride super.purenix;
+
+  # tests use doctest-parallel which produces some errors during testing
+  clash-prelude = dontCheck super.clash-prelude;
 })

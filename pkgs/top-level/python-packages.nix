@@ -1430,6 +1430,8 @@ in {
 
   bson = callPackage ../development/python-modules/bson { };
 
+  bsuite = callPackage ../development/python-modules/bsuite { };
+
   btchip = callPackage ../development/python-modules/btchip { };
 
   bt-proximity = callPackage ../development/python-modules/bt-proximity { };
@@ -1563,6 +1565,8 @@ in {
   cdcs = callPackage ../development/python-modules/cdcs { };
 
   celery = callPackage ../development/python-modules/celery { };
+
+  celery-redbeat = callPackage ../development/python-modules/celery-redbeat { };
 
   cement = callPackage ../development/python-modules/cement { };
 
@@ -1713,6 +1717,8 @@ in {
   ckcc-protocol = callPackage ../development/python-modules/ckcc-protocol { };
 
   claripy = callPackage ../development/python-modules/claripy { };
+
+  classify-imports = callPackage ../development/python-modules/classify-imports { };
 
   cld2-cffi = callPackage ../development/python-modules/cld2-cffi { };
 
@@ -2152,6 +2158,8 @@ in {
 
   datatable = callPackage ../development/python-modules/datatable { };
 
+  datauri = callPackage ../development/python-modules/datauri { };
+
   dateparser = callPackage ../development/python-modules/dateparser { };
 
   dateutils = callPackage ../development/python-modules/dateutils { };
@@ -2280,6 +2288,8 @@ in {
 
   dicttoxml = callPackage ../development/python-modules/dicttoxml { };
 
+  dicttoxml2 = callPackage ../development/python-modules/dicttoxml2 { };
+
   diff-cover = callPackage ../development/python-modules/diff-cover { };
 
   diff-match-patch = callPackage ../development/python-modules/diff-match-patch { };
@@ -2316,6 +2326,8 @@ in {
 
   distorm3 = callPackage ../development/python-modules/distorm3 { };
 
+  distrax = callPackage ../development/python-modules/distrax { };
+
   distributed = callPackage ../development/python-modules/distributed { };
 
   distro = callPackage ../development/python-modules/distro { };
@@ -2341,6 +2353,10 @@ in {
   django-cache-url = callPackage ../development/python-modules/django-cache-url { };
 
   django-cacheops = callPackage ../development/python-modules/django-cacheops { };
+
+  django-celery-beat = callPackage ../development/python-modules/django-celery-beat { };
+
+  django-celery-email = callPackage ../development/python-modules/django-celery-email { };
 
   django_classytags = callPackage ../development/python-modules/django_classytags { };
 
@@ -2381,6 +2397,8 @@ in {
   django-guardian = callPackage ../development/python-modules/django-guardian { };
 
   django-haystack = callPackage ../development/python-modules/django-haystack { };
+
+  django-health-check = callPackage ../development/python-modules/django-health-check { };
 
   django_hijack_admin = callPackage ../development/python-modules/django-hijack-admin { };
 
@@ -2455,8 +2473,6 @@ in {
 
   django-reversion = callPackage ../development/python-modules/django-reversion { };
 
-  django-sampledatahelper = callPackage ../development/python-modules/django-sampledatahelper { };
-
   django-sesame = callPackage ../development/python-modules/django-sesame { };
 
   django_silk = callPackage ../development/python-modules/django_silk { };
@@ -2511,7 +2527,11 @@ in {
 
   dmenu-python = callPackage ../development/python-modules/dmenu { };
 
+  dm-env = callPackage ../development/python-modules/dm-env { };
+
   dm-haiku = callPackage ../development/python-modules/dm-haiku { };
+
+  dm-sonnet = callPackage ../development/python-modules/dm-sonnet { };
 
   dm-tree = callPackage ../development/python-modules/dm-tree {
     abseil-cpp = pkgs.abseil-cpp.override {
@@ -3395,6 +3415,8 @@ in {
   gast = callPackage ../development/python-modules/gast { };
 
   garages-amsterdam = callPackage ../development/python-modules/garages-amsterdam { };
+
+  gatt = callPackage ../development/python-modules/gatt { };
 
   gattlib = callPackage ../development/python-modules/gattlib {
     inherit (pkgs) bluez glib pkg-config;
@@ -6737,6 +6759,8 @@ in {
 
   plaid-python = callPackage ../development/python-modules/plaid-python { };
 
+  plantuml = callPackage ../development/python-modules/plantuml { };
+
   plaster = callPackage ../development/python-modules/plaster { };
 
   plaster-pastedeploy = callPackage ../development/python-modules/plaster-pastedeploy { };
@@ -6758,6 +6782,8 @@ in {
   plone-testing = callPackage ../development/python-modules/plone-testing { };
 
   plotly = callPackage ../development/python-modules/plotly { };
+
+  plotnine = callPackage ../development/python-modules/plotnine { };
 
   pluggy = callPackage ../development/python-modules/pluggy { };
 
@@ -7536,6 +7562,8 @@ in {
   pyinputevent = callPackage ../development/python-modules/pyinputevent { };
 
   pyinsteon = callPackage ../development/python-modules/pyinsteon { };
+
+  pyinstrument = callPackage ../development/python-modules/pyinstrument { };
 
   pyintesishome = callPackage ../development/python-modules/pyintesishome { };
 
@@ -8469,6 +8497,8 @@ in {
 
   pytest-twisted = callPackage ../development/python-modules/pytest-twisted { };
 
+  pytest-unordered = callPackage ../development/python-modules/pytest-unordered { };
+
   pytest-vcr = callPackage ../development/python-modules/pytest-vcr { };
 
   pytest-virtualenv = callPackage ../development/python-modules/pytest-virtualenv { };
@@ -9215,6 +9245,8 @@ in {
 
   reproject = callPackage ../development/python-modules/reproject { };
 
+  reqif = callPackage ../development/python-modules/reqif { };
+
   requests-aws4auth = callPackage ../development/python-modules/requests-aws4auth { };
 
   requests-cache = callPackage ../development/python-modules/requests-cache { };
@@ -9322,6 +9354,8 @@ in {
   rjsmin = callPackage ../development/python-modules/rjsmin { };
 
   rki-covid-parser = callPackage ../development/python-modules/rki-covid-parser { };
+
+  rlax = callPackage ../development/python-modules/rlax { };
 
   rl-coach = callPackage ../development/python-modules/rl-coach { };
 
@@ -9546,6 +9580,8 @@ in {
   };
 
   scikit-learn-extra = callPackage ../development/python-modules/scikit-learn-extra { };
+
+  scikit-misc = callPackage ../development/python-modules/scikit-misc { };
 
   scikit-optimize = callPackage ../development/python-modules/scikit-optimize { };
 
@@ -10222,6 +10258,8 @@ in {
 
   stravalib = callPackage ../development/python-modules/stravalib { };
 
+  streamdeck = callPackage ../development/python-modules/streamdeck { };
+
   streaming-form-data = callPackage ../development/python-modules/streaming-form-data { };
 
   streamlabswater = callPackage ../development/python-modules/streamlabswater { };
@@ -10378,6 +10416,8 @@ in {
 
   tatsu = callPackage ../development/python-modules/tatsu { };
 
+  taxi = callPackage ../development/python-modules/taxi { };
+
   tblib = callPackage ../development/python-modules/tblib { };
 
   tbm-utils = callPackage ../development/python-modules/tbm-utils { };
@@ -10476,6 +10516,8 @@ in {
 
   tesserocr = callPackage ../development/python-modules/tesserocr { };
 
+  testcontainers = callPackage ../development/python-modules/testcontainers { };
+
   testfixtures = callPackage ../development/python-modules/testfixtures { };
 
   textfsm = callPackage ../development/python-modules/textfsm { };
@@ -10509,6 +10551,8 @@ in {
   text-unidecode = callPackage ../development/python-modules/text-unidecode { };
 
   textwrap3 = callPackage ../development/python-modules/textwrap3 { };
+
+  textx = callPackage ../development/python-modules/textx { };
 
   tflearn = callPackage ../development/python-modules/tflearn { };
 
@@ -10570,6 +10614,8 @@ in {
   };
 
   tilequant = callPackage ../development/python-modules/tilequant { };
+
+  tiler = callPackage ../development/python-modules/tiler { };
 
   tilestache = callPackage ../development/python-modules/tilestache { };
 
@@ -10720,6 +10766,8 @@ in {
   trezor_agent = callPackage ../development/python-modules/trezor_agent { };
 
   trezor = callPackage ../development/python-modules/trezor { };
+
+  trfl = callPackage ../development/python-modules/trfl { };
 
   trimesh = callPackage ../development/python-modules/trimesh { };
 
