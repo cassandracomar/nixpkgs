@@ -562,7 +562,6 @@ in {
     linux_zen = recurseIntoAttrs (packagesFor kernels.linux_zen);
     linux_lqx = recurseIntoAttrs (packagesFor kernels.linux_lqx);
     linux_xanmod = recurseIntoAttrs (packagesFor kernels.linux_xanmod);
-    linux_xanmod_tt = recurseIntoAttrs (packagesFor kernels.linux_xanmod_tt);
     linux_xanmod_latest = recurseIntoAttrs (packagesFor kernels.linux_xanmod_latest);
     linux_xanmod_tt = recurseIntoAttrs (packagesFor kernels.linux_xanmod_tt);
 
