@@ -2,13 +2,13 @@
 
 buildGoModule rec {
   pname = "VictoriaMetrics";
-  version = "1.77.2";
+  version = "1.79.1";
 
   src = fetchFromGitHub {
     owner = pname;
     repo = pname;
     rev = "v${version}";
-    sha256 = "sha256-S0HXIjZI48A+tMv+gT8UfYqmCI4NOwWAFykfhW73WPc=";
+    sha256 = "sha256-rBR2gZ6wAt8P70MScPbktlLtXWWvqs08u786zSiFjJ0=";
   };
 
   vendorSha256 = null;

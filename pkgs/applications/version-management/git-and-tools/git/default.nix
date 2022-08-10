@@ -19,6 +19,7 @@
 , pkg-config, glib, libsecret
 , gzip # needed at runtime by gitweb.cgi
 , withSsh ? false
+, doInstallCheck ? !stdenv.isDarwin  # extremely slow on darwin
 }:
 
 assert osxkeychainSupport -> stdenv.isDarwin;
@@ -26,12 +27,12 @@ assert sendEmailSupport -> perlSupport;
 assert svnSupport -> perlSupport;
 
 let
-  version = "2.37.0";
+  version = "2.37.1";
   svn = subversionClient.override { perlBindings = perlSupport; };
   gitwebPerlLibs = with perlPackages; [ CGI HTMLParser CGIFast FCGI FCGIProcManager HTMLTagCloud ];
 in
 
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "git"
     + lib.optionalString svnSupport "-with-svn"
     + lib.optionalString (!svnSupport && !guiSupport && !sendEmailSupport && !withManual && !pythonSupport && !withpcre2) "-minimal";
@@ -39,7 +40,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://www.kernel.org/pub/software/scm/git/git-${version}.tar.xz";
-    sha256 = "sha256-n3+hcRvQDE7D3eL+REB9wT8S5HcrXjxypY20wHSVQR8=";
+    sha256 = "sha256-yBYsa4uPHF23BqsBtO4p4xBhGCE13CfEhgIkquwbNQA=";
   };
 
   outputs = [ "out" ] ++ lib.optional withManual "doc";
@@ -280,7 +281,7 @@ stdenv.mkDerivation {
   ## InstallCheck
 
   doCheck = false;
-  doInstallCheck = true;
+  inherit doInstallCheck;
 
   installCheckTarget = "test";
 
@@ -369,6 +370,9 @@ stdenv.mkDerivation {
   passthru = {
     shellPath = "/bin/git-shell";
     tests = {
+      withInstallCheck = finalAttrs.finalPackage.overrideAttrs (_: {
+        doInstallCheck = true;
+      });
       buildbot-integration = nixosTests.buildbot;
     };
   };
@@ -387,4 +391,4 @@ stdenv.mkDerivation {
     platforms = lib.platforms.all;
     maintainers = with lib.maintainers; [ primeos wmertens globin ];
   };
-}
+})

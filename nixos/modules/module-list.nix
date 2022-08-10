@@ -357,7 +357,7 @@
   ./services/databases/dgraph.nix
   ./services/databases/firebird.nix
   ./services/databases/foundationdb.nix
-  ./services/databases/hbase.nix
+  ./services/databases/hbase-standalone.nix
   ./services/databases/influxdb.nix
   ./services/databases/influxdb2.nix
   ./services/databases/memcached.nix
@@ -447,6 +447,7 @@
   ./services/hardware/interception-tools.nix
   ./services/hardware/irqbalance.nix
   ./services/hardware/joycond.nix
+  ./services/hardware/kanata.nix
   ./services/hardware/lcd.nix
   ./services/hardware/lirc.nix
   ./services/hardware/nvidia-optimus.nix
@@ -474,7 +475,6 @@
   ./services/hardware/thermald.nix
   ./services/hardware/undervolt.nix
   ./services/hardware/vdr.nix
-  ./services/hardware/xow.nix
   ./services/home-automation/home-assistant.nix
   ./services/home-automation/zigbee2mqtt.nix
   ./services/logging/SystemdJournal2Gelf.nix
@@ -1107,7 +1107,6 @@
   ./services/web-apps/shiori.nix
   ./services/web-apps/snipe-it.nix
   ./services/web-apps/vikunja.nix
-  ./services/web-apps/virtlyst.nix
   ./services/web-apps/wiki-js.nix
   ./services/web-apps/whitebophir.nix
   ./services/web-apps/wordpress.nix
@@ -1288,4 +1287,5 @@
   ./virtualisation/waydroid.nix
   ./virtualisation/xen-dom0.nix
   ./virtualisation/xe-guest-utilities.nix
+  { documentation.nixos.extraModules = [ ./virtualisation/qemu-vm.nix ]; }
 ]

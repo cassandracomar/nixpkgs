@@ -97,6 +97,11 @@
       </listitem>
       <listitem>
         <para>
+          Cinnamon has been updated to 5.4.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           <literal>hardware.nvidia</literal> has a new option
           <literal>open</literal> that can be used to opt in the
           opensource version of NVIDIA kernel driver. Note that the
@@ -128,9 +133,25 @@
       </listitem>
       <listitem>
         <para>
+          <link xlink:href="https://hbase.apache.org/">HBase
+          cluster</link>, a distributed, scalable, big data store.
+          Available as
+          <link xlink:href="options.html#opt-services.hadoop.hbase.enable">services.hadoop.hbase</link>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           <link xlink:href="https://github.com/leetronics/infnoise">infnoise</link>,
           a hardware True Random Number Generator dongle. Available as
           <link xlink:href="options.html#opt-services.infnoise.enable">services.infnoise</link>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <link xlink:href="https://github.com/jtroo/kanata">kanata</link>,
+          a tool to improve keyboard comfort and usability with advanced
+          customization. Available as
+          <link xlink:href="options.html#opt-services.kanata.enable">services.kanata</link>.
         </para>
       </listitem>
       <listitem>
@@ -246,8 +267,22 @@
       </listitem>
       <listitem>
         <para>
+          <literal>services.hbase</literal> has been renamed to
+          <literal>services.hbase-standalone</literal>. For production
+          HBase clusters, use <literal>services.hadoop.hbase</literal>
+          instead.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           PHP 7.4 is no longer supported due to upstream not supporting
           this version for the entire lifecycle of the 22.11 release.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>pkgs.cosign</literal> does not provide the
+          <literal>cosigned</literal> binary anymore.
         </para>
       </listitem>
       <listitem>
@@ -255,6 +290,20 @@
           riak package removed along with
           <literal>services.riak</literal> module, due to lack of
           maintainer to update the package.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          xow package removed along with the
+          <literal>hardware.xow</literal> module, due to the project
+          being deprecated in favor of <literal>xone</literal>, which is
+          available via the <literal>hardware.xone</literal> module.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          virtlyst package and <literal>services.virtlyst</literal>
+          module removed, due to lack of maintainers.
         </para>
       </listitem>
       <listitem>

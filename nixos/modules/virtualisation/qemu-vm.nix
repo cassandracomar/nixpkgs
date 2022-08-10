@@ -516,12 +516,12 @@ in
         description =
           ''
             Virtual networks to which the VM is connected.  Each
-            number <replaceable>N</replaceable> in this list causes
+            number «N» in this list causes
             the VM to have a virtual Ethernet interface attached to a
             separate virtual network on which it will be assigned IP
             address
-            <literal>192.168.<replaceable>N</replaceable>.<replaceable>M</replaceable></literal>,
-            where <replaceable>M</replaceable> is the index of this VM
+            <literal>192.168.«N».«M»</literal>,
+            where «M» is the index of this VM
             in the list of VMs.
           '';
       };
@@ -870,7 +870,7 @@ in
       (mkIf pkgs.stdenv.hostPlatform.isx86 [
         "-usb" "-device usb-tablet,bus=usb-bus.0"
       ])
-      (mkIf (pkgs.stdenv.isAarch32 || pkgs.stdenv.isAarch64) [
+      (mkIf pkgs.stdenv.hostPlatform.isAarch [
         "-device virtio-gpu-pci" "-device usb-ehci,id=usb0" "-device usb-kbd" "-device usb-tablet"
       ])
       (let
