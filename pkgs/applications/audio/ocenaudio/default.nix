@@ -1,13 +1,21 @@
-{ stdenv, lib, fetchurl, autoPatchelfHook, dpkg, qt5, libjack2, alsa-lib, bzip2
+{ stdenv
+, lib
+, fetchurl
+, autoPatchelfHook
+, dpkg
+, qt5
+, libjack2
+, alsa-lib
+, bzip2
 , libpulseaudio }:
 
 stdenv.mkDerivation rec {
   pname = "ocenaudio";
-  version = "3.11.11";
+  version = "3.11.14";
 
   src = fetchurl {
     url = "https://www.ocenaudio.com/downloads/index.php/ocenaudio_debian9_64.deb?version=${version}";
-    sha256 = "sha256-C/Gku/lgR2HONvXHQYLdLBzZg7VHi+9oWfFa3+GiIRs=";
+    sha256 = "sha256-5HQ64jCM8kyWLqxFqsFN3lJgM/JlWf1/RYKSpAFYTYE=";
   };
 
   nativeBuildInputs = [
@@ -37,8 +45,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description =
-      "Cross-platform, easy to use, fast and functional audio editor";
+    description = "Cross-platform, easy to use, fast and functional audio editor";
     homepage = "https://www.ocenaudio.com";
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
     license = licenses.unfree;

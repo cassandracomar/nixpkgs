@@ -8,18 +8,18 @@
 
 buildGoModule rec {
   pname = "shellhub-agent";
-  version = "0.9.4";
+  version = "0.10.1";
 
   src = fetchFromGitHub {
     owner = "shellhub-io";
     repo = "shellhub";
     rev = "v${version}";
-    sha256 = "WcxRVup7wjA9YNyL6UpFoMfkCmXixfbYatcrmA4OHh4=";
+    sha256 = "jeZh1vPXUN/jcf306S6KdIeHygci+4+uky4MXQgRlpA=";
   };
 
   modRoot = "./agent";
 
-  vendorSha256 = "sha256-UDsgfsdq8DecyTAFrmWO09V3JIuTA5YLCEAei0tYRy4=";
+  vendorSha256 = "sha256-AqtDI1GFw4cduFdWRSh9lYe/OwvEdu5iB0+ud8QPgXM=";
 
   ldflags = [ "-s" "-w" "-X main.AgentVersion=v${version}" ];
 

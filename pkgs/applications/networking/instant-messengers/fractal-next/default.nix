@@ -23,19 +23,19 @@
 
 stdenv.mkDerivation rec {
   pname = "fractal-next";
-  version = "unstable-2022-07-10";
+  version = "unstable-2022-09-09";
 
   src = fetchFromGitLab {
     domain = "gitlab.gnome.org";
     owner = "GNOME";
     repo = "fractal";
-    rev = "837b56978474fe512469805844b8ee234587499a";
-    hash = "sha256-6op/+eiDra5EFRludpkQOucBXdPl5a/oQWPwwhJEx+M=";
+    rev = "5f0a4b48a745ccce202d14e7d02e14f51598fb42";
+    hash = "sha256-7s2ytHpM5pZ0dhnVMA8KDWIBaSWds7t9GB6Wav+0dQA=";
   };
 
   cargoDeps = rustPlatform.fetchCargoTarball {
     inherit src;
-    hash = "sha256-2mE26ES+fYSWdfMr8uTsX2VVGTNMDQ9MXEk5E/L95UI=";
+    hash = "sha256-CJD9YmL06ELR3X/gIrsVCpDyJnWPbH/JF4HlXvWjiZ8=";
   };
 
   nativeBuildInputs = [
