@@ -322,6 +322,15 @@
       </listitem>
       <listitem>
         <para>
+          <link xlink:href="https://github.com/tmate-io/tmate-ssh-server">tmate-ssh-server</link>,
+          server side part of
+          <link xlink:href="https://tmate.io/">tmate</link>. Available
+          as
+          <link linkend="opt-services.tmate-ssh-server.enable">services.tmate-ssh-server</link>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           <link xlink:href="https://www.grafana.com/oss/tempo/">Grafana
           Tempo</link>, a distributed tracing store. Available as
           <link linkend="opt-services.tempo.enable">services.tempo</link>.
@@ -525,6 +534,16 @@
           project being deprecated in favor of
           <literal>datadog-agent</literal>, which is available via the
           <literal>services.datadog-agent</literal> module.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>teleport</literal> has been upgraded to major version
+          10. Please see upstream
+          <link xlink:href="https://goteleport.com/docs/ver/10.0/management/operations/upgrading/">upgrade
+          instructions</link> and
+          <link xlink:href="https://goteleport.com/docs/ver/10.0/changelog/#1000">release
+          notes</link>.
         </para>
       </listitem>
       <listitem>

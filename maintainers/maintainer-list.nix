@@ -2877,6 +2877,12 @@
     githubId = 1382175;
     name = "Oliver Matthews";
   };
+  cwyc = {
+    email = "hello@cwyc.page";
+    github = "cwyc";
+    githubId = 16950437;
+    name = "cwyc";
+  };
   cyounkins = {
     name = "Craig Younkins";
     email = "cyounkins@gmail.com";
@@ -9390,6 +9396,12 @@
     githubId = 1222539;
     name = "Roman Naumann";
   };
+  naphta = {
+    email = "naphta@noreply.github.com";
+    github = "naphta";
+    githubId = 6709831;
+    name = "Jake Hill";
+  };
   nasirhm = {
     email = "nasirhussainm14@gmail.com";
     github = "nasirhm";
@@ -9889,6 +9901,12 @@
     github = "NULLx76";
     githubId = 1809198;
     name = "Victor Roest";
+  };
+  nullishamy = {
+    email = "amy.codes@null.net";
+    name = "nullishamy";
+    github = "nullishamy";
+    githubId = 99221043;
   };
   numinit = {
     email = "me@numin.it";
@@ -10681,6 +10699,16 @@
     githubId = 178496;
     name = "Philipp Middendorf";
   };
+  pmw = {
+    email = "philip@mailworks.org";
+    matrix = "@philip4g:matrix.org";
+    name = "Philip White";
+    github = "philipmw";
+    githubId = 1379645;
+    keys = [{
+      fingerprint = "9AB0 6C94 C3D1 F9D0 B9D9  A832 BC54 6FB3 B16C 8B0B";
+    }];
+  };
   pmy = {
     email = "pmy@xqzp.net";
     github = "pmeiyu";
@@ -10850,6 +10878,12 @@
         fingerprint = "AF85 991C C950 49A2 4205  1933 BCA9 943D D1DF 4C04";
       }
     ];
+  };
+  prtzl = {
+    email = "matej.blagsic@protonmail.com";
+    github = "prtzl";
+    githubId = 32430344;
+    name = "Matej Blagsic";
   };
   ProducerMatt = {
     name = "Matthew Pherigo";

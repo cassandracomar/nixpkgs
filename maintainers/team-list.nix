@@ -363,6 +363,17 @@ with lib.maintainers; {
     shortName = "Kodi";
   };
 
+  libretro = {
+    members = [
+      aanderse
+      edwtjo
+      MP2E
+      thiagokokada
+    ];
+    scope = "Maintain Libretro, RetroArch and related packages.";
+    shortName = "Libretro";
+  };
+
   linux-kernel = {
     members = [
       TredwellGit
@@ -382,6 +393,15 @@ with lib.maintainers; {
     ];
     scope = "Group registration for LumiGuide employees who collectively maintain packages.";
     shortName = "Lumiguide employees";
+  };
+
+  lua = {
+    githubTeams = [
+      "lua"
+    ];
+    scope = "Maintain the lua ecosystem.";
+    shortName = "lua";
+    enableFeatureFreezePing = true;
   };
 
   lumina = {
