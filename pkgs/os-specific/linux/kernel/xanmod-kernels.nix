@@ -59,6 +59,10 @@ let
       RT_GROUP_SCHED = lib.mkForce (option no);
       SCHED_AUTOGROUP = lib.mkForce (option no);
       SCHED_CORE = lib.mkForce (option no);
+    } // lib.optionalAttrs (variant == "edge") {
+      # this has been removed as of 6.0; xanmod sets KCFLAGS="-O3" in its makefile.
+      # see: https://github.com/xanmod/linux/blob/6cbaa601f6074e14c6d8aeb0bf163f793f314f58/arch/x86/Makefile#L70-L71
+      CC_OPTIMIZE_FOR_PERFORMANCE_O3 = lib.mkForce (option no);
     };
 
     extraMeta = {
