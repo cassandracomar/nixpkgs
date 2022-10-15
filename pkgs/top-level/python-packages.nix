@@ -171,6 +171,8 @@ in {
 
   acoustics = callPackage ../development/python-modules/acoustics { };
 
+  acquire = callPackage ../development/python-modules/acquire { };
+
   actdiag = callPackage ../development/python-modules/actdiag { };
 
   adafruit-io = callPackage ../development/python-modules/adafruit-io { };
@@ -288,6 +290,8 @@ in {
   aioconsole = callPackage ../development/python-modules/aioconsole { };
 
   aiocontextvars = callPackage ../development/python-modules/aiocontextvars { };
+
+  aiocsv = callPackage ../development/python-modules/aiocsv { };
 
   aiocurrencylayer = callPackage ../development/python-modules/aiocurrencylayer { };
 
@@ -1283,7 +1287,10 @@ in {
 
   bcdoc = callPackage ../development/python-modules/bcdoc { };
 
-  bcrypt = callPackage ../development/python-modules/bcrypt { };
+  bcrypt = if stdenv.hostPlatform.system == "i686-linux" then
+    callPackage ../development/python-modules/bcrypt/3.nix { }
+  else
+    callPackage ../development/python-modules/bcrypt { };
 
   beaker = callPackage ../development/python-modules/beaker { };
 
@@ -2477,6 +2484,50 @@ in {
 
   diskcache = callPackage ../development/python-modules/diskcache { };
 
+  dissect = callPackage ../development/python-modules/dissect { };
+
+  dissect-cim = callPackage ../development/python-modules/dissect-cim { };
+
+  dissect-clfs = callPackage ../development/python-modules/dissect-clfs { };
+
+  dissect-cstruct = callPackage ../development/python-modules/dissect-cstruct { };
+
+  dissect-fat = callPackage ../development/python-modules/dissect-fat { };
+
+  dissect-ffs = callPackage ../development/python-modules/dissect-ffs { };
+
+  dissect-esedb = callPackage ../development/python-modules/dissect-esedb { };
+
+  dissect-etl = callPackage ../development/python-modules/dissect-etl { };
+
+  dissect-eventlog = callPackage ../development/python-modules/dissect-eventlog { };
+
+  dissect-evidence = callPackage ../development/python-modules/dissect-evidence { };
+
+  dissect-extfs = callPackage ../development/python-modules/dissect-extfs { };
+
+  dissect-hypervisor = callPackage ../development/python-modules/dissect-hypervisor { };
+
+  dissect-ntfs = callPackage ../development/python-modules/dissect-ntfs { };
+
+  dissect-ole = callPackage ../development/python-modules/dissect-ole { };
+
+  dissect-regf = callPackage ../development/python-modules/dissect-regf { };
+
+  dissect-shellitem = callPackage ../development/python-modules/dissect-shellitem { };
+
+  dissect-sql = callPackage ../development/python-modules/dissect-sql { };
+
+  dissect-target = callPackage ../development/python-modules/dissect-target { };
+
+  dissect-util = callPackage ../development/python-modules/dissect-util { };
+
+  dissect-vmfs = callPackage ../development/python-modules/dissect-vmfs { };
+
+  dissect-volume = callPackage ../development/python-modules/dissect-volume { };
+
+  dissect-xfs = callPackage ../development/python-modules/dissect-xfs { };
+
   dissononce = callPackage ../development/python-modules/dissononce { };
 
   distlib = callPackage ../development/python-modules/distlib { };
@@ -2912,6 +2963,8 @@ in {
   ecs-logging =  callPackage ../development/python-modules/ecs-logging { };
 
   ed25519 = callPackage ../development/python-modules/ed25519 { };
+
+  ed25519-blake2b = callPackage ../development/python-modules/ed25519-blake2b { };
 
   edalize = callPackage ../development/python-modules/edalize { };
 
@@ -3469,6 +3522,8 @@ in {
   flit = callPackage ../development/python-modules/flit { };
 
   flit-core = callPackage ../development/python-modules/flit-core { };
+
+  flow-record = callPackage ../development/python-modules/flow-record { };
 
   flower = callPackage ../development/python-modules/flower { };
 
@@ -6483,6 +6538,11 @@ in {
 
   openidc-client = callPackage ../development/python-modules/openidc-client { };
 
+  openmm = toPythonModule (pkgs.openmm.override {
+    python3Packages = self;
+    enablePython = true;
+  });
+
   openpyxl = callPackage ../development/python-modules/openpyxl { };
 
   openrazer = callPackage ../development/python-modules/openrazer/pylib.nix { };
@@ -7363,7 +7423,7 @@ in {
   psd-tools = callPackage ../development/python-modules/psd-tools { };
 
   psutil = callPackage ../development/python-modules/psutil {
-    inherit (pkgs.darwin.apple_sdk.frameworks) IOKit;
+    inherit (pkgs.darwin.apple_sdk.frameworks) CoreFoundation IOKit;
   };
 
   psutil-home-assistant = callPackage ../development/python-modules/psutil-home-assistant { };
@@ -7436,6 +7496,8 @@ in {
 
   py-air-control-exporter = callPackage ../development/python-modules/py-air-control-exporter { };
 
+  py-bip39-bindings = callPackage ../development/python-modules/py-bip39-bindings { };
+
   py-dmidecode = callPackage ../development/python-modules/py-dmidecode { };
 
   py-nightscout = callPackage ../development/python-modules/py-nightscout { };
@@ -7443,6 +7505,8 @@ in {
   py-synologydsm-api = callPackage ../development/python-modules/py-synologydsm-api { };
 
   py-sneakers = callPackage ../development/python-modules/py-sneakers { };
+
+  py-sr25519-bindings = callPackage ../development/python-modules/py-sr25519-bindings { };
 
   py-tes = callPackage ../development/python-modules/py-tes { };
 
@@ -8373,6 +8437,8 @@ in {
 
   pyqt6-sip = callPackage ../development/python-modules/pyqt/pyqt6-sip.nix { };
 
+  pyqt6-webengine = callPackage ../development/python-modules/pyqt6-webengine.nix { };
+
   pyqtgraph = callPackage ../development/python-modules/pyqtgraph { };
 
   pyqtwebengine = pkgs.libsForQt5.callPackage ../development/python-modules/pyqtwebengine {
@@ -8412,6 +8478,8 @@ in {
   pyramid_mako = callPackage ../development/python-modules/pyramid_mako { };
 
   pyramid_multiauth = callPackage ../development/python-modules/pyramid_multiauth { };
+
+  pyreadstat = callPackage ../development/python-modules/pyreadstat { };
 
   pyrealsense2 = toPythonModule (pkgs.librealsense.override {
     enablePython = true;
@@ -9564,9 +9632,9 @@ in {
 
   readme_renderer = callPackage ../development/python-modules/readme_renderer { };
 
-  readstats = callPackage ../development/python-modules/pyreadstat { };
-
   readthedocs-sphinx-ext = callPackage ../development/python-modules/readthedocs-sphinx-ext { };
+
+  reactivex = callPackage ../development/python-modules/reactivex { };
 
   rebulk = callPackage ../development/python-modules/rebulk { };
 
@@ -9849,6 +9917,8 @@ in {
   rsskey = callPackage ../development/python-modules/rsskey { };
 
   rst2ansi = callPackage ../development/python-modules/rst2ansi { };
+
+  rst2pdf = callPackage ../development/python-modules/rst2pdf { };
 
   rstcheck = callPackage ../development/python-modules/rstcheck { };
 
@@ -11376,11 +11446,15 @@ in {
 
   types-protobuf = callPackage ../development/python-modules/types-protobuf { };
 
+  types-python-dateutil = callPackage ../development/python-modules/types-python-dateutil { };
+
   types-pytz = callPackage ../development/python-modules/types-pytz { };
 
   types-pyyaml = callPackage ../development/python-modules/types-pyyaml { };
 
   types-redis = callPackage ../development/python-modules/types-redis { };
+
+  types-retry = callPackage ../development/python-modules/types-retry { };
 
   types-requests = callPackage ../development/python-modules/types-requests { };
 
@@ -11944,8 +12018,8 @@ in {
   };
 
   wxPython_4_1 = callPackage ../development/python-modules/wxPython/4.1.nix {
-    wxGTK = pkgs.wxGTK31.override {
-      withGtk2 = false;
+    inherit (pkgs.darwin.apple_sdk.frameworks) AGL AudioToolbox AVFoundation AVKit Carbon Cocoa CoreMedia CoreFoundation IOKit Kernel OpenGL Security WebKit;
+    wxGTK = pkgs.wxGTK31-gtk3.override {
       withWebKit = true;
     };
   };

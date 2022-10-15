@@ -3,15 +3,21 @@
 let
   # These names are how they are designated in https://xanmod.org.
   ltsVariant = {
-    version = "5.15.60";
-    hash = "sha256-XSOYgrJ/uvPpEG+P3Zy1geFeF/HMZ4LejsKWtTxMUTs=";
+    version = "5.15.70";
+    hash = "sha256-gMtGoj/HzMqd6Y3PSc6QTsu/PI7vfb+1pg4mt878cxs=";
     variant = "lts";
   };
 
-  edgeVariant = {
-    version = "6.0.1";
-    hash = "sha256-zZGAlBbdx1rWOqo7BI5pr/o0Z3VKr/PDqZaOa9N2Sow=";
-    variant = "edge";
+  currentVariant = {
+    version = "5.19.13";
+    hash = "sha256-BzQH4c24CtE3R5HNe2sOc3McVkRmf/RKOOjuf1W4YfE=";
+    variant = "current";
+  };
+
+  nextVariant = {
+    version = "6.0.0";
+    hash = "sha256-E7T8eHwMKYShv4KWdCbHQmpn+54edJoKdimZY3GFbPU=";
+    variant = "next";
   };
 
   ttVariant = {
@@ -44,9 +50,6 @@ let
       NET_SCH_DEFAULT = yes;
       DEFAULT_FQ_PIE = yes;
 
-      # Graysky's additional CPU optimizations
-      CC_OPTIMIZE_FOR_PERFORMANCE_O3 = yes;
-
       # Futex WAIT_MULTIPLE implementation for Wine / Proton Fsync.
       FUTEX = yes;
       FUTEX_PI = yes;
@@ -59,10 +62,6 @@ let
       RT_GROUP_SCHED = lib.mkForce (option no);
       SCHED_AUTOGROUP = lib.mkForce (option no);
       SCHED_CORE = lib.mkForce (option no);
-    } // lib.optionalAttrs (variant == "edge") {
-      # this has been removed as of 6.0; xanmod sets KCFLAGS="-O3" in its makefile.
-      # see: https://github.com/xanmod/linux/blob/6cbaa601f6074e14c6d8aeb0bf163f793f314f58/arch/x86/Makefile#L70-L71
-      CC_OPTIMIZE_FOR_PERFORMANCE_O3 = lib.mkForce (option no);
     };
 
     extraMeta = {
@@ -75,6 +74,7 @@ let
 in
 {
   lts = xanmodKernelFor ltsVariant;
-  edge = xanmodKernelFor edgeVariant;
+  current = xanmodKernelFor currentVariant;
+  next = xanmodKernelFor nextVariant;
   tt = xanmodKernelFor ttVariant;
 }

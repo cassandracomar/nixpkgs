@@ -11,7 +11,7 @@
 , enableSpellcheck ? true
 
 # Arguments to include external libraries
-, enableLibSM ? true, libSM
+, enableLibSM ? true, xorg
 , enableGnuTLS ? true, gnutls
 , enableEnchant ? enableSpellcheck, enchant
 , enableDbus ? true, dbus, dbus-glib
@@ -76,7 +76,7 @@ let
     { flags = [ "ldap" ]; enabled = enableLdap; deps = [ openldap ]; }
     { flags = [ "libetpan" ]; enabled = enableLibetpan; deps = [ libetpan ]; }
     { flags = [ "libravatar-plugin" ]; enabled = enablePluginLibravatar; }
-    { flags = [ "libsm" ]; enabled = enableLibSM; deps = [ libSM ]; }
+    { flags = [ "libsm" ]; enabled = enableLibSM; deps = [ xorg.libSM ]; }
     { flags = [ "litehtml_viewer-plugin" ]; enabled = enablePluginLitehtmlViewer; deps = [ gumbo ]; }
     { flags = [ "mailmbox-plugin" ]; enabled = enablePluginMailmbox; }
     { flags = [ "managesieve-plugin" ]; enabled = enablePluginManageSieve; }
@@ -163,6 +163,6 @@ in stdenv.mkDerivation rec {
     homepage = "https://www.claws-mail.org/";
     license = licenses.gpl3Plus;
     platforms = platforms.linux;
-    maintainers = with maintainers; [ fpletz globin orivej oxzi ajs124 ];
+    maintainers = with maintainers; [ fpletz globin orivej oxzi ajs124 srapenne ];
   };
 }
