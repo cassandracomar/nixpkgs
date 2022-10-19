@@ -28328,6 +28328,18 @@ with pkgs;
     desktopName = "Firefox DevEdition";
   };
 
+  firefox-nightly-bin-unwrapped = callPackage ../applications/networking/browsers/firefox-bin {
+    inherit (gnome) adwaita-icon-theme;
+    channel = "nightly";
+    generated = import ../applications/networking/browsers/firefox-bin/nightly_sources.nix;
+  };
+
+  firefox-nightly-bin = res.wrapFirefox firefox-nightly-bin-unwrapped {
+    nameSuffix = "-nightly";
+    pname = "firefox-nightly-bin";
+    desktopName = "Firefox Nightly";
+  };
+
   librewolf-unwrapped = callPackage ../applications/networking/browsers/librewolf {};
 
   librewolf = wrapFirefox librewolf-unwrapped {
