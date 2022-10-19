@@ -15,8 +15,8 @@ let
   };
 
   nextVariant = {
-    version = "6.0.1";
-    hash = "sha256-zZGAlBbdx1rWOqo7BI5pr/o0Z3VKr/PDqZaOa9N2Sow=";
+    version = "6.0.2";
+    hash = "sha256-bJWMHBBXpsOHASYwaCU4flfgzoUlDRFjBudDqKCk3Ac=";
     variant = "next";
   };
 
@@ -25,6 +25,12 @@ let
     suffix = "xanmod1-tt";
     hash = "sha256-4ck9PAFuIt/TxA/U+moGlVfCudJnzSuAw7ooFG3OJis=";
     variant = "tt";
+  };
+
+  rtVariant = {
+    version = "6.0.2";
+    hash = "sha256-bJWMHBBXpsOHASYwaCU4flfgzoUlDRFjBudDqKCk3Ac=";
+    variant = "rt";
   };
 
   xanmodKernelFor = { version, suffix ? "xanmod1", hash, variant }: buildLinux (args // rec {
@@ -77,4 +83,5 @@ in
   current = xanmodKernelFor currentVariant;
   next = xanmodKernelFor nextVariant;
   tt = xanmodKernelFor ttVariant;
+  rt = xanmodKernelFor rtVariant;
 }
