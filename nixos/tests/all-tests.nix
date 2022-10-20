@@ -299,6 +299,7 @@ in {
   k3s = handleTest ./k3s {};
   kafka = handleTest ./kafka.nix {};
   kanidm = handleTest ./kanidm.nix {};
+  karma = handleTest ./karma.nix {};
   kbd-setfont-decompress = handleTest ./kbd-setfont-decompress.nix {};
   kbd-update-search-paths-patch = handleTest ./kbd-update-search-paths-patch.nix {};
   kea = handleTest ./kea.nix {};
@@ -443,6 +444,7 @@ in {
   novacomd = handleTestOn ["x86_64-linux"] ./novacomd.nix {};
   nscd = handleTest ./nscd.nix {};
   nsd = handleTest ./nsd.nix {};
+  ntfy-sh = handleTest ./ntfy-sh.nix {};
   nzbget = handleTest ./nzbget.nix {};
   nzbhydra2 = handleTest ./nzbhydra2.nix {};
   oh-my-zsh = handleTest ./oh-my-zsh.nix {};

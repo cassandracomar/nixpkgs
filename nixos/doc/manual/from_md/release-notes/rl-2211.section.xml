@@ -40,6 +40,24 @@
       </listitem>
       <listitem>
         <para>
+          The <literal>polymc</literal> package has been removed due to
+          a rogue maintainer. It has been replaced by
+          <literal>prismlauncher</literal>, a fork by the rest of the
+          maintainers. For more details, see
+          <link xlink:href="https://github.com/NixOS/nixpkgs/pull/196624">the
+          pull request that made this change</link> and
+          <link xlink:href="https://github.com/NixOS/nixpkgs/issues/196460">this
+          issue detailing the vulnerability</link>. Users with existing
+          installations should rename
+          <literal>~/.local/share/polymc</literal> to
+          <literal>~/.local/share/PrismLauncher</literal>. The main
+          config file’s path has also moved from
+          <literal>~/.local/share/polymc/polymc.cfg</literal> to
+          <literal>~/.local/share/PrismLauncher/prismlauncher.cfg</literal>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           The <literal>nixpkgs.hostPlatform</literal> and
           <literal>nixpkgs.buildPlatform</literal> options have been
           added. These cover and override the
@@ -256,6 +274,13 @@
       </listitem>
       <listitem>
         <para>
+          <link xlink:href="https://github.com/prymitive/karma">karma</link>,
+          an alert dashboard for Prometheus Alertmanager. Available as
+          <link xlink:href="options.html#opt-services.karma.enable">services.karma</link>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           <link xlink:href="https://languagetool.org/">languagetool</link>,
           a multilingual grammar, style, and spell checker. Available as
           <link xlink:href="options.html#opt-services.languagetool.enable">services.languagetool</link>.
@@ -273,6 +298,13 @@
           <link xlink:href="https://www.getoutline.com/">Outline</link>,
           a wiki and knowledge base similar to Notion. Available as
           <link linkend="opt-services.outline.enable">services.outline</link>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <link xlink:href="https://ntfy.sh">ntfy.sh</link>, a push
+          notification service. Available as
+          <link linkend="opt-services.ntfy-sh.enable">services.ntfy-sh</link>
         </para>
       </listitem>
       <listitem>
@@ -732,6 +764,16 @@
           <literal>luauSupport</literal> overrides, use
           <literal>features</literal> instead, which defaults to
           <literal>[ &quot;lua54&quot; &quot;luau&quot; ]</literal>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>pkgs.fetchNextcloudApp</literal> has been rewritten
+          to circumvent impurities in e.g. tarballs from GitHub and to
+          make it easier to apply patches. This means that your hashes
+          are out-of-date and the (previously required) attributes
+          <literal>name</literal> and <literal>version</literal> are no
+          longer accepted.
         </para>
       </listitem>
     </itemizedlist>
