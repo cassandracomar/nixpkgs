@@ -9,9 +9,9 @@ let
   };
 
   ttVariant = {
-    version = "6.0.2";
+    version = "6.0.6";
     suffix = "xanmod1-tt";
-    hash = "sha256-v+e0EPKcfMb6vnL9mKy+BkUZ5zpiFr1nmvhgUodVeTA=";
+    hash = "sha256-QZcFupXQQKwBNdwRLfBjTKm/Nz56m26brUNtnvTA3lE=";
     variant = "tt";
   };
 
@@ -40,7 +40,7 @@ let
 
     structuredExtraConfig = with lib.kernel; {
       # AMD P-state driver
-      X86_AMD_PSTATE = yes;
+      X86_AMD_PSTATE = lib.mkForce yes;
 
       # Google's BBRv2 TCP congestion Control
       TCP_CONG_BBR2 = yes;
@@ -81,8 +81,8 @@ in
     src = fetchFromGitHub {
       owner = "cassandracomar";
       repo = "xanmod-linux";
-      rev = "6.0.2-xanmod1-tt";
-      hash = "sha256-v+e0EPKcfMb6vnL9mKy+BkUZ5zpiFr1nmvhgUodVeTA=";
+      rev = "6.0.6-xanmod1-tt";
+      hash = "sha256-QZcFupXQQKwBNdwRLfBjTKm/Nz56m26brUNtnvTA3lE=";
     };
   };
   rt = xanmodKernelFor rtVariant;
