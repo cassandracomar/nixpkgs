@@ -2,7 +2,7 @@
 # Do not edit!
 
 {
-  version = "2022.10.4";
+  version = "2022.10.5";
   components = {
     "abode" = ps: with ps; [
       abodepy
@@ -1606,7 +1606,8 @@
     ]; # missing inputs: lacrosse-view
     "lametric" = ps: with ps; [
       aiohttp-cors
-    ]; # missing inputs: demetriek
+      demetriek
+    ];
     "landisgyr_heat_meter" = ps: with ps; [
       ultraheat-api
     ];
@@ -2357,7 +2358,8 @@
       pillow
     ];
     "prusalink" = ps: with ps; [
-    ]; # missing inputs: pyprusalink
+      pyprusalink
+    ];
     "ps4" = ps: with ps; [
     ]; # missing inputs: pyps4-2ndscreen
     "pulseaudio_loopback" = ps: with ps; [
@@ -2943,7 +2945,8 @@
     "switch_as_x" = ps: with ps; [
     ];
     "switchbee" = ps: with ps; [
-    ]; # missing inputs: pyswitchbee
+      pyswitchbee
+    ];
     "switchbot" = ps: with ps; [
       pyswitchbot
       aiohttp-cors
@@ -3916,6 +3919,7 @@
     "konnected"
     "kraken"
     "kulersky"
+    "lametric"
     "landisgyr_heat_meter"
     "lastfm"
     "launch_library"
@@ -4054,6 +4058,7 @@
     "prometheus"
     "prosegur"
     "proximity"
+    "prusalink"
     "pure_energie"
     "push"
     "pushbullet"
@@ -4172,6 +4177,7 @@
     "surepetcare"
     "switch"
     "switch_as_x"
+    "switchbee"
     "switchbot"
     "switcher_kis"
     "syncthing"

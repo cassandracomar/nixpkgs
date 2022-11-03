@@ -114,7 +114,7 @@ let
       jq
     ];
   } (''
-    BROWSERS_JSON=${driver}/share/playwright-driver/package/browsers.json
+    BROWSERS_JSON=${driver}/package/browsers.json
   '' + lib.optionalString withChromium ''
     CHROMIUM_REVISION=$(jq -r '.browsers[] | select(.name == "chromium").revision' $BROWSERS_JSON)
     mkdir -p $out/chromium-$CHROMIUM_REVISION/chrome-linux
@@ -126,8 +126,8 @@ let
       --set FONTCONFIG_FILE ${fontconfig}
   '' + lib.optionalString withFirefox ''
     FIREFOX_REVISION=$(jq -r '.browsers[] | select(.name == "firefox").revision' $BROWSERS_JSON)
-    mkdir -p $out/firefox-$FIREFOX_REVISION
-    ln -s ${firefox}/bin/firefox $out/firefox-$FIREFOX_REVISION/firefox
+    mkdir -p $out/firefox-$FIREFOX_REVISION/firefox
+    ln -s ${firefox}/bin/firefox $out/firefox-$FIREFOX_REVISION/firefox/firefox
   '' + ''
     FFMPEG_REVISION=$(jq -r '.browsers[] | select(.name == "ffmpeg").revision' $BROWSERS_JSON)
     mkdir -p $out/ffmpeg-$FFMPEG_REVISION
@@ -200,7 +200,7 @@ buildPythonPackage rec {
     "playwright"
   ];
 
-  passthru = {
+  passthru = rec {
     inherit driver;
     browsers = {
       x86_64-linux = browsers-linux { };
@@ -210,6 +210,10 @@ buildPythonPackage rec {
     }.${system} or throwSystem;
     browsers-chromium = browsers-linux { withFirefox = false; };
     browsers-firefox = browsers-linux { withChromium = false; };
+
+    tests = {
+      inherit driver browsers;
+    };
   };
 
   meta = with lib; {

@@ -375,7 +375,7 @@ let
           # FIXME: this checksum is currently wrong, since the tensorflow dependency fetch is broken on darwin
           "sha256-j2k9Q+k41nq5nP1VjjkkNjXRov1uAda4RCMDMAthjr0="
         else
-          "sha256-zH3xNFEU2JR0Ww8bpD4mCiorGtao0WVPP4vklVMgS4A=";
+          "sha256-3nAjP6WH6xhvVyA6ZGZ6ZpsTTUCQohNIiQhVn1eWpr8=";
     };
 
     buildAttrs = {
@@ -483,7 +483,7 @@ in buildPythonPackage {
   ];
 
   # remove patchelfUnstable once patchelf 0.14 with https://github.com/NixOS/patchelf/pull/256 becomes the default
-  nativeBuildInputs = lib.optional cudaSupport [ addOpenGLRunpath patchelfUnstable ];
+  nativeBuildInputs = lib.optionals cudaSupport [ addOpenGLRunpath patchelfUnstable ];
 
   postFixup = lib.optionalString cudaSupport ''
     find $out -type f \( -name '*.so' -or -name '*.so.*' \) | while read lib; do

@@ -3,21 +3,9 @@
 let
   # These names are how they are designated in https://xanmod.org.
   ltsVariant = {
-    version = "5.15.70";
-    hash = "sha256-gMtGoj/HzMqd6Y3PSc6QTsu/PI7vfb+1pg4mt878cxs=";
+    version = "5.15.75";
+    hash = "sha256-tgm5nmguEfRFq3OhmZgRgFLIW7E798Rv1basxnfdqLI=";
     variant = "lts";
-  };
-
-  currentVariant = {
-    version = "5.19.13";
-    hash = "sha256-BzQH4c24CtE3R5HNe2sOc3McVkRmf/RKOOjuf1W4YfE=";
-    variant = "current";
-  };
-
-  nextVariant = {
-    version = "6.0.2";
-    hash = "sha256-bJWMHBBXpsOHASYwaCU4flfgzoUlDRFjBudDqKCk3Ac=";
-    variant = "next";
   };
 
   ttVariant = {
@@ -25,6 +13,12 @@ let
     suffix = "xanmod1-tt";
     hash = "sha256-v+e0EPKcfMb6vnL9mKy+BkUZ5zpiFr1nmvhgUodVeTA=";
     variant = "tt";
+  };
+
+  mainVariant = {
+    version = "6.0.6";
+    hash = "sha256-JMfAtiPDgoVF+ypeFXev06PL39ZM2H7m07IxpasjAoM=";
+    variant = "main";
   };
 
   rtVariant = {
@@ -52,6 +46,10 @@ let
       TCP_CONG_BBR2 = yes;
       DEFAULT_BBR2 = yes;
 
+      # Google's Multigenerational LRU framework
+      LRU_GEN = yes;
+      LRU_GEN_ENABLED = yes;
+
       # FQ-PIE Packet Scheduling
       NET_SCH_DEFAULT = yes;
       DEFAULT_FQ_PIE = yes;
@@ -62,12 +60,11 @@ let
 
       # WineSync driver for fast kernel-backed Wine
       WINESYNC = module;
-    } // lib.optionalAttrs (variant == "tt") {
-      # removed options
-      CFS_BANDWIDTH = lib.mkForce (option no);
-      RT_GROUP_SCHED = lib.mkForce (option no);
-      SCHED_AUTOGROUP = lib.mkForce (option no);
-      SCHED_CORE = lib.mkForce (option no);
+
+      # Preemptive Full Tickless Kernel at 500Hz
+      HZ = freeform "500";
+      HZ_500 = yes;
+      HZ_1000 = no;
     };
 
     extraMeta = {
@@ -80,8 +77,6 @@ let
 in
 {
   lts = xanmodKernelFor ltsVariant;
-  current = xanmodKernelFor currentVariant;
-  next = xanmodKernelFor nextVariant;
   tt = (xanmodKernelFor ttVariant).override {
     src = fetchFromGitHub {
       owner = "cassandracomar";
@@ -91,4 +86,5 @@ in
     };
   };
   rt = xanmodKernelFor rtVariant;
+  main = xanmodKernelFor mainVariant;
 }
