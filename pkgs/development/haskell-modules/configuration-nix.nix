@@ -907,7 +907,32 @@ self: super: builtins.intersectAttrs super {
     (overrideCabal { doCheck = pkgs.postgresql.doCheck; })
   ];
 
-  cachix = self.generateOptparseApplicativeCompletions [ "cachix" ] (super.cachix.override { nix = pkgs.nixVersions.nix_2_9; });
+  cachix = overrideCabal (drv: {
+    version = "1.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "cachix";
+      repo = "cachix";
+      rev = "v1.1";
+      sha256 = "sha256-lML+E5RR5Pk2Do85+8Qs7mMVqp7ImlCIqEYjUAS08W4=";
+    };
+    buildDepends = [ self.conduit-zstd ];
+    postUnpack = "sourceRoot=$sourceRoot/cachix";
+    postPatch = ''
+      sed -i 's/1.0.1/1.1/' cachix.cabal
+    '';
+  }) (super.cachix.override { nix = pkgs.nixVersions.nix_2_9; });
+  cachix-api = overrideCabal (drv: {
+    version = "1.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "cachix";
+      repo = "cachix";
+      rev = "v1.1";
+      sha256 = "sha256-lML+E5RR5Pk2Do85+8Qs7mMVqp7ImlCIqEYjUAS08W4=";
+    };
+    buildDepends = [ self.stm-chans ];
+    postUnpack = "sourceRoot=$sourceRoot/cachix-api";
+  }) super.cachix-api;
+
 
   hercules-ci-agent = super.hercules-ci-agent.override { nix = pkgs.nixVersions.nix_2_9; };
   hercules-ci-cnix-expr =
@@ -989,11 +1014,11 @@ self: super: builtins.intersectAttrs super {
   }) super.procex;
 
   # Test suite wants to run main executable
-  fourmolu_0_8_2_0 = overrideCabal (drv: {
+  fourmolu_0_9_0_0 = overrideCabal (drv: {
     preCheck = drv.preCheck or "" + ''
       export PATH="$PWD/dist/build/fourmolu:$PATH"
     '';
-  }) super.fourmolu_0_8_2_0;
+  }) super.fourmolu_0_9_0_0;
 
   # Test suite needs to execute 'disco' binary
   disco = overrideCabal (drv: {
@@ -1101,6 +1126,20 @@ self: super: builtins.intersectAttrs super {
     hydraPlatforms = pkgs.lib.platforms.all;
     broken = false;
   }) super.cabal-install;
+
+  tailwind = addBuildDepend
+      # Overrides for tailwindcss copied from:
+      # https://github.com/EmaApps/emanote/blob/master/nix/tailwind.nix
+      (pkgs.nodePackages.tailwindcss.overrideAttrs (oa: {
+        plugins = [
+          pkgs.nodePackages."@tailwindcss/aspect-ratio"
+          pkgs.nodePackages."@tailwindcss/forms"
+          pkgs.nodePackages."@tailwindcss/line-clamp"
+          pkgs.nodePackages."@tailwindcss/typography"
+        ];
+      })) super.tailwind;
+
+  emanote = addBuildDepend pkgs.stork super.emanote;
 
   keid-render-basic = addBuildTool pkgs.glslang super.keid-render-basic;
 

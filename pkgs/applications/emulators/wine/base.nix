@@ -108,6 +108,7 @@ stdenv.mkDerivation ((lib.optionalAttrs (buildScript != null) {
   ])
   ++ lib.optionals waylandSupport (with pkgs; [
      wayland libxkbcommon wayland-protocols wayland.dev libxkbcommon.dev
+     mesa # for libgbm
   ])));
 
   patches = [ ]
@@ -184,6 +185,7 @@ stdenv.mkDerivation ((lib.optionalAttrs (buildScript != null) {
 
   passthru = {
     inherit pkgArches;
+    inherit (src) updateScript;
     tests = { inherit (nixosTests) wine; };
   };
   meta = {

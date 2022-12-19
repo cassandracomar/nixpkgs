@@ -11,7 +11,7 @@ stdenv.mkDerivation {
   name = "libfoo-1.2.3";
   src = fetchurl {
     url = "http://example.org/libfoo-1.2.3.tar.bz2";
-    sha256 = "0x2g1jqygyr5wiwg4ma1nd7w4ydpy82z9gkcv8vh2v8dn3y58v5m";
+    hash = "sha256-tWxU/LANbQE32my+9AXyt3nCT7NBVfJ45CX757EMT3Q=";
   };
 }
 ```
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   version = "1.2.3";
   src = fetchurl {
     url = "http://example.org/libfoo-source-${version}.tar.bz2";
-    sha256 = "0x2g1jqygyr5wiwg4ma1nd7w4ydpy82z9gkcv8vh2v8dn3y58v5m";
+    hash = "sha256-tWxU/LANbQE32my+9AXyt3nCT7NBVfJ45CX757EMT3Q=";
   };
 }
 ```
@@ -719,11 +719,11 @@ If set, libraries and executables are not stripped. By default, they are.
 
 ##### `dontStripHost` {#var-stdenv-dontStripHost}
 
-Like `dontStrip`, but only affects the `strip` command targetting the package’s host platform. Useful when supporting cross compilation, but otherwise feel free to ignore.
+Like `dontStrip`, but only affects the `strip` command targeting the package’s host platform. Useful when supporting cross compilation, but otherwise feel free to ignore.
 
 ##### `dontStripTarget` {#var-stdenv-dontStripTarget}
 
-Like `dontStrip`, but only affects the `strip` command targetting the packages’ target platform. Useful when supporting cross compilation, but otherwise feel free to ignore.
+Like `dontStrip`, but only affects the `strip` command targeting the packages’ target platform. Useful when supporting cross compilation, but otherwise feel free to ignore.
 
 ##### `dontMoveSbin` {#var-stdenv-dontMoveSbin}
 
@@ -887,7 +887,7 @@ Packages may expect or require other utilities to be available at runtime.
 
 Use `--prefix` to explicitly set dependencies in `PATH`.
 
-:::{note}
+::: {.note}
 `--prefix` essentially hard-codes dependencies into the wrapper.
 They cannot be overridden without rebuilding the package.
 :::
@@ -1139,6 +1139,13 @@ Here are some more packages that provide a setup hook. Since the list of hooks i
 
 Many other packages provide hooks, that are not part of `stdenv`. You can find
 these in the [Hooks Reference](#chap-hooks).
+
+### Compiler and Linker wrapper hooks {#compiler-linker-wrapper-hooks}
+
+If the file `${cc}/nix-support/cc-wrapper-hook` exists, it will be run at the end of the [compiler wrapper](#cc-wrapper).
+If the file `${binutils}/nix-support/post-link-hook` exists, it will be run at the end of the linker wrapper.
+These hooks allow a user to inject code into the wrappers.
+As an example, these hooks can be used to extract `extraBefore`, `params` and `extraAfter` which store all the command line arguments passed to the compiler and linker respectively.
 
 ## Purity in Nixpkgs {#sec-purity-in-nixpkgs}
 

@@ -135,10 +135,6 @@ final: prev: {
     meta = oldAttrs.meta // { broken = since "12"; };
   });
 
-  deltachat-desktop = prev."deltachat-desktop-../../applications/networking/instant-messengers/deltachat-desktop".override (oldAttrs: {
-    meta = oldAttrs.meta // { broken = true; }; # use the top-level package instead
-  });
-
   eask = prev."@emacs-eask/cli".override {
     name = "eask";
   };
@@ -280,7 +276,7 @@ final: prev: {
     '';
   };
 
-  manta = prev.manta.override {
+  manta = prev.manta.override ( oldAttrs: {
     nativeBuildInputs = with pkgs; [ nodejs-14_x installShellFiles ];
     postInstall = ''
       # create completions, following upstream procedure https://github.com/joyent/node-manta/blob/v5.2.3/Makefile#L85-L91
@@ -291,7 +287,8 @@ final: prev: {
         installShellCompletion --cmd $cmd --bash <(./bin/$cmd --completion)
       done
     '';
-  };
+    meta = oldAttrs.meta // { maintainers = with lib.maintainers; [ teutat3s ]; };
+  });
 
   mermaid-cli = prev."@mermaid-js/mermaid-cli".override (
   if stdenv.isDarwin
@@ -364,6 +361,10 @@ final: prev: {
     '';
   };
 
+  photoprism-frontend = prev."photoprism-frontend-../../servers/photoprism".override {
+    meta.broken = true; # use the top-level package instead
+  };
+
   pnpm = prev.pnpm.override {
     nativeBuildInputs = [ pkgs.buildPackages.makeWrapper ];
 
@@ -409,7 +410,7 @@ final: prev: {
 
     src = fetchurl {
       url = "https://registry.npmjs.org/prisma/-/prisma-${version}.tgz";
-      sha512 = "sha512-9Aeg4qiKlv9Wsjz4NO8k2CzRzlvS3A4FYVJ5+28sBBZ0eEwbiVOE/Jj7v6rZC1tFW2s4GSICQOAyuOjc6WsNew==";
+      sha512 = "sha512-VsecNo0Ca3+bDTzSpJqIpdupKVhhQ8aOYeWc09JlUM89knqvhSrlMrg0U8BiOD4tFrY1OPaCcraK8leDBxKMBg==";
     };
     postInstall = with pkgs; ''
       wrapProgram "$out/bin/prisma" \
@@ -529,12 +530,13 @@ final: prev: {
     '';
   };
 
-  triton = prev.triton.override {
+  triton = prev.triton.override (oldAttrs: {
     nativeBuildInputs = [ pkgs.installShellFiles ];
     postInstall = ''
       installShellCompletion --cmd triton --bash <($out/bin/triton completion)
     '';
-  };
+    meta = oldAttrs.meta // { maintainers = with lib.maintainers; [ teutat3s ]; };
+  });
 
   ts-node = prev.ts-node.override {
     nativeBuildInputs = [ pkgs.buildPackages.makeWrapper ];

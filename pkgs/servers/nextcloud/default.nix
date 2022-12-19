@@ -4,7 +4,9 @@ let
   generic = {
     version, sha256,
     eol ? false, extraVulnerabilities ? []
-  }: stdenv.mkDerivation rec {
+  }: let
+    major = lib.versions.major version;
+  in stdenv.mkDerivation rec {
     pname = "nextcloud";
     inherit version;
 
@@ -13,7 +15,7 @@ let
       inherit sha256;
     };
 
-    patches = [ ./0001-Setup-remove-custom-dbuser-creation-behavior.patch ];
+    patches = [ (./patches + "/v${major}/0001-Setup-remove-custom-dbuser-creation-behavior.patch") ];
 
     passthru.tests = nixosTests.nextcloud;
 
@@ -44,17 +46,17 @@ in {
     in your NixOS config.
 
     WARNING: if you were on Nextcloud 22 on NixOS 22.05 you have to upgrade to Nextcloud 23
-    first on 22.05 because Nextcloud doesn't support upgrades accross multiple major versions!
+    first on 22.05 because Nextcloud doesn't support upgrades across multiple major versions!
   '';
 
   nextcloud24 = generic {
-    version = "24.0.6";
-    sha256 = "b26dff9980a47e7e722805fdbbf87e07f59a3817b03ecc32698e028e9baf0301";
+    version = "24.0.8";
+    sha256 = "a5c3a070516debba991355e6b737b261396b15b9f2cd939617611ab0bed99299";
   };
 
   nextcloud25 = generic {
-    version = "25.0.0";
-    sha256 = "2c05ac9d7b72b44ef8b3d2ae03ff0fd6121e254b8054556f5163bd8760dd8f49";
+    version = "25.0.2";
+    sha256 = "d6ab40faa108937bda42395f570ff111f4c97343b55be1420024da3177e37d59";
   };
 
   # tip: get the sha with:

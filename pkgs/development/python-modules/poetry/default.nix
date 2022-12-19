@@ -5,7 +5,6 @@
 , cachy
 , cleo
 , crashtest
-, dataclasses
 , deepdiff
 , dulwich
 , fetchFromGitHub
@@ -55,7 +54,8 @@ buildPythonPackage rec {
 
   postPatch = ''
     substituteInPlace pyproject.toml \
-      --replace 'crashtest = "^0.3.0"' 'crashtest = "*"'
+      --replace 'crashtest = "^0.3.0"' 'crashtest = "*"' \
+      --replace 'xattr = { version = "^0.9.7"' 'xattr = { version = "^0.10.0"'
   '';
 
   nativeBuildInputs = [

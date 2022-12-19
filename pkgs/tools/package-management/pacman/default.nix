@@ -6,7 +6,6 @@
 , binutils
 , coreutils
 , curl
-, gnupg
 , gpgme
 , installShellFiles
 , libarchive
@@ -29,6 +28,12 @@
 , lz4
 , lzip
 
+# pacman-key runtime dependencies
+, gawk
+, gettext
+, gnugrep
+, gnupg
+
 # Tells pacman where to find ALPM hooks provided by packages.
 # This path is very likely to be used in an Arch-like root.
 , sysHookDir ? "/usr/share/libalpm/hooks/"
@@ -36,11 +41,11 @@
 
 stdenv.mkDerivation rec {
   pname = "pacman";
-  version = "6.0.1";
+  version = "6.0.2";
 
   src = fetchurl {
     url = "https://sources.archlinux.org/other/${pname}/${pname}-${version}.tar.xz";
-    hash = "sha256-DbYUVuVqpJ4mDokcCwJb4hAxnmKxVSHynT6TsA079zE=";
+    hash = "sha256-fY4+jFEhrsCWXfcfWb7fRgUsbPFPljZcRBHsPeCkwaU=";
   };
 
   nativeBuildInputs = [
@@ -106,7 +111,14 @@ stdenv.mkDerivation rec {
     wrapProgram $out/bin/makepkg \
       --prefix PATH : ${lib.makeBinPath [ binutils ]}
     wrapProgram $out/bin/pacman-key \
-      --prefix PATH : ${lib.makeBinPath [ "${placeholder "out"}" gnupg ]}
+      --prefix PATH : ${lib.makeBinPath [
+        "${placeholder "out"}"
+        coreutils
+        gawk
+        gettext
+        gnugrep
+        gnupg
+      ]}
   '';
 
   meta = with lib; {

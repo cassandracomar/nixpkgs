@@ -5,7 +5,7 @@
 , fetchpatch
 , python3
 , substituteAll
-, ffmpeg
+, ffmpeg-headless
 , inetutils
 , nixosTests
 
@@ -31,36 +31,30 @@ let
     # Override the version of some packages pinned in Home Assistant's setup.py and requirements_all.txt
 
     (self: super: {
-      backoff = super.backoff.overridePythonAttrs (oldAttrs: rec {
-        version = "1.11.1";
+      # https://github.com/postlund/pyatv/issues/1879
+      aiohttp = super.aiohttp.overridePythonAttrs (oldAttrs: rec {
+        pname = "aiohttp";
+        version = "3.8.1";
+        src = self.fetchPypi {
+          inherit pname version;
+          hash = "sha256-/FRx4aVN4V73HBvG6+gNTcaB6mAOaL/Ry85AQn8LdXg=";
+        };
+      });
+
+      caldav = super.caldav.overridePythonAttrs (old: rec {
+        version = "0.9.1";
         src = fetchFromGitHub {
-          owner = "litl";
-          repo = "backoff";
+          owner = "python-caldav";
+          repo = "caldav";
           rev = "v${version}";
-          hash = "sha256-87IMcLaoCn0Vns8Ub/AFmv0gXtS0aPZX0cSt7+lOPm4=";
+          hash = "sha256-Gil0v4pGyp5+TnYPjb8Vk0xTqnQKaeD8Ko/ZWhvkbUk=";
         };
-      });
-
-      bsblan = super.bsblan.overridePythonAttrs (oldAttrs: rec {
-        version = "0.5.0";
-        postPatch = null;
-        propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [ super.cattrs ];
-        src = fetchFromGitHub {
-          owner = "liudger";
-          repo = "python-bsblan";
-          rev = "v.${version}";
-          hash = "sha256-yzlHcIb5QlG+jAgEtKlAcY7rESiUY7nD1YwqK63wgcg=";
-        };
-      });
-
-      blebox-uniapi = super.blebox-uniapi.overridePythonAttrs (oldAttrs: rec {
-        version = "2.0.2";
-        src = fetchFromGitHub {
-          owner = "blebox";
-          repo = "blebox_uniapi";
-          rev = "refs/tags/v${version}";
-          hash = "sha256-0Yiooy7YSUFjqqcyH2fPQ6AWuR0EJxfRRZTw/6JGcMA=";
-        };
+        postPatch = ''
+          substituteInPlace setup.py \
+            --replace ", 'xandikos<0.2.4'" "" \
+            --replace ", 'radicale'" ""
+        '';
+        checkInputs = old.checkInputs ++ [ self.nose ];
       });
 
       gridnet = super.gridnet.overridePythonAttrs (oldAttrs: rec {
@@ -84,62 +78,6 @@ let
         };
       });
 
-      iaqualink = super.iaqualink.overridePythonAttrs (oldAttrs: rec {
-        version = "0.4.1";
-        src = fetchFromGitHub {
-          owner = "flz";
-          repo = "iaqualink-py";
-          rev = "v${version}";
-          hash = "sha256-GDJwPBEU7cteAdYj7eo5tAo0G8AVcQR7KSxLNLhU/XU=";
-        };
-      });
-
-      # pytest-aiohttp>0.3.0 breaks home-assistant tests
-      pytest-aiohttp = super.pytest-aiohttp.overridePythonAttrs (oldAttrs: rec {
-        version = "0.3.0";
-        src = self.fetchPypi {
-          inherit version;
-          pname = "pytest-aiohttp";
-          hash = "sha256-ySmFQzljeXc3WDhwO2L+9jUoWYvAqdRRY566lfSqpE8=";
-        };
-        propagatedBuildInputs = with python3.pkgs; [ aiohttp pytest ];
-        doCheck = false;
-        patches = [];
-      });
-      aioecowitt = super.aioecowitt.overridePythonAttrs (oldAttrs: {
-        doCheck = false; # requires aiohttp>=1.0.0
-      });
-      aiohomekit = super.aiohomekit.overridePythonAttrs (oldAttrs: {
-        doCheck = false; # requires aiohttp>=1.0.0
-      });
-      aioopenexchangerates = super.aioopenexchangerates.overridePythonAttrs (oldAttrs: {
-        doCheck = false; # requires aiohttp>=1.0.0
-      });
-      gcal-sync = super.gcal-sync.overridePythonAttrs (oldAttrs: {
-        doCheck = false; # requires aiohttp>=1.0.0
-      });
-      hass-nabucasa = super.hass-nabucasa.overridePythonAttrs (oldAttrs: {
-        doCheck = false; # requires aiohttp>=1.0.0
-      });
-      pylitterbot = super.pylitterbot.overridePythonAttrs (oldAttrs: {
-        doCheck = false; # requires pytest-aiohttp>=1.0.0
-      });
-      pynws = super.pynws.overridePythonAttrs (oldAttrs: {
-        doCheck = false; # requires pytest-aiohttp>=1.0.0
-      });
-      pytomorrowio = super.pytomorrowio.overridePythonAttrs (oldAttrs: {
-        doCheck = false; # requires pytest-aiohttp>=1.0.0
-      });
-      rtsp-to-webrtc = super.rtsp-to-webrtc.overridePythonAttrs (oldAttrs: {
-        doCheck = false; # requires pytest-aiohttp>=1.0.0
-      });
-      snitun = super.snitun.overridePythonAttrs (oldAttrs: {
-        doCheck = false; # requires aiohttp>=1.0.0
-      });
-      zwave-js-server-python = super.zwave-js-server-python.overridePythonAttrs (oldAttrs: {
-        doCheck = false; # requires aiohttp>=1.0.0
-      });
-
       # Pinned due to API changes in 0.1.0
       poolsense = super.poolsense.overridePythonAttrs (oldAttrs: rec {
         version = "0.0.8";
@@ -159,10 +97,6 @@ let
           rev = version;
           sha256 = "00ly4injmgrj34p0lyx7cz2crgnfcijmzc0540gf7hpwha0marf6";
         };
-      });
-
-      pydeconz = super.pydeconz.overridePythonAttrs (oldAttrs: rec {
-        doCheck = false; # requires pytest-aiohttp>=1.0.0
       });
 
       python-slugify = super.python-slugify.overridePythonAttrs (oldAttrs: rec {
@@ -254,7 +188,7 @@ let
   extraPackagesFile = writeText "home-assistant-packages" (lib.concatMapStringsSep "\n" (pkg: pkg.pname) extraBuildInputs);
 
   # Don't forget to run parse-requirements.py after updating
-  hassVersion = "2022.10.5";
+  hassVersion = "2022.12.6";
 
 in python.pkgs.buildPythonApplication rec {
   pname = "homeassistant";
@@ -272,19 +206,20 @@ in python.pkgs.buildPythonApplication rec {
     owner = "home-assistant";
     repo = "core";
     rev = version;
-    hash = "sha256-y2X6tiR3TLbQ1tYUUuu8D0i5j+P0FnDWJ1mSlGPwIuY=";
+    hash = "sha256-9dukY04sh35kj5vUbNmqnN+MPGqJT/YUuHC64pHzWjw=";
   };
 
   # leave this in, so users don't have to constantly update their downstream patch handling
   patches = [
     (substituteAll {
       src = ./patches/ffmpeg-path.patch;
-      ffmpeg = "${lib.getBin ffmpeg}/bin/ffmpeg";
+      ffmpeg = "${lib.getBin ffmpeg-headless}/bin/ffmpeg";
     })
   ];
 
   postPatch = let
     relaxedConstraints = [
+      "aiohttp"
       "attrs"
       "awesomeversion"
       "bcrypt"

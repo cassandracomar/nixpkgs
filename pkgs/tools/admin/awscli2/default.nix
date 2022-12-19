@@ -4,6 +4,8 @@
 , less
 , fetchFromGitHub
 , nix-update-script
+, testers
+, awscli2
 }:
 
 let
@@ -32,14 +34,14 @@ let
 in
 with py.pkgs; buildPythonApplication rec {
   pname = "awscli2";
-  version = "2.8.8"; # N.B: if you change this, check if overrides are still up-to-date
+  version = "2.9.6"; # N.B: if you change this, check if overrides are still up-to-date
   format = "pyproject";
 
   src = fetchFromGitHub {
     owner = "aws";
     repo = "aws-cli";
     rev = version;
-    sha256 = "sha256-F8FqsLh+KU6YR1BsE1+UPOsLkr7ie10kXCYJS0DfDCQ=";
+    hash = "sha256-3zB0Uy2pmkrOLb+/mXZGs/pnzo6zi2zVPyeNPGPVQJM=";
   };
 
   nativeBuildInputs = [
@@ -59,7 +61,6 @@ with py.pkgs; buildPythonApplication rec {
     pyyaml
     rsa
     ruamel-yaml
-    wcwidth
     python-dateutil
     jmespath
     urllib3
@@ -72,11 +73,10 @@ with py.pkgs; buildPythonApplication rec {
   ];
 
   postPatch = ''
-    substituteInPlace pyproject.toml \
-      --replace "colorama>=0.2.5,<0.4.4" "colorama" \
-      --replace "distro>=1.5.0,<1.6.0" "distro" \
-      --replace "docutils>=0.10,<0.16" "docutils" \
-      --replace "wcwidth<0.2.0" "wcwidth"
+    sed -i pyproject.toml \
+      -e 's/colorama.*/colorama",/' \
+      -e 's/cryptography.*/cryptography",/' \
+      -e 's/distro.*/distro",/'
   '';
 
   postInstall = ''
@@ -121,6 +121,11 @@ with py.pkgs; buildPythonApplication rec {
     updateScript = nix-update-script {
       attrPath = pname;
     };
+    tests.version = testers.testVersion {
+      package = awscli2;
+      command = "aws --version";
+      version = version;
+    };
   };
 
   meta = with lib; {
@@ -129,5 +134,6 @@ with py.pkgs; buildPythonApplication rec {
     description = "Unified tool to manage your AWS services";
     license = licenses.asl20;
     maintainers = with maintainers; [ bhipple davegallant bryanasdev000 devusb anthonyroussel ];
+    mainProgram = "aws";
   };
 }

@@ -14,6 +14,7 @@
 , numactl
 , perl
 , python3
+, python3Packages
 , rocclr
 , rocm-comgr
 , rocm-device-libs
@@ -27,15 +28,15 @@
 }:
 
 let
-  hip = stdenv.mkDerivation rec {
+  hip = stdenv.mkDerivation (finalAttrs: {
     pname = "hip";
-    version = "5.3.0";
+    version = "5.4.0";
 
     src = fetchFromGitHub {
       owner = "ROCm-Developer-Tools";
       repo = "HIP";
-      rev = "rocm-${version}";
-      hash = "sha256-UAodlVUiTU4n/EyvTIuQekTGh4izmBjKCRXOHXVKY4M=";
+      rev = "rocm-${finalAttrs.version}";
+      hash = "sha256-34SJM2n3jZWIS2uwpboWOXVFhaVWGK5ELPKD/cJc1zw=";
     };
 
     patches = [
@@ -58,9 +59,6 @@ let
             -e 's,#!/bin/bash,#!${stdenv.shell},' \
             -i "$f"
       done
-
-      substituteInPlace bin/hip_embed_pch.sh \
-        --replace '$LLVM_DIR/bin/' ""
 
       sed 's,#!/usr/bin/python,#!${python3.interpreter},' -i hip_prof_gen.py
 
@@ -102,24 +100,24 @@ let
       description = "C++ Heterogeneous-Compute Interface for Portability";
       homepage = "https://github.com/ROCm-Developer-Tools/HIP";
       license = licenses.mit;
-      maintainers = with maintainers; [ lovesegfault Flakebi ];
+      maintainers = with maintainers; [ lovesegfault ] ++ teams.rocm.members;
       platforms = platforms.linux;
     };
-  };
+  });
 in
-stdenv.mkDerivation rec {
+stdenv.mkDerivation (finalAttrs: {
   pname = "hip";
-  version = "5.3.0";
+  version = "5.4.0";
 
   src = fetchFromGitHub {
     owner = "ROCm-Developer-Tools";
     repo = "hipamd";
-    rev = "rocm-${version}";
-    hash = "sha256-gZGZiDP/HbdmzLQkG9Jq9lyMP9hoD6UzTMiX9cUmQNA=";
+    rev = "rocm-${finalAttrs.version}";
+    hash = "sha256-VL0vZVv099pZPX0J2pXPFvrhkVO/b6X+ZZDaD9B1hYI=";
   };
 
   nativeBuildInputs = [ cmake python3 makeWrapper perl ];
-  buildInputs = [ libxml2 numactl libglvnd libX11 ];
+  buildInputs = [ libxml2 numactl libglvnd libX11 python3Packages.cppheaderparser ];
   propagatedBuildInputs = [
     clang
     llvm
@@ -167,10 +165,19 @@ stdenv.mkDerivation rec {
     wrapProgram $out/bin/hipconfig --set HIP_PATH $out --set HSA_PATH ${rocm-runtime} --set HIP_CLANG_PATH ${clang}/bin
   '';
 
+  # TODO: Separate HIP and hipamd into separate derivations
   passthru.updateScript = writeScript "update.sh" ''
     #!/usr/bin/env nix-shell
     #!nix-shell -i bash -p curl jq common-updater-scripts nix-prefetch-github
-    version="$(curl -sL "https://api.github.com/repos/ROCm-Developer-Tools/HIP/tags" | jq '.[].name | split("-") | .[1] | select( . != null )' --raw-output | sort -n | tail -1)"
+    version="$(curl ''${GITHUB_TOKEN:+-u ":$GITHUB_TOKEN"} \
+      -sL "https://api.github.com/repos/ROCm-Developer-Tools/HIP/releases?per_page=1" | jq '.[0].tag_name | split("-") | .[1]' --raw-output)"
+
+    IFS='.' read -a version_arr <<< "$version"
+
+    if [ "''${#version_arr[*]}" == 2 ]; then
+      version="''${version}.0"
+    fi
+
     current_version="$(grep "version =" pkgs/development/compilers/hip/default.nix | head -n1 | cut -d'"' -f2)"
     if [[ "$version" != "$current_version" ]]; then
       tarball_meta="$(nix-prefetch-github ROCm-Developer-Tools HIP --rev "rocm-$version")"
@@ -182,7 +189,15 @@ stdenv.mkDerivation rec {
       echo hip already up-to-date
     fi
 
-    version="$(curl -sL "https://api.github.com/repos/ROCm-Developer-Tools/hipamd/tags" | jq '.[].name | split("-") | .[1] | select( . != null )' --raw-output | sort -n | tail -1)"
+    version="$(curl ''${GITHUB_TOKEN:+-u ":$GITHUB_TOKEN"} \
+      -sL "https://api.github.com/repos/ROCm-Developer-Tools/hipamd/releases?per_page=1" | jq '.[0].tag_name | split("-") | .[1]' --raw-output)"
+
+    IFS='.' read -a version_arr <<< "$version"
+
+    if [ "''${#version_arr[*]}" == 2 ]; then
+      version="''${version}.0"
+    fi
+
     current_version="$(grep "version =" pkgs/development/compilers/hip/default.nix | tail -n1 | cut -d'"' -f2)"
     if [[ "$version" != "$current_version" ]]; then
       tarball_meta="$(nix-prefetch-github ROCm-Developer-Tools hipamd --rev "rocm-$version")"
@@ -199,7 +214,7 @@ stdenv.mkDerivation rec {
     description = "C++ Heterogeneous-Compute Interface for Portability";
     homepage = "https://github.com/ROCm-Developer-Tools/hipamd";
     license = licenses.mit;
-    maintainers = with maintainers; [ lovesegfault Flakebi ];
+    maintainers = with maintainers; [ lovesegfault ] ++ teams.rocm.members;
     platforms = platforms.linux;
   };
-}
+})

@@ -3,7 +3,6 @@
 , buildPackages
 , fetchFromGitLab
 , fetchpatch
-, removeReferencesTo
 , python3
 , meson
 , ninja
@@ -20,20 +19,18 @@
 , libjack2
 , libusb1
 , udev
-, libva
 , libsndfile
 , vulkan-headers
 , vulkan-loader
 , webrtc-audio-processing
 , ncurses
-, readline81 # meson can't find <7 as those versions don't have a .pc file
+, readline # meson can't find <7 as those versions don't have a .pc file
 , lilv
 , makeFontsConf
 , callPackage
 , nixosTests
 , withValgrind ? lib.meta.availableOn stdenv.hostPlatform valgrind
 , valgrind
-, withMediaSession ? true
 , libcameraSupport ? true
 , libcamera
 , libdrm
@@ -68,11 +65,10 @@
 
 let
   mesonEnableFeature = b: if b then "enabled" else "disabled";
-  mesonList = l: "[" + lib.concatStringsSep "," l + "]";
 
   self = stdenv.mkDerivation rec {
     pname = "pipewire";
-    version = "0.3.59";
+    version = "0.3.63";
 
     outputs = [
       "out"
@@ -90,7 +86,7 @@ let
       owner = "pipewire";
       repo = "pipewire";
       rev = version;
-      sha256 = "sha256-4wDtdgkjBRlthhwbI3cSQFnbr+gxPQP5j5YnrWiQVp4=";
+      sha256 = "sha256-GQJpw5G9YN7T2upu2FLUxE8UvMRev3K2j4Z1uK1/dt4=";
     };
 
     patches = [
@@ -106,12 +102,6 @@ let
       ./0090-pipewire-config-template-paths.patch
       # Place SPA data files in lib output to avoid dependency cycles
       ./0095-spa-data-dir.patch
-
-      # remove when updating to 0.3.60
-      (fetchpatch { # filter-chain: iterate the port correctly
-        url = "https://gitlab.freedesktop.org/pipewire/pipewire/-/commit/94a64268613adac8ef6f3e6c1f04468220540d00.patch";
-        sha256 = "sha256-IDTB7NgadgR3vKv97Nvd9pBfnOnMi21YsvLdD1Ew7HE=";
-      })
     ];
 
     nativeBuildInputs = [
@@ -133,7 +123,7 @@ let
       libsndfile
       lilv
       ncurses
-      readline81
+      readline
       udev
       vulkan-headers
       vulkan-loader

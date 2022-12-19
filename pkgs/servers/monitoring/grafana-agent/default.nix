@@ -1,17 +1,17 @@
-{ lib, buildGoModule, fetchFromGitHub, systemd, nixosTests, bcc }:
+{ lib, buildGoModule, fetchFromGitHub, systemd, nixosTests }:
 
 buildGoModule rec {
   pname = "grafana-agent";
-  version = "0.28.0";
+  version = "0.29.0";
 
   src = fetchFromGitHub {
     rev = "v${version}";
     owner = "grafana";
     repo = "agent";
-    sha256 = "sha256-UuDRnpb9JpghGDFsrlU7+iMboqiWVyT7qFSSPlLSFGs=";
+    sha256 = "sha256-6CnYoUECT6vcQw2v7GLRzOtlL4tKKpz4VADuz9MxseM=";
   };
 
-  vendorSha256 = "sha256-UEQYZbP3dzi7wZwX+InJrgHrFB1wfSUNmUMkit+Y1Lo=";
+  vendorSha256 = "sha256-FSxkldMYMmyjVv6UYeZlceygkfKFzZK2udeUNBbpYnc=";
 
   ldflags = let
     prefix = "github.com/grafana/agent/pkg/build";
@@ -27,6 +27,7 @@ buildGoModule rec {
 
   tags = [
     "nonetwork"
+    "noebpf"
     "nodocker"
   ];
 
@@ -38,8 +39,6 @@ buildGoModule rec {
   # uses go-systemd, which uses libsystemd headers
   # https://github.com/coreos/go-systemd/issues/351
   NIX_CFLAGS_COMPILE = [ "-I${lib.getDev systemd}/include" ];
-
-  buildInputs = [ bcc ];
 
   # tries to access /sys: https://github.com/grafana/agent/issues/333
   preBuild = ''

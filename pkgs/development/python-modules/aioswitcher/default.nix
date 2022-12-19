@@ -14,7 +14,7 @@
 
 buildPythonPackage rec {
   pname = "aioswitcher";
-  version = "3.2.0";
+  version = "3.2.1";
   format = "pyproject";
 
   disabled = pythonOlder "3.9";
@@ -23,7 +23,7 @@ buildPythonPackage rec {
     owner = "TomerFi";
     repo = pname;
     rev = "refs/tags/${version}";
-    hash = "sha256-Vob5p0+SlZR2eHj5Br2pWp3FCxW+zgY6crh8jrkreT0=";
+    hash = "sha256-k3xmW8aMBz6dbWuLnd6tw2BFoTuD80fpY7q2NfYqMlw=";
   };
 
   nativeBuildInputs = [
@@ -44,10 +44,6 @@ buildPythonPackage rec {
     time-machine
   ];
 
-  pytestFlagsArray = [
-    "--asyncio-mode=legacy"
-  ];
-
   disabledTests = [
     # AssertionError: Expected <14:00> to be equal to <17:00>, but was not.
     "test_schedule_parser_with_a_weekly_recurring_enabled_schedule_data"
@@ -64,6 +60,7 @@ buildPythonPackage rec {
   meta = with lib; {
     description = "Python module to interact with Switcher water heater";
     homepage = "https://github.com/TomerFi/aioswitcher";
+    changelog = "https://github.com/TomerFi/aioswitcher/releases/tag/${version}";
     license = with licenses; [ mit ];
     maintainers = with maintainers; [ fab ];
   };

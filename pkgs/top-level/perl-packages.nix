@@ -385,7 +385,11 @@ let
       url = "mirror://cpan/authors/id/M/MD/MDOOTSON/Alien-wxWidgets-0.69.tar.gz";
       hash = "sha256-UyJOS7vv/0z3tj7ZpiljiTuf/Ull1w2WcQNI+Gdt4kk=";
     };
-    propagatedBuildInputs = [ pkgs.pkg-config pkgs.gtk2 pkgs.wxGTK30 ModulePluggable ];
+    postPatch = ''
+      substituteInPlace Build.PL \
+        --replace "gtk+-2.0" "gtk+-3.0"
+    '';
+    propagatedBuildInputs = [ pkgs.pkg-config pkgs.gtk3 pkgs.wxGTK30 ModulePluggable ];
     buildInputs = [ LWPProtocolHttps ];
     meta = {
       description = "Building, finding and using wxWidgets binaries";
@@ -1203,15 +1207,15 @@ let
       url = "mirror://cpan/authors/id/S/SJ/SJQUINNEY/Authen-Krb5-Admin-0.17.tar.gz";
       hash = "sha256-XdScrNmD79YajD8aVlcbtzeF6xVZCLXXvsl+7XjfDFQ=";
     };
-    propagatedBuildInputs = [ pkgs.krb5Full.dev AuthenKrb5 ];
+    propagatedBuildInputs = [ pkgs.krb5.dev AuthenKrb5 ];
     # The following ENV variables are required by Makefile.PL to find
-    # programs in krb5Full.dev. It is not enough to just specify the
-    # path to krb5-config as this tool returns the prefix of krb5Full,
+    # programs in krb5.dev. It is not enough to just specify the
+    # path to krb5-config as this tool returns the prefix of krb5,
     # which implies a working value for KRB5_LIBDIR, but not the others.
     perlPreHook = ''
-      export KRB5_CONFTOOL=${pkgs.krb5Full.dev}/bin/krb5-config
-      export KRB5_BINDIR=${pkgs.krb5Full.dev}/bin
-      export KRB5_INCDIR=${pkgs.krb5Full.dev}/include
+      export KRB5_CONFTOOL=${pkgs.krb5.dev}/bin/krb5-config
+      export KRB5_BINDIR=${pkgs.krb5.dev}/bin
+      export KRB5_INCDIR=${pkgs.krb5.dev}/include
     '';
     # Tests require working Kerberos infrastructure so replace with a
     # simple attempt to exercise the module.
@@ -10525,8 +10529,8 @@ let
       url = "mirror://cpan/authors/id/A/AG/AGROLMS/GSSAPI-0.28.tar.gz";
       hash = "sha256-fY8se2F2L7TsctLsKBKQ8vh/nH0pgnPaRSVDKmXncNY=";
     };
-    propagatedBuildInputs = [ pkgs.krb5Full.dev ];
-    makeMakerFlags = [ "--gssapiimpl" "${pkgs.krb5Full.dev}" ];
+    propagatedBuildInputs = [ pkgs.krb5.dev ];
+    makeMakerFlags = [ "--gssapiimpl" "${pkgs.krb5.dev}" ];
     meta = {
       description = "Perl extension providing access to the GSSAPIv2 library";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
@@ -11998,10 +12002,10 @@ let
 
   IOAsync = buildPerlModule {
     pname = "IO-Async";
-    version = "0.801";
+    version = "0.802";
     src = fetchurl {
-      url = "mirror://cpan/authors/id/P/PE/PEVANS/IO-Async-0.801.tar.gz";
-      hash = "sha256-ieRZuhe3alcrsbS7EgMBVB6MyTJCQXFmI2tsbbDhybk=";
+      url = "mirror://cpan/authors/id/P/PE/PEVANS/IO-Async-0.802.tar.gz";
+      hash = "sha256-5YJzFXd2fEfqxDXvKQRmPUp1Cw5oAqSmGJo38Mswhzg";
     };
     preCheck = "rm t/50resolver.t"; # this test fails with "Temporary failure in name resolution" in sandbox
     propagatedBuildInputs = [ Future StructDumb ];
@@ -12238,7 +12242,7 @@ let
     };
   };
 
-  IOSocketInet6 = buildPerlModule {
+  IOSocketINET6 = buildPerlModule {
     pname = "IO-Socket-INET6";
     version = "2.72";
     src = fetchurl {
@@ -12503,11 +12507,11 @@ let
 
   ImageExifTool = buildPerlPackage rec {
     pname = "Image-ExifTool";
-    version = "12.49";
+    version = "12.52";
 
     src = fetchurl {
       url = "https://exiftool.org/Image-ExifTool-${version}.tar.gz";
-      hash = "sha256-l21p2ak+pe9GSWOatsGQ9YvyZfAFfKV3xB38rzexcVs=";
+      hash = "sha256-yH8RlkTRAanHYNyq5Vi52W8mGKIJwmGZsWhzyokz+ao=";
     };
 
     nativeBuildInputs = lib.optional stdenv.isDarwin shortenPerlShebang;
@@ -12529,7 +12533,7 @@ let
         Reconyx, Ricoh, Samsung, Sanyo, Sigma/Foveon and Sony.
       '';
       homepage = "https://exiftool.org/";
-
+      changelog = "https://exiftool.org/history.html";
       license = with lib.licenses; [ gpl1Plus /* or */ artistic2 ];
       maintainers = with maintainers; [ kiloreux anthonyroussel ];
       mainProgram = "exiftool";
@@ -22634,12 +22638,12 @@ let
 
   SysVirt = buildPerlModule rec {
     pname = "Sys-Virt";
-    version = "8.8.0";
+    version = "8.10.0";
     src = fetchFromGitLab {
       owner = "libvirt";
       repo = "libvirt-perl";
       rev = "v${version}";
-      hash = "sha256-8maLIW4hBbMbq+rnwEfaHsUgpppaU5K4aQTwTgUjdcI=";
+      hash = "sha256-rVTofRtnYDF5CmWp3SB2+kJZz4u6+OTzNAUwiDrqdTo=";
     };
     nativeBuildInputs = [ pkgs.pkg-config ];
     buildInputs = [ pkgs.libvirt CPANChanges TestPod TestPodCoverage XMLXPath ];
@@ -26137,13 +26141,13 @@ let
 
   Tirex = buildPerlPackage rec {
     pname = "Tirex";
-    version = "0.6.1";
+    version = "0.7.0";
 
     src = fetchFromGitHub {
       owner = "openstreetmap";
       repo = "tirex";
       rev = "v${version}";
-      hash = "sha256-8GXhF2v04ZSF0h0WNKPp4bgYcvPYCml6HtCbikFxUzc=";
+      hash = "sha256-0QbPfCPBdNBbUiZ8Ppg2zao98+Ddl3l+yX6y1/J50rg=";
     };
 
     buildInputs = [
@@ -26158,6 +26162,7 @@ let
     ];
 
     installPhase = ''
+      install -m 755 -d $out/usr/libexec
       make install DESTDIR=$out INSTALLOPTS=""
       mv $out/$out/lib $out/$out/share $out
       rmdir $out/$out $out/nix/store $out/nix
@@ -26945,6 +26950,12 @@ let
       url = "mirror://cpan/authors/id/M/MD/MDOOTSON/Wx-0.9932.tar.gz";
       hash = "sha256-HP22U1oPRnbm8aqyydjhbVd74+s7fMBMgHTWheZlG3A=";
     };
+    patches = [
+      (fetchpatch {
+        url = "https://aur.archlinux.org/cgit/aur.git/plain/gtk3.patch?h=perl-wx&id=a3776d3747e3767d1e0f6d37bdaabf087f779fea";
+        hash = "sha256-CokmRzDTFmEMN/jTKw9ECCPvi0mHt5+h8Ojg4Jgd7D4=";
+      })
+    ];
     propagatedBuildInputs = [ AlienWxWidgets ];
     # Testing requires an X server:
     #   Error: Unable to initialize GTK, is DISPLAY set properly?"
@@ -27805,7 +27816,7 @@ let
       hash = "sha256-RdIExtrXzZAXYIS/JCe6qM5QNoSlaZ6+sjbk0zvAuoY=";
     };
     buildInputs = [ PodCoverage TestDifferences TestException TestFatal TestNoWarnings TestPod ];
-    propagatedBuildInputs = [ ClassAccessor Clone EmailValid FileShareDir FileSlurp IOSocketInet6 ListMoreUtils ModuleFind Moose MooseXSingleton NetIP Readonly TextCSV ZonemasterLDNS libintl-perl ];
+    propagatedBuildInputs = [ ClassAccessor Clone EmailValid FileShareDir FileSlurp IOSocketINET6 ListMoreUtils ModuleFind Moose MooseXSingleton NetIP Readonly TextCSV ZonemasterLDNS libintl-perl ];
 
     preCheck = ''
       # disable dnssec test as it fails
@@ -27916,6 +27927,7 @@ let
   DistZillaPluginNoTabsTests = self.DistZillaPluginTestNoTabs;
   EmailMIMEModifier = self.EmailMIME;
   ExtUtilsCommand = self.ExtUtilsMakeMaker;
+  IOSocketInet6 = self.IOSocketINET6;
   IOstringy = self.IOStringy;
   libintl_perl = self.libintl-perl;
   libintlperl = self.libintl-perl;

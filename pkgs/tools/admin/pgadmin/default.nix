@@ -10,11 +10,11 @@
 
 let
   pname = "pgadmin";
-  version = "6.15";
+  version = "6.17";
 
   src = fetchurl {
     url = "https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v${version}/source/pgadmin4-${version}.tar.gz";
-    sha256 = "sha256-S//Rfi8IiBo+lL0BCFVBw+hy2Tw37B349Gcpq2knqSM=";
+    sha256 = "sha256-fcMNqki0namB5mRntlJUE9cN+axlw+7b8EA9aactlIw=";
   };
 
   yarnDeps = mkYarnModules {
@@ -181,7 +181,7 @@ pythonPackages.buildPythonApplication rec {
   # checks will be run through nixos/tests
   doCheck = false;
 
-  # speaklater3 is seperate because when passing buildDeps
+  # speaklater3 is separate because when passing buildDeps
   # to the test, it fails there due to a collision with speaklater
   propagatedBuildInputs = buildDeps ++ [ pythonPackages.speaklater3 ];
 

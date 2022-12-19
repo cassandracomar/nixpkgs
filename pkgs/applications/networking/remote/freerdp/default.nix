@@ -62,13 +62,13 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "freerdp";
-  version = "2.8.1";
+  version = "2.9.0";
 
   src = fetchFromGitHub {
     owner = "FreeRDP";
     repo = "FreeRDP";
     rev = version;
-    sha256 = "sha256-0heCwXFms6Ni/F1TaS5QEK+ePlR9DXUrzVj3vA5DvCk=";
+    sha256 = "sha256-I9xJWHoY8fZ5T9zca77gFciC+7JdD6fMwV16giiY4FU=";
   };
 
   postPatch = ''
@@ -156,7 +156,7 @@ stdenv.mkDerivation rec {
     WITH_X11 = true;
   };
 
-  NIX_CFLAGS_COMPILE = lib.optional stdenv.isDarwin [
+  NIX_CFLAGS_COMPILE = lib.optionals stdenv.isDarwin [
     "-DTARGET_OS_IPHONE=0"
     "-DTARGET_OS_WATCH=0"
     "-include AudioToolbox/AudioToolbox.h"
