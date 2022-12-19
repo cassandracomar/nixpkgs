@@ -11,6 +11,7 @@
 
 # for determining the latest compatible linuxPackages
 , linuxPackages_6_0 ? pkgs.linuxKernel.packages.linux_6_0
+, linuxPackages_6_1 ? pkgs.linuxKernel.packages.linux_6_1
 }:
 
 let
@@ -234,8 +235,8 @@ in {
 
   zfsUnstable = common {
     # check the release notes for compatible kernels
-    kernelCompatible = kernel.kernelOlder "6.1";
-    latestCompatibleLinuxPackages = linuxPackages_6_0;
+    kernelCompatible = kernel.kernelOlder "6.2";
+    latestCompatibleLinuxPackages = linuxPackages_6_1;
 
     # this package should point to a version / git revision compatible with the latest kernel release
     # IMPORTANT: Always use a tagged release candidate or commits from the
