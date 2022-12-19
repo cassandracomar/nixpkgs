@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   '';
   configureScript = "../configure";
 
-  doCheck = true;
+  doCheck = false;
 
   # Note: The test-suite *requires* /dev/pts among the `build-chroot-dirs' of
   # the build daemon when building in a chroot.  See
