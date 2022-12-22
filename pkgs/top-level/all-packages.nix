@@ -416,10 +416,6 @@ with pkgs;
 
   comedilib = callPackage ../development/libraries/comedilib {  };
 
-  commitlint = nodePackages."@commitlint/cli";
-
-  commit-formatter = callPackage ../applications/version-management/commit-formatter { };
-
   commix = callPackage ../tools/security/commix { };
 
   conserver = callPackage ../tools/misc/conserver { };
@@ -448,8 +444,6 @@ with pkgs;
 
   databricks-sql-cli = python3Packages.callPackage ../applications/misc/databricks-sql-cli { };
 
-  datalad = callPackage ../applications/version-management/datalad { };
-
   dhallDirectoryToNix = callPackage ../build-support/dhall/directory-to-nix.nix { };
 
   dhallPackageToNix = callPackage ../build-support/dhall/package-to-nix.nix { };
@@ -463,6 +457,8 @@ with pkgs;
   deadnix = callPackage ../development/tools/deadnix { };
 
   dsq = callPackage ../tools/misc/dsq { };
+
+  dtv-scan-tables = callPackage ../data/misc/dtv-scan-tables { };
 
   dufs = callPackage ../servers/http/dufs {
     inherit (darwin.apple_sdk.frameworks) Security;
@@ -1085,6 +1081,8 @@ with pkgs;
     { deps = [ lcov enableGCOVInstrumentation ]; }
     ../build-support/setup-hooks/make-coverage-analysis-report.sh;
 
+  makeHardcodeGsettingsPatch = callPackage ../build-support/make-hardcode-gsettings-patch { };
+
   # intended to be used like nix-build -E 'with import <nixpkgs> {}; enableDebugging fooPackage'
   enableDebugging = pkg: pkg.override { stdenv = stdenvAdapters.keepDebugInfo pkg.stdenv; };
 
@@ -1587,7 +1585,13 @@ with pkgs;
 
   cgit-pink = callPackage ../applications/version-management/cgit/pink.nix { };
 
+  commit-formatter = callPackage ../applications/version-management/commit-formatter { };
+
+  commitlint = nodePackages."@commitlint/cli";
+
   conform = callPackage ../applications/version-management/conform { };
+
+  datalad = callPackage ../applications/version-management/datalad { };
 
   darcs-to-git = callPackage ../applications/version-management/darcs-to-git { };
 
@@ -1666,6 +1670,8 @@ with pkgs;
   git-branchless = callPackage ../applications/version-management/git-branchless {
     inherit (darwin.apple_sdk.frameworks) Security SystemConfiguration;
   };
+
+  git-branchstack = python3.pkgs.callPackage ../applications/version-management/git-branchstack { };
 
   git-bug = callPackage ../applications/version-management/git-bug { };
 
@@ -3251,7 +3257,7 @@ with pkgs;
 
   passExtensions = recurseIntoAttrs pass.extensions;
 
-  pdepend = callPackage ../development/php-packages/pdepend/default.nix { };
+  pdepend = callPackage ../development/php-packages/pdepend { };
 
   platformsh = callPackage ../misc/platformsh { };
 
@@ -4581,6 +4587,8 @@ with pkgs;
   gdrive = callPackage ../applications/networking/gdrive { };
 
   gdu = callPackage ../tools/system/gdu { };
+
+  gfxreconstruct = callPackage ../tools/graphics/gfxreconstruct { };
 
   go-chromecast = callPackage ../applications/video/go-chromecast { };
 
@@ -10272,6 +10280,8 @@ with pkgs;
 
   opae = callPackage ../development/libraries/opae { };
 
+  open-pdf-sign = callPackage ../tools/misc/open-pdf-sign { };
+
   opentelemetry-collector = callPackage ../tools/misc/opentelemetry-collector { };
   opentelemetry-collector-contrib = callPackage ../tools/misc/opentelemetry-collector/contrib.nix { };
 
@@ -13560,6 +13570,8 @@ with pkgs;
 
   fishPlugins = recurseIntoAttrs (callPackage ../shells/fish/plugins { });
 
+  fzf-git-sh = callPackage ../shells/fzf-git-sh {};
+
   ion = callPackage ../shells/ion {
     inherit (darwin) Security;
   };
@@ -14624,6 +14636,10 @@ with pkgs;
 
   hvm = callPackage ../development/compilers/hvm {
     inherit (darwin.apple_sdk.frameworks) Security;
+  };
+
+  iay = callPackage ../tools/misc/iay {
+    inherit (darwin.apple_sdk.frameworks) AppKit Security Foundation Cocoa;
   };
 
   idrisPackages = dontRecurseIntoAttrs (callPackage ../development/idris-modules {
@@ -15750,7 +15766,9 @@ with pkgs;
   mbqn = callPackage ../development/interpreters/bqn/mlochbaum-bqn { };
 
   cbqn = cbqn-bootstrap.phase2;
+  cbqn-replxx = cbqn-bootstrap.phase2-replxx;
   cbqn-standalone = cbqn-bootstrap.phase0;
+  cbqn-standalone-replxx = cbqn-bootstrap.phase0-replxx;
 
   # Below, the classic self-bootstrapping process
   cbqn-bootstrap = lib.dontRecurseIntoAttrs {
@@ -15775,6 +15793,14 @@ with pkgs;
       mbqn-source = null;
     };
 
+    phase0-replxx = callPackage ../development/interpreters/bqn/cbqn {
+      inherit (cbqn-bootstrap) stdenv;
+      genBytecode = false;
+      bqn-path = null;
+      mbqn-source = null;
+      enableReplxx = true;
+    };
+
     phase1 = callPackage ../development/interpreters/bqn/cbqn {
       inherit (cbqn-bootstrap) mbqn-source stdenv;
       genBytecode = true;
@@ -15785,6 +15811,13 @@ with pkgs;
       inherit (cbqn-bootstrap) mbqn-source stdenv;
       genBytecode = true;
       bqn-path = "${buildPackages.cbqn-bootstrap.phase1}/bin/cbqn";
+    };
+
+    phase2-replxx = callPackage ../development/interpreters/bqn/cbqn {
+      inherit (cbqn-bootstrap) mbqn-source stdenv;
+      genBytecode = true;
+      bqn-path = "${buildPackages.cbqn-bootstrap.phase1}/bin/cbqn";
+      enableReplxx = true;
     };
   };
 
@@ -18626,7 +18659,13 @@ with pkgs;
   c-blosc = callPackage ../development/libraries/c-blosc { };
 
   # justStaticExecutables is needed due to https://github.com/NixOS/nix/issues/2990
-  cachix = haskell.lib.compose.justStaticExecutables haskellPackages.cachix;
+  cachix = (haskell.lib.compose.justStaticExecutables haskellPackages.cachix).overrideAttrs(o: {
+    passthru = o.passthru or {} // {
+      tests = o.passthru.tests or {} // {
+        inherit hci;
+      };
+    };
+  });
 
   cubeb = callPackage ../development/libraries/audio/cubeb { };
 
@@ -22895,6 +22934,8 @@ with pkgs;
 
   tageditor = libsForQt5.callPackage ../applications/audio/tageditor { };
 
+  ta-lib = callPackage ../development/libraries/ta-lib { };
+
   taglib = callPackage ../development/libraries/taglib { };
 
   taglib_extras = callPackage ../development/libraries/taglib-extras { };
@@ -23578,7 +23619,7 @@ with pkgs;
   R = callPackage ../applications/science/math/R {
     # TODO: split docs into a separate output
     texLive = texlive.combine {
-      inherit (texlive) scheme-small inconsolata helvetic texinfo fancyvrb cm-super;
+      inherit (texlive) scheme-small inconsolata helvetic texinfo fancyvrb cm-super rsfs;
     };
     withRecommendedPackages = false;
     inherit (darwin.apple_sdk.frameworks) Cocoa Foundation;
@@ -24756,6 +24797,8 @@ with pkgs;
 
   thttpd = callPackage ../servers/http/thttpd { };
 
+  static-web-server = callPackage ../servers/static-web-server { };
+
   storm = callPackage ../servers/computing/storm { };
 
   surrealdb = callPackage ../servers/nosql/surrealdb {
@@ -25423,6 +25466,8 @@ with pkgs;
   };
 
   osxsnarf = callPackage ../os-specific/darwin/osxsnarf { };
+
+  plistwatch = callPackage ../os-specific/darwin/plistwatch { };
 
   power-calibrate = callPackage ../os-specific/linux/power-calibrate { };
 
@@ -26589,6 +26634,8 @@ with pkgs;
 
   freepats = callPackage ../data/misc/freepats { };
 
+  garamond-libre = callPackage ../data/fonts/garamond-libre { };
+
   g15daemon = callPackage ../os-specific/linux/g15daemon {};
 
   galatia-sil = callPackage ../data/fonts/galatia-sil { };
@@ -26630,6 +26677,8 @@ with pkgs;
   gruvbox-dark-icons-gtk = callPackage ../data/icons/gruvbox-dark-icons-gtk {
     inherit (plasma5Packages) breeze-icons;
   };
+
+  gruvbox-gtk-theme = callPackage ../data/themes/gruvbox-gtk-theme {};
 
   gubbi-font = callPackage ../data/fonts/gubbi { };
 
@@ -28208,6 +28257,8 @@ with pkgs;
   dmenu = callPackage ../applications/misc/dmenu { };
   dmenu-wayland = callPackage ../applications/misc/dmenu/wayland.nix { };
 
+  dmenu-rs = callPackage ../applications/misc/dmenu-rs { };
+
   dmensamenu = callPackage ../applications/misc/dmensamenu {
     inherit (python3Packages) buildPythonApplication requests;
   };
@@ -29287,9 +29338,7 @@ with pkgs;
 
   gollum = callPackage ../applications/misc/gollum { };
 
-  gonic = callPackage ../servers/gonic {
-    inherit (darwin.apple_sdk.frameworks) AppKit AudioToolbox;
-  };
+  gonic = callPackage ../servers/gonic { };
 
   goodvibes = callPackage ../applications/audio/goodvibes { };
 
@@ -30375,6 +30424,8 @@ with pkgs;
   ltc-tools = callPackage ../applications/audio/ltc-tools { };
 
   lscolors = callPackage ../applications/misc/lscolors { };
+
+  lswt = callPackage ../applications/misc/lswt { };
 
   luddite = with python3Packages; toPythonApplication luddite;
 
@@ -36405,6 +36456,8 @@ with pkgs;
     # pythons with double digits in minor versions, like X.YZ
     python3 = python39;
   };
+
+  grap = callPackage ../tools/security/grap { };
 
   gravit = callPackage ../applications/science/astronomy/gravit { };
 
