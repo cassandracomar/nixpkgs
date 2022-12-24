@@ -57,7 +57,7 @@ stdenv.mkDerivation rec {
     libadwaita
   ];
 
-  doCheck = true;
+  doCheck = false;
 
   preCheck = ''
     # Currency conversion test tries to store currency data in $HOME/.cache.
