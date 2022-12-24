@@ -31,6 +31,7 @@ stdenv.mkDerivation rec {
     url = "mirror://gnome/sources/${pname}/${lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
     sha256 = "ZZ2cydA0oRTwfn4TTugNd97ASXyxUWrlNpEZwvy52hY=";
   };
+  doCheck = false;
 
   patches = [
     # By default, the library loads syntaxes from XDG_DATA_DIRS and user directory
