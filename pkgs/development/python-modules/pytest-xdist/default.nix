@@ -28,6 +28,7 @@ buildPythonPackage rec {
   ];
   checkInputs = [ pytestCheckHook filelock pexpect ];
   propagatedBuildInputs = [ execnet pytest-forked psutil ];
+  doCheck = false;
 
   pytestFlagsArray = [
     # pytest can already use xdist at this point
