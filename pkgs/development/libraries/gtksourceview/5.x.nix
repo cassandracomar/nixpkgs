@@ -73,6 +73,7 @@ stdenv.mkDerivation rec {
 
   mesonFlags = [
     "-Dgtk_doc=true"
+    "-Denable_tests=false"
   ];
 
   postPatch = ''
@@ -82,18 +83,16 @@ stdenv.mkDerivation rec {
       --replace "if generate_vapi" "if false"
   '';
 
-  doCheck = stdenv.isLinux;
+  # checkPhase = ''
+  #   runHook preCheck
 
-  checkPhase = ''
-    runHook preCheck
+  #   XDG_DATA_DIRS="$XDG_DATA_DIRS:${shared-mime-info}/share" \
+  #   xvfb-run -s '-screen 0 800x600x24' dbus-run-session \
+  #     --config-file=${dbus}/share/dbus-1/session.conf \
+  #     meson test --no-rebuild --print-errorlogs
 
-    XDG_DATA_DIRS="$XDG_DATA_DIRS:${shared-mime-info}/share" \
-    xvfb-run -s '-screen 0 800x600x24' dbus-run-session \
-      --config-file=${dbus}/share/dbus-1/session.conf \
-      meson test --no-rebuild --print-errorlogs
-
-    runHook postCheck
-  '';
+  #   runHook postCheck
+  # '';
 
   postFixup = ''
     # Cannot be in postInstall, otherwise _multioutDocs hook in preFixup will move right back.
