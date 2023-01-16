@@ -11,7 +11,7 @@
 , e2fsprogs
 , libkrb5
 , libva
-, openssl
+, openssl_1_1
 , pcsclite
 , gtk3
 , libselinux
@@ -21,15 +21,16 @@
 , cpio
 , autoPatchelfHook
 , wrapGAppsHook
+, libxcrypt
 }:
 
 stdenv.mkDerivation rec {
   pname = "nice-dcv-client";
-  version = "2021.2.3797-1";
+  version = "2022.2.4804-1";
   src =
     fetchurl {
-      url = "https://d1uj6qtbmh3dt5.cloudfront.net/2021.2/Clients/nice-dcv-viewer-${version}.el8.x86_64.rpm";
-      sha256 = "sha256-iLz25SB5v7ghkAZOMGPmpNaPihd8ikzCQS//r1xBNRU=";
+      url = "https://d1uj6qtbmh3dt5.cloudfront.net/2022.2/Clients/nice-dcv-viewer-${version}.el8.x86_64.rpm";
+      sha256 = "sha256-CvDJKvNc5Ucs6cvo5gMgmAkWgsNFp9oum5vE488RZN0=";
     };
 
   nativeBuildInputs = [ autoPatchelfHook wrapGAppsHook python3Packages.rpm ];
@@ -44,7 +45,7 @@ stdenv.mkDerivation rec {
     libva
     e2fsprogs
     libX11
-    openssl
+    openssl_1_1
     pcsclite
     gtk3
     cairo
@@ -53,6 +54,7 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     gst_all_1.gstreamer
     gst_all_1.gst-plugins-base
+    libxcrypt
   ];
 
   installPhase = ''
