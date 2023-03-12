@@ -268,7 +268,7 @@ in
       linux_5_19 = throw "linux 5.19 was removed because it has reached its end of life upstream";
       linux_6_0 = throw "linux 6.0 was removed because it has reached its end of life upstream";
 
-      linux_xanmod_tt = throw "linux_xanmod_tt was removed because upstream no longer offers this option";
+      # linux_xanmod_tt = throw "linux_xanmod_tt was removed because upstream no longer offers this option";
 
       linux_5_18_hardened = throw "linux 5.18 was removed because it has reached its end of life upstream";
       linux_5_19_hardened = throw "linux 5.19 was removed because it has reached its end of life upstream";
@@ -617,7 +617,7 @@ in
     linux_5_18_hardened = throw "linux 5.18 was removed because it has reached its end of life upstream";
     linux_5_19_hardened = throw "linux 5.19 was removed because it has reached its end of life upstream";
     linux_6_0_hardened = throw "linux 6.0 was removed because it has reached its end of life upstream";
-    linux_xanmod_tt = throw "linux_xanmod_tt was removed because upstream no longer offers this option";
+    # linux_xanmod_tt = throw "linux_xanmod_tt was removed because upstream no longer offers this option";
   });
 
   packageAliases = {
