@@ -4,6 +4,8 @@ let
 
 inherit (builtins) length;
 
+asciiTable = import ./ascii-table.nix;
+
 in
 
 rec {
@@ -18,6 +20,7 @@ rec {
     isInt
     isList
     isAttrs
+    isPath
     isString
     match
     parseDrvName
@@ -126,6 +129,17 @@ rec {
     f:
     # List of input strings
     list: concatStringsSep sep (lib.imap1 f list);
+
+  /* Concatenate a list of strings, adding a newline at the end of each one.
+     Defined as `concatMapStrings (s: s + "\n")`.
+
+     Type: concatLines :: [string] -> string
+
+     Example:
+       concatLines [ "foo" "bar" ]
+       => "foo\nbar\n"
+  */
+  concatLines = concatMapStrings (s: s + "\n");
 
   /* Construct a Unix-style, colon-separated search path consisting of
      the given `subDir` appended to each of the given paths.
@@ -315,9 +329,7 @@ rec {
        => 40
 
   */
-  charToInt = let
-    table = import ./ascii-table.nix;
-  in c: builtins.getAttr c table;
+  charToInt = c: builtins.getAttr c asciiTable;
 
   /* Escape occurrence of the elements of `list` in `string` by
      prefixing it with a backslash.
@@ -342,6 +354,21 @@ rec {
 
   */
   escapeC = list: replaceStrings list (map (c: "\\x${ toLower (lib.toHexString (charToInt c))}") list);
+
+  /* Escape the string so it can be safely placed inside a URL
+     query.
+
+     Type: escapeURL :: string -> string
+
+     Example:
+       escapeURL "foo/bar baz"
+       => "foo%2Fbar%20baz"
+  */
+  escapeURL = let
+    unreserved = [ "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R" "S" "T" "U" "V" "W" "X" "Y" "Z" "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s" "t" "u" "v" "w" "x" "y" "z" "0" "1" "2" "3" "4" "5" "6" "7" "8" "9" "-" "_" "." "~" ];
+    toEscape = builtins.removeAttrs asciiTable unreserved;
+  in
+    replaceStrings (builtins.attrNames toEscape) (lib.mapAttrsToList (_: c: "%${fixedWidthString 2 "0" (lib.toHexString c)}") toEscape);
 
   /* Quote string to be used safely within the Bourne shell.
 
@@ -395,7 +422,7 @@ rec {
   */
   toShellVar = name: value:
     lib.throwIfNot (isValidPosixName name) "toShellVar: ${name} is not a valid shell variable name" (
-    if isAttrs value && ! isCoercibleToString value then
+    if isAttrs value && ! isStringLike value then
       "declare -A ${name}=(${
         concatStringsSep " " (lib.mapAttrsToList (n: v:
           "[${escapeShellArg n}]=${escapeShellArg v}"
@@ -798,10 +825,31 @@ rec {
   in lib.warnIf (!precise) "Imprecise conversion from float to string ${result}"
     result;
 
-  /* Check whether a value can be coerced to a string */
-  isCoercibleToString = x:
-    elem (typeOf x) [ "path" "string" "null" "int" "float" "bool" ] ||
-    (isList x && lib.all isCoercibleToString x) ||
+  /* Soft-deprecated function. While the original implementation is available as
+     isConvertibleWithToString, consider using isStringLike instead, if suitable. */
+  isCoercibleToString = lib.warnIf (lib.isInOldestRelease 2305)
+    "lib.strings.isCoercibleToString is deprecated in favor of either isStringLike or isConvertibleWithToString. Only use the latter if it needs to return true for null, numbers, booleans and list of similarly coercibles."
+    isConvertibleWithToString;
+
+  /* Check whether a list or other value can be passed to toString.
+
+     Many types of value are coercible to string this way, including int, float,
+     null, bool, list of similarly coercible values.
+  */
+  isConvertibleWithToString = x:
+    isStringLike x ||
+    elem (typeOf x) [ "null" "int" "float" "bool" ] ||
+    (isList x && lib.all isConvertibleWithToString x);
+
+  /* Check whether a value can be coerced to a string.
+     The value must be a string, path, or attribute set.
+
+     String-like values can be used without explicit conversion in
+     string interpolations and in most functions that expect a string.
+   */
+  isStringLike = x:
+    isString x ||
+    isPath x ||
     x ? outPath ||
     x ? __toString;
 
@@ -818,7 +866,7 @@ rec {
        => false
   */
   isStorePath = x:
-    if !(isList x) && isCoercibleToString x then
+    if isStringLike x then
       let str = toString x; in
       substring 0 1 str == "/"
       && dirOf str == storeDir

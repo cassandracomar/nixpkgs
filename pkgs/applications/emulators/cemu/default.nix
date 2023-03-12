@@ -31,13 +31,13 @@
 
 stdenv.mkDerivation rec {
   pname = "cemu";
-  version = "2.0-22";
+  version = "2.0-28";
 
   src = fetchFromGitHub {
     owner = "cemu-project";
     repo = "Cemu";
     rev = "v${version}";
-    hash = "sha256-ZQfJHQnT5mV6GC3dO6QV1fGsnyZMYqXiVdBSsimL5yU=";
+    hash = "sha256-qKrj3XPtFVy0/KH18D0oCeVUQQmIdkYJYrCKD82c/+s=";
   };
 
   patches = [
@@ -115,9 +115,7 @@ stdenv.mkDerivation rec {
     )
   '';
 
-  passthru.updateScript = nix-update-script {
-    attrPath = pname;
-  };
+  passthru.updateScript = nix-update-script { };
 
   meta = with lib; {
     description = "Cemu is a Wii U emulator";

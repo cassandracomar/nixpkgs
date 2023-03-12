@@ -12,7 +12,7 @@
 
 let
   pname = "gfold";
-  version = "4.0.1";
+  version = "4.3.2";
 in
 rustPlatform.buildRustPackage {
   inherit pname version;
@@ -21,10 +21,10 @@ rustPlatform.buildRustPackage {
     owner = "nickgerace";
     repo = pname;
     rev = version;
-    sha256 = "sha256-XOUXDuKLr8tESG2GJMl1kYsk2JRtQXzQyaO7d44Ajt8=";
+    sha256 = "sha256-wZokY1KhhO3aztLIeZU/saGibzTYB9loGe003arFWEs=";
   };
 
-  cargoSha256 = "sha256-jkktXVgHtqQeMU+rPiT4fz0kTIHW07RukxCnFABlzgw=";
+  cargoHash = "sha256-yII5lm0zbP46gUsLrr3/828Tolwg5meRP5TVvEMy8Dg=";
 
   buildInputs = lib.optionals stdenv.isDarwin [ libiconv Security ];
 
