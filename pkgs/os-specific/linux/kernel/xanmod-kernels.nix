@@ -61,6 +61,8 @@ let
       HZ = freeform "500";
       HZ_500 = yes;
       HZ_1000 = no;
+
+      CACHY = yes;
     };
 
     extraMeta = {
