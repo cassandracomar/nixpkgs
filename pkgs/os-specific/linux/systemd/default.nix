@@ -133,13 +133,13 @@ assert withHomed -> withCryptsetup;
 let
   wantCurl = withRemote || withImportd;
   wantGcrypt = withResolved || withImportd;
-  version = "252.5";
+  version = "253.0-793d34a3b8";
 
   # Bump this variable on every (major) version change. See below (in the meson options list) for why.
   # command:
   #  $ curl -s https://api.github.com/repos/systemd/systemd/releases/latest | \
   #     jq '.created_at|strptime("%Y-%m-%dT%H:%M:%SZ")|mktime'
-  releaseTimestamp = "1667246393";
+  releaseTimestamp = "1676488940";
 in
 stdenv.mkDerivation (finalAttrs: {
   inherit pname version;
