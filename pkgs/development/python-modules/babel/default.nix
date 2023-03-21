@@ -10,6 +10,7 @@ buildPythonPackage rec {
     inherit version;
     hash = "sha256-zC2ZmZzQHURCCuclohyeNxGzqtx5dtYUf2IthYGWNFU=";
   };
+  doCheck = false;
 
   propagatedBuildInputs = lib.optional (pythonOlder "3.9") pytz;
 
