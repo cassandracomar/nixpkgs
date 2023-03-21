@@ -91,6 +91,7 @@ mapAliases ({
   arduino_core = throw "'arduino_core' has been renamed to/replaced by 'arduino-core'"; # Converted to throw 2022-02-22
   arora = throw "arora has been removed"; # Added 2020-09-09
   asciidocFull = throw "'asciidocFull' has been renamed to/replaced by 'asciidoc-full'"; # Converted to throw 2022-02-22
+  asls = throw "asls has been removed: abandoned by upstream"; # Added 2023-03-16
   asterisk_13 = throw "asterisk_13: Asterisk 13 is end of life and has been removed"; # Added 2022-04-06
   asterisk_15 = throw "asterisk_15: Asterisk 15 is end of life and has been removed"; # Added 2020-10-07
   asterisk_17 = throw "asterisk_17: Asterisk 17 is end of life and has been removed"; # Added 2022-04-06
@@ -113,6 +114,7 @@ mapAliases ({
   ### B ###
 
   badtouch = authoscope; # Project was renamed, added 20210626
+  baget = throw "'baget' has been removed due to being unmaintained";
   bar-xft = throw "'bar-xft' has been renamed to/replaced by 'lemonbar-xft'"; # Converted to throw 2022-02-22
   bashCompletion = throw "'bashCompletion' has been renamed to/replaced by 'bash-completion'"; # Converted to throw 2022-02-22
   bashInteractive_5 = bashInteractive; # Added 2021-08-20
@@ -415,6 +417,8 @@ mapAliases ({
 
   electrum-dash = throw "electrum-dash has been removed from nixpkgs as the project is abandoned"; # Added 2022-01-01
 
+  elixir_ls = elixir-ls; # Added 2023-03-20
+
   # Emacs
   emacs28NativeComp = emacs28; # Added 2022-06-08
   emacs28Packages = emacs28.pkgs; # Added 2021-10-04
@@ -636,6 +640,8 @@ mapAliases ({
   hardlink = throw "hardlink was merged into util-linux since 2019-06-14."; # Added 2022-08-12
   inherit (harePackages) hare harec; # Added 2022-08-10
   hawkthorne = throw "hawkthorne has been removed because it depended on a broken version of love"; # Added 2022-01-15
+  haxe_3_2 = throw "'haxe_3_2' has been removed because it is old and no longer used by any packages in nixpkgs"; # Added 2023-03-15
+  haxe_3_4 = throw "'haxe_3_4' has been removed because it is old and no longer used by any packages in nixpkgs"; # Added 2023-03-15
   hdr-plus = throw "hdr-plus has been removed because it is unmaintained, often breaks and no longer consumed as a dependency"; # Added 2022-11-08
   heapster = throw "Heapster is now retired. See https://github.com/kubernetes-retired/heapster/blob/master/docs/deprecation.md"; # Added 2022-04-05
   heimdalFull = throw "'heimdalFull' has been renamed to/replaced by 'heimdal'"; # Converted to throw 2022-02-22
@@ -1578,7 +1584,7 @@ mapAliases ({
   truecrypt = throw "'truecrypt' has been renamed to/replaced by 'veracrypt'"; # Converted to throw 2022-02-22
   tuijam = throw "tuijam has been removed because Google Play Music was discontinued"; # Added 2021-03-07
   turbo-geth = throw "turbo-geth has been renamed to erigon"; # Added 2021-08-08
-  tvbrowser-bin = throw "tvbrowser-bin was removed because it is now built from sources; use 'tvbrowser' instead"; # Added 2023-02-04
+  tvbrowser-bin = tvbrowser; # Added 2023-03-02
   twister = throw "twister has been removed: abandoned by upstream and python2-only"; # Added 2022-04-26
   tychus = throw "tychus has been dropped due to the lack of maintenance from upstream since 2018"; # Added 2022-06-03
   typora = throw "Newer versions of typora use anti-user encryption and refuse to start. As such it has been removed"; # Added 2021-09-11
