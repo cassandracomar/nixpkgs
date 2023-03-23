@@ -9,9 +9,9 @@ let
   };
 
   ttVariant = {
-    version = "6.2.5";
-    suffix = "xanmod2-tt";
-    hash = "sha256-y6syGCWelQp2uFVT2IH7JgTX/Z3HhvpEtvsEBT0xJLA=";
+    version = "6.2.8";
+    suffix = "xanmod1-tt";
+    hash = "sha256-LVx08ad5b1uzYIZIozB0DzmdwOxYWug+QM9CRLwlMLg=";
     variant = "tt";
   };
 
@@ -79,8 +79,8 @@ in
     src = fetchFromGitHub {
       owner = "cassandracomar";
       repo = "xanmod-linux";
-      rev = "6.2.5-xanmod2-tt";
-      hash = "sha256-y6syGCWelQp2uFVT2IH7JgTX/Z3HhvpEtvsEBT0xJLA=";
+      rev = "6.2.8-xanmod1-tt";
+      hash = "sha256-LVx08ad5b1uzYIZIozB0DzmdwOxYWug+QM9CRLwlMLg=";
     };
   };
   rt = xanmodKernelFor rtVariant;
