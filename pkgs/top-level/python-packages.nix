@@ -5309,6 +5309,10 @@ self: super: with self; {
 
   larynx-train = callPackage ../development/python-modules/larynx-train { };
 
+  laspy = callPackage ../development/python-modules/laspy { };
+
+  laszip = callPackage ../development/python-modules/laszip { };
+
   latexcodec = callPackage ../development/python-modules/latexcodec { };
 
   latexify-py = callPackage ../development/python-modules/latexify-py { };
@@ -7552,6 +7556,8 @@ self: super: with self; {
 
   pmw = callPackage ../development/python-modules/pmw { };
 
+  pnglatex = callPackage ../development/python-modules/pnglatex { };
+
   pocket = callPackage ../development/python-modules/pocket { };
 
   podcastparser = callPackage ../development/python-modules/podcastparser { };
@@ -7819,6 +7825,8 @@ self: super: with self; {
   py-dormakaba-dkey = callPackage ../development/python-modules/py-dormakaba-dkey { };
 
   py-nightscout = callPackage ../development/python-modules/py-nightscout { };
+
+  py-serializable = callPackage ../development/python-modules/py-serializable { };
 
   py-synologydsm-api = callPackage ../development/python-modules/py-synologydsm-api { };
 
