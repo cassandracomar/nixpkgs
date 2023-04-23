@@ -176,7 +176,7 @@ stdenvNoCC.mkDerivation (args // {
           # Note that toString is necessary here as it results in the path at
           # eval time (i.e. to the file in your local Nixpkgs checkout) rather
           # than the Nix store path of the path after it's been imported.
-          if lib.isPath nugetDeps && !lib.hasPrefix "/nix/store/" (toString nugetDeps)
+          if lib.isPath nugetDeps && !lib.hasPrefix "${builtins.storeDir}/" (toString nugetDeps)
           then toString nugetDeps
           else ''$(mktemp -t "${pname}-deps-XXXXXX.nix")'';
       in
@@ -284,4 +284,8 @@ stdenvNoCC.mkDerivation (args // {
   } // args.passthru or { };
 
   meta = (args.meta or { }) // { inherit platforms; };
-})
+}
+  # ICU tries to unconditionally load files from /usr/share/icu on Darwin, which makes builds fail
+  # in the sandbox, so disable ICU on Darwin. This, as far as I know, shouldn't cause any built packages
+  # to behave differently, just the dotnet build tool.
+  // lib.optionalAttrs stdenvNoCC.isDarwin { DOTNET_SYSTEM_GLOBALIZATION_INVARIANT = 1; })

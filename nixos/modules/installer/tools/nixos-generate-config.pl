@@ -200,7 +200,7 @@ sub pciCheck {
     }
 
     # In case this is a virtio scsi device, we need to explicitly make this available.
-    if ($vendor eq "0x1af4" && $device eq "0x1004") {
+    if ($vendor eq "0x1af4" && ($device eq "0x1004" || $device eq "0x1048") ) {
         push @initrdAvailableKernelModules, "virtio_scsi";
     }
 
@@ -473,7 +473,7 @@ EOF
     }
 
     # Don't emit tmpfs entry for /tmp, because it most likely comes from the
-    # boot.tmpOnTmpfs option in configuration.nix (managed declaratively).
+    # boot.tmp.useTmpfs option in configuration.nix (managed declaratively).
     next if ($mountPoint eq "/tmp" && $fsType eq "tmpfs");
 
     # Emit the filesystem.

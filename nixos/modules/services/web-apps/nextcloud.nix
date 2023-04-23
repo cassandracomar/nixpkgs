@@ -204,7 +204,7 @@ in {
     package = mkOption {
       type = types.package;
       description = lib.mdDoc "Which package to use for the Nextcloud instance.";
-      relatedPackages = [ "nextcloud24" "nextcloud25" "nextcloud26" ];
+      relatedPackages = [ "nextcloud25" "nextcloud26" ];
     };
     phpPackage = mkOption {
       type = types.package;
@@ -712,6 +712,10 @@ in {
           See <https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/encryption_configuration.html#disabling-encryption> on how to achieve this.
 
           For more context, here is the implementing pull request: https://github.com/NixOS/nixpkgs/pull/198470
+        '')
+        ++ (optional (cfg.enableBrokenCiphersForSSE && versionAtLeast cfg.package.version "26") ''
+          Nextcloud26 supports RC4 without requiring legacy OpenSSL, so
+          `services.nextcloud.enableBrokenCiphersForSSE` can be set to `false`.
         '');
 
       services.nextcloud.package = with pkgs;
@@ -1112,7 +1116,7 @@ in {
           ${optionalString (cfg.nginx.recommendedHttpHeaders) ''
             add_header X-Content-Type-Options nosniff;
             add_header X-XSS-Protection "1; mode=block";
-            add_header X-Robots-Tag none;
+            add_header X-Robots-Tag "noindex, nofollow";
             add_header X-Download-Options noopen;
             add_header X-Permitted-Cross-Domain-Policies none;
             add_header X-Frame-Options sameorigin;
