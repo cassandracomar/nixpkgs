@@ -28,9 +28,6 @@ buildPythonPackage rec {
     pytz
   ];
 
-  # including backports.zoneinfo for python<3.9 yields infinite recursion
-  doCheck = pythonAtLeast "3.9";
-
   nativeCheckInputs = [
     # via setup.py
     freezegun
