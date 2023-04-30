@@ -31,6 +31,7 @@
   # for determining the latest compatible linuxPackages
 , linuxPackages_6_1 ? pkgs.linuxKernel.packages.linux_6_1
 , linuxPackages_6_2 ? pkgs.linuxKernel.packages.linux_6_2
+, linuxPackages_6_3 ? pkgs.linuxKernel.packages.linux_6_3
 }:
 
 let
@@ -264,12 +265,12 @@ in
     # check the release notes for compatible kernels
     kernelCompatible =
       if stdenv'.isx86_64
-      then kernel.kernelOlder "6.3"
-      else kernel.kernelOlder "6.2";
+      then kernel.kernelOlder "6.4"
+      else kernel.kernelOlder "6.3";
     latestCompatibleLinuxPackages =
       if stdenv'.isx86_64
-      then linuxPackages_6_2
-      else linuxPackages_6_1;
+      then linuxPackages_6_3
+      else linuxPackages_6_2;
 
     # this package should point to the latest release.
     version = "2.1.11";
@@ -284,12 +285,12 @@ in
     #   for future releases, please delete this condition.
     kernelCompatible =
       if stdenv'.isx86_64
-      then kernel.kernelOlder "6.3"
-      else kernel.kernelOlder "6.2";
+      then kernel.kernelOlder "6.4"
+      else kernel.kernelOlder "6.3";
     latestCompatibleLinuxPackages =
       if stdenv'.isx86_64
-      then linuxPackages_6_2
-      else linuxPackages_6_1;
+      then linuxPackages_6_3
+      else linuxPackages_6_2;
 
     # this package should point to a version / git revision compatible with the latest kernel release
     # IMPORTANT: Always use a tagged release candidate or commits from the
