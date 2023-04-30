@@ -2,13 +2,13 @@
 
 stdenv.mkDerivation rec {
   pname = "luau";
-  version = "0.567";
+  version = "0.572";
 
   src = fetchFromGitHub {
     owner = "Roblox";
     repo = "luau";
     rev = version;
-    hash = "sha256-x1P9/TZUU/XITH1/8NtPXzM46fwk0VxHNphlWqzhoog=";
+    hash = "sha256-7pckVsxzEdy0YykyvaouNWmnETEi86Cs7kCxaoU5lHs=";
   };
 
   nativeBuildInputs = [ cmake ];

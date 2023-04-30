@@ -90,6 +90,10 @@ rec {
     config = "mipsel-unknown-linux-gnu";
   } // platforms.fuloong2f_n32;
 
+  loongarch64-linux = {
+    config = "loongarch64-unknown-linux-gnu";
+  };
+
   # can execute on 32bit chip
   mips-linux-gnu                = { config = "mips-unknown-linux-gnu";                } // platforms.gcc_mips32r2_o32;
   mipsel-linux-gnu              = { config = "mipsel-unknown-linux-gnu";              } // platforms.gcc_mips32r2_o32;
@@ -329,6 +333,9 @@ rec {
 
   # Ghcjs
   ghcjs = {
-    config = "js-unknown-ghcjs";
+    # This triple is special to GHC/Cabal/GHCJS and not recognized by autotools
+    # See: https://gitlab.haskell.org/ghc/ghc/-/commit/6636b670233522f01d002c9b97827d00289dbf5c
+    # https://github.com/ghcjs/ghcjs/issues/53
+    config = "javascript-unknown-ghcjs";
   };
 }

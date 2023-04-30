@@ -191,7 +191,7 @@ stdenv.mkDerivation rec {
     "-Dpythia6=OFF"
     "-Dpythia8=OFF"
     "-Drfio=OFF"
-    "-Droot7=OFF"
+    "-Droot7=ON"
     "-Dsqlite=OFF"
     "-Dssl=ON"
     "-Dtmva=ON"
@@ -209,9 +209,6 @@ stdenv.mkDerivation rec {
     # fatal error: could not build module '_Builtin_intrinsics'
     "-Druntime_cxxmodules=OFF"
   ];
-
-  # https://github.com/NixOS/nixpkgs/issues/201254
-  NIX_LDFLAGS = lib.optionalString (stdenv.isLinux && stdenv.isAarch64 && stdenv.cc.isGNU) "-lgcc";
 
   # Workaround the xrootd runpath bug #169677 by prefixing [DY]LD_LIBRARY_PATH with ${lib.makeLibraryPath xrootd}.
   # TODO: Remove the [DY]LDLIBRARY_PATH prefix for xrootd when #200830 get merged.

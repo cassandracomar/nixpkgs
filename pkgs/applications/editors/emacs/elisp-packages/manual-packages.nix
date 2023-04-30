@@ -5,11 +5,13 @@ let
   inherit (self) callPackage;
 in
 {
+  acm = callPackage ./manual-packages/acm { };
+
+  acm-terminal = callPackage ./manual-packages/acm-terminal { };
+
   agda-input = callPackage ./manual-packages/agda-input { };
 
   agda2-mode = callPackage ./manual-packages/agda2-mode { };
-
-  bqn-mode = callPackage ./manual-packages/bqn-mode { };
 
   cask = callPackage ./manual-packages/cask { };
 
@@ -20,8 +22,6 @@ in
   elisp-ffi = callPackage ./manual-packages/elisp-ffi { };
 
   emacspeak = callPackage ./manual-packages/emacspeak { };
-
-  ement = callPackage ./manual-packages/ement { };
 
   ess-R-object-popup = callPackage ./manual-packages/ess-R-object-popup { };
 
@@ -47,7 +47,13 @@ in
 
   jam-mode = callPackage ./manual-packages/jam-mode { };
 
+  ligo-mode = callPackage ./manual-packages/ligo-mode { };
+
   llvm-mode = callPackage ./manual-packages/llvm-mode { };
+
+  lsp-bridge = callPackage ./manual-packages/lsp-bridge {
+    inherit (pkgs) python3 git go gopls pyright;
+  };
 
   matrix-client = callPackage ./manual-packages/matrix-client {
     _map = self.map;

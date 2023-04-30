@@ -1,5 +1,4 @@
 { buildPythonPackage
-, cudaSupport ? torch.cudaSupport or false # by default uses the value from torch
 , fetchFromGitHub
 , lib
 , libjpeg_turbo
@@ -15,8 +14,8 @@
 }:
 
 let
-  inherit (torch) cudaPackages gpuTargetString;
-  inherit (cudaPackages) cudatoolkit cudaFlags cudaVersion;
+  inherit (torch) cudaCapabilities cudaPackages cudaSupport;
+  inherit (cudaPackages) backendStdenv cudaVersion;
 
   # NOTE: torchvision doesn't use cudnn; torch does!
   #   For this reason it is not included.
@@ -41,7 +40,7 @@ let
   };
 
   pname = "torchvision";
-  version = "0.14.1";
+  version = "0.15.1";
 in
 buildPythonPackage {
   inherit pname version;
@@ -50,7 +49,7 @@ buildPythonPackage {
     owner = "pytorch";
     repo = "vision";
     rev = "refs/tags/v${version}";
-    hash = "sha256-lKkEJolJQaLr1TVm44CizbJQedGa1wyy0cFWg2LTJN0=";
+    hash = "sha256-CQS2IXb8YSLrrkn/7BsO4Me5Cv0eXgMAKXM4rGzr0Bw=";
   };
 
   nativeBuildInputs = [ libpng ninja which ] ++ lib.optionals cudaSupport [ cuda-native-redist ];
@@ -66,9 +65,9 @@ buildPythonPackage {
   # NOTE: We essentially override the compilers provided by stdenv because we don't have a hook
   #   for cudaPackages to swap in compilers supported by NVCC.
   + lib.optionalString cudaSupport ''
-    export CC=${cudatoolkit.cc}/bin/cc
-    export CXX=${cudatoolkit.cc}/bin/c++
-    export TORCH_CUDA_ARCH_LIST="${gpuTargetString}"
+    export CC=${backendStdenv.cc}/bin/cc
+    export CXX=${backendStdenv.cc}/bin/c++
+    export TORCH_CUDA_ARCH_LIST="${lib.concatStringsSep ";" cudaCapabilities}"
     export FORCE_CUDA=1
   '';
 

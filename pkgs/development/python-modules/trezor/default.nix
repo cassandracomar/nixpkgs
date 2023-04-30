@@ -14,7 +14,6 @@
 , mnemonic
 , pillow
 , protobuf
-, pyblake2
 , requests
 , shamir-mnemonic
 , simple-rlp
@@ -31,7 +30,7 @@ buildPythonPackage rec {
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "sha256-jhUBca/+rDge/bFHgpKQhNZBTsd8zNyHHW8NZE/1e9g=";
+    hash = "sha256-jhUBca/+rDge/bFHgpKQhNZBTsd8zNyHHW8NZE/1e9g=";
   };
 
   nativeBuildInputs = [ installShellFiles ];
@@ -47,7 +46,6 @@ buildPythonPackage rec {
     mnemonic
     pillow
     protobuf
-    pyblake2
     requests
     shamir-mnemonic
     simple-rlp
