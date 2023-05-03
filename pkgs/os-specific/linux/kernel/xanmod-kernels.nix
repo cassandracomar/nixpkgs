@@ -11,7 +11,7 @@ let
   ttVariant = {
     version = "6.3.1";
     suffix = "xanmod1-tt";
-    hash = "sha256-vhq6HbDw+a4IFL0OpiSDlGwmTrh/+xcvUgnFfBD6CSA=";
+    hash = "sha256-tLdhTznPartT4Ki2BFxRCK0tJQl/BgLWp249mmRF7L0=";
     variant = "tt";
   };
 
@@ -80,7 +80,7 @@ in
       owner = "cassandracomar";
       repo = "xanmod-linux";
       rev = "6.3.1-xanmod1-tt";
-      hash = "sha256-vhq6HbDw+a4IFL0OpiSDlGwmTrh/+xcvUgnFfBD6CSA=";
+      hash = "sha256-tLdhTznPartT4Ki2BFxRCK0tJQl/BgLWp249mmRF7L0=";
     };
   };
   rt = xanmodKernelFor rtVariant;
