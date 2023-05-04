@@ -78,11 +78,11 @@ let
       };
 
       patches = [
-        (fetchpatch {
-          name = "musl.patch";
-          url = "https://github.com/openzfs/zfs/commit/1f19826c9ac85835cbde61a7439d9d1fefe43a4a.patch";
-          sha256 = "XEaK227ubfOwlB2s851UvZ6xp/QOtYUWYsKTkEHzmo0=";
-        })
+        # (fetchpatch {
+        #   name = "musl.patch";
+        #   url = "https://github.com/openzfs/zfs/commit/1f19826c9ac85835cbde61a7439d9d1fefe43a4a.patch";
+        #   sha256 = "XEaK227ubfOwlB2s851UvZ6xp/QOtYUWYsKTkEHzmo0=";
+        # })
       ] ++ extraPatches;
 
       postPatch = optionalString buildKernel ''
@@ -302,10 +302,10 @@ in
     # IMPORTANT: Always use a tagged release candidate or commits from the
     # zfs-<version>-staging branch, because this is tested by the OpenZFS
     # maintainers.
-    version = "2.1.12-staging-2023-04-18";
-    rev = "e25f9131d679692704c11dc0c1df6d4585b70c35";
+    version = "master";
+    rev = "82ac409acc77935ae366b800ee7cefb14939bbae";
 
-    sha256 = "tJLwyqUj1l5F0WKZDeMGrEFa8fc/axKqm31xtN51a5M=";
+    sha256 = "sha256-4gHi6YxtewujnWUQzNqf9VZWP/ICdfyA8sRMx/sC7D0=";
 
     isUnstable = true;
   };
